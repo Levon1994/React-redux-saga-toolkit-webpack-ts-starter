@@ -1,0 +1,43 @@
+{
+  "name": "react-boilerplate",
+  "version": "0.0.1",
+  "description": "Boilerplate and standarts for all Appello React/RN projects",
+  "main": "index.js",
+  "scripts": {
+    "prettier": "prettier --write src/**/*.js",
+    "lint": "eslint --debug src/",
+    "lint:write": "eslint --debug src/ --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/appello/devops/reactjs.git"
+  },
+  "author": "Roman Kuzkokov",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-disable": "^1.0.4",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.9.1",
+    "husky": "^1.1.2",
+    "lint-staged": "^8.1.5",
+    "prettier": "^1.16.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": ["airbnb"],
+  "plugins": [
+    "babel",
+    "import",
+    "react",
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "linebreak-style": "off", // Don"t play nicely with Windows.
+
+    "object-curly-newline": "off", // Incompatible with prettier
+    "no-mixed-operators": "off", // Incompatible with prettier
+    "arrow-body-style": ["error", "as-needed"],
+    "function-paren-newline": "off", // Incompatible with prettier
+    "no-plusplus": "off",
+    "space-before-function-paren": 0, // Incompatible with prettier,
+
+    "max-len": ["error", 100, 2, { "ignoreUrls": true }], // airbnb is allowing some edge cases
+    "no-console": "error", // airbnb is using warn
+    "no-alert": "error", // airbnb is using warn
+
+    "radix": "off", // parseInt, parseFloat radix turned off
+
+    "import/prefer-default-export": "off", // we perfer named export
+
+    "react/forbid-prop-types": ["error", {
+      "forbid": ["any", "array", "object"],
+      "checkContextTypes": true,
+      "checkChildContextTypes": true
+    }],
+    "react/jsx-filename-extension": ["error", { "extensions": ["", ".js"] }], // airbnb is using .jsx
+
+    "react/no-unused-prop-types": "off", // Is still buggy
+
+    "prettier/prettier": ["error"]
+  },
+  "settings": {
+    "eslint-plugin-disable": {
+      "paths": {
+        "jsx-a11y": ["src/**/*.js"]
+      }
+    }
+  }
+}

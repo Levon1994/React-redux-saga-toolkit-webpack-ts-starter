@@ -46,6 +46,10 @@
 
     "react/no-unused-prop-types": "off", // Is still buggy
 
+    "import/no-named-as-default": "off",
+    "react/prefer-stateless-function": "warn",
+    "global-require": "off",
+
     "prettier/prettier": ["error"]
   },
   "settings": {

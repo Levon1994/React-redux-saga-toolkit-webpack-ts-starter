@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Boilerplate and standarts for all Appello React/RN projects",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "prettier": "prettier --write src/**/*.js",
     "lint": "eslint --debug src/",

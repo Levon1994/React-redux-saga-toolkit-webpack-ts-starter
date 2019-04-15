@@ -4,12 +4,13 @@
     "browser": true,
     "node": true
   },
-  "extends": ["airbnb"],
+  "extends": ["airbnb", "prettier"],
   "plugins": [
     "babel",
     "import",
     "react",
-    "prettier"
+    "prettier",
+    "disable"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -37,6 +38,8 @@
 
     "import/prefer-default-export": "off", // we perfer named export
 
+    "lines-between-class-members": "off",
+
     "react/forbid-prop-types": ["error", {
       "forbid": ["any", "array", "object"],
       "checkContextTypes": true,
@@ -44,6 +47,7 @@
     }],
     "react/jsx-filename-extension": ["error", { "extensions": ["", ".js"] }], // airbnb is using .jsx
 
+    "react/destructuring-assignment": "warn",
     "react/no-unused-prop-types": "off", // Is still buggy
 
     "import/no-named-as-default": "off",
@@ -55,7 +59,7 @@
   "settings": {
     "eslint-plugin-disable": {
       "paths": {
-        "jsx-a11y": ["src/**/*.js"]
+        "jsx-a11y": ["*"]
       }
     }
   }

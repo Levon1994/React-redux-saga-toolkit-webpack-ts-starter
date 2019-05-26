@@ -5,13 +5,7 @@
     "node": true
   },
   "extends": ["airbnb", "prettier"],
-  "plugins": [
-    "babel",
-    "import",
-    "react",
-    "prettier",
-    "disable"
-  ],
+  "plugins": ["babel", "import", "react", "prettier", "disable"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -21,34 +15,37 @@
     }
   },
   "rules": {
-    "linebreak-style": "off", // Don"t play nicely with Windows.
-
-    "object-curly-newline": "off", // Incompatible with prettier
-    "no-mixed-operators": "off", // Incompatible with prettier
+    "linebreak-style": "off",
+    "object-curly-newline": "off",
+    "no-mixed-operators": "off",
     "arrow-body-style": ["error", "as-needed"],
-    "function-paren-newline": "off", // Incompatible with prettier
+    "function-paren-newline": "off",
     "no-plusplus": "off",
-    "space-before-function-paren": 0, // Incompatible with prettier,
+    "space-before-function-paren": 0,
+    "max-len": ["error", 100, 2, { "ignoreUrls": true }],
+    "no-console": "error",
+    "no-alert": "error",
+    "no-shadow": "off",
+    "no-unused-expressions": ["error", { "allowShortCircuit": true }],
+    "no-use-before-define": ["error", { "variables": false }],
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "radix": "off",
 
-    "max-len": ["error", 100, 2, { "ignoreUrls": true }], // airbnb is allowing some edge cases
-    "no-console": "error", // airbnb is using warn
-    "no-alert": "error", // airbnb is using warn
-
-    "radix": "off", // parseInt, parseFloat radix turned off
-
-    "import/prefer-default-export": "off", // we perfer named export
-
+    "import/prefer-default-export": "off",
     "lines-between-class-members": "off",
 
-    "react/forbid-prop-types": ["error", {
-      "forbid": ["any", "array", "object"],
-      "checkContextTypes": true,
-      "checkChildContextTypes": true
-    }],
-    "react/jsx-filename-extension": ["error", { "extensions": ["", ".js"] }], // airbnb is using .jsx
-
+    "react/forbid-prop-types": [
+      "error",
+      {
+        "forbid": ["any", "array", "object"],
+        "checkContextTypes": true,
+        "checkChildContextTypes": true
+      }
+    ],
+    "react/jsx-filename-extension": ["error", { "extensions": ["", ".js"] }],
     "react/destructuring-assignment": "warn",
-    "react/no-unused-prop-types": "off", // Is still buggy
+    "react/no-did-update-set-state": "off",
+    "react/jsx-one-expression-per-line": "off",
 
     "import/no-named-as-default": "off",
     "react/prefer-stateless-function": "warn",
@@ -61,6 +58,9 @@
       "paths": {
         "jsx-a11y": ["*"]
       }
+    },
+    "import/resolver": {
+      "babel-module": {}
     }
   }
 }

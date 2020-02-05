@@ -42,7 +42,7 @@
         "checkChildContextTypes": true
       }
     ],
-    "react/jsx-filename-extension": ["error", { "extensions": ["", ".js"] }],
+    "react/jsx-filename-extension": ["error", { "extensions": ["", ".js", ".tsx"] }],
     "react/destructuring-assignment": "warn",
     "react/no-did-update-set-state": "off",
     "react/jsx-one-expression-per-line": "off",

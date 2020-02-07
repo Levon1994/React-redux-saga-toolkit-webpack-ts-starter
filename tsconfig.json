@@ -18,11 +18,12 @@
 		"baseUrl": "./src",
 		"paths": {
 			"uiKit": [
-				"components/uiKit"
+				"view/components/uiKit"
 			],
 			"uiKit/*": [
-				"components/uiKit/*"
-			]
+				"view/components/uiKit/*"
+      ],
+      "components/*": ["view/components/*"]
 		}
 	},
 	"include": [

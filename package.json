@@ -6,10 +6,6 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
-    "prettier": "prettier --write src/**/*.{ts,tsx}",
-    "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.7.1",
@@ -24,8 +20,11 @@
     "eslint-plugin-react": "^7.18.3",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-extra-dimensions-android": "^1.2.5",
     "react-native-gesture-handler": "^1.5.6",
     "react-native-iphone-x-helper": "^1.2.1",
+    "react-native-reanimated": "^1.7.0",
+    "react-native-screens": "^2.0.0-beta.2",
     "react-native-size-matters": "^0.3.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-tab-view": "^2.13.0",
@@ -74,18 +73,6 @@
     "tslint-react-recommended": "^1.0.15",
     "typescript": "^3.7.5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint src/",
-      "git add"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-customizable"
@@ -94,14 +81,6 @@
   "rnpm": {
     "assets": [
       "./src/assets/fonts/"
-    ]
-  },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
     ]
   }
 }

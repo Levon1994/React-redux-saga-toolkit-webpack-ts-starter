@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, ImageSourcePropType } from 'react-native';
 
 import { DonationComponent } from 'view/components';
+import { Box } from 'view/components/uiKit/Box';
 
 import {
   Container,
@@ -61,6 +62,7 @@ export const MyImpactContainer = ({ list, renderListItem }: MyImpactProps) => {
             showsVerticalScrollIndicator={false}
             keyExtractor={item => String(item.id)}
             bounces={false}
+            ItemSeparatorComponent={() => <Box height={10} />}
             style={{
               width: '100%',
             }}

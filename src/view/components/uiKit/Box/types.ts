@@ -4,7 +4,7 @@ export interface BoxProps {
   mb?: string | number;
   mr?: string | number;
   ml?: string | number;
-  padding?: string | number;
+  p?: string | number;
   pt?: string | number;
   pb?: string | number;
   pv?: string | number;

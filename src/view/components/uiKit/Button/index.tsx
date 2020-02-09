@@ -20,10 +20,11 @@ const StyledButton = styled.TouchableOpacity.attrs({
   padding-horizontal: ${moderateScale(16, 0.2)};
 `;
 
-const ButtonLabel = styled(Text).attrs(({ size, lh }) => ({
+const ButtonLabel = styled(Text).attrs(({ size, lh, color }) => ({
   size: size || moderateScale(12, 0.2),
   lh: lh || moderateScale(16, 0.2),
   center: true,
+  color,
 }))``;
 
 export const Button: React.FC<ButtonProps> = ({ label, ...restProps }) => (

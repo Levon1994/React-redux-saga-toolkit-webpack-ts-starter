@@ -7,6 +7,10 @@ export const theme = {
     background: '#367CCF',
     secondaryBackground: '#E4EDF7',
     notActive: '#85B2E8',
+    progressValue: '#BFDCFF',
+    info: '#AAD5FF',
+    horizontalView: '#e6eaee',
+    feedPrice: '#AAA9A9',
   },
 };
 

@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
-import { Text } from 'view/components/uiKit/Text';
 import { KeyboardAvoidingView, TabLabel, TabScene } from 'view/components';
 import { MyImpactContainer } from 'view/containers/MyImpactContainer';
-import { CharityItem } from './components/CharityItem';
+import { PersonalDetails } from 'view/containers/PersonalDetails';
+import { CharityItem, FeedItem } from './components';
 
 import { StyledTabBar } from './styled';
 
-import { listData } from './fakeData';
+import { listData, feedList } from './fakeData';
 
 enum Tabs {
   MyImpact = 'MyImpact',
@@ -17,6 +17,7 @@ enum Tabs {
 
 export const HomeScreen = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const [isShowFeed, setShowFeed] = useState(false);
   const tabHome = [
     { key: Tabs.MyImpact, title: 'My Impact' },
     { key: Tabs.PersonalDetails, title: 'Personal Details' },
@@ -24,13 +25,26 @@ export const HomeScreen = () => {
 
   const renderCharityItem = ({ item }: any) => <CharityItem item={item} />;
 
+  const renderFeedListItem = ({ item }: any) => <FeedItem item={item} />;
+
   const tabViewScenes = SceneMap({
     [Tabs.MyImpact]: useMemo(
       () =>
         TabScene(() => <MyImpactContainer list={listData} renderListItem={renderCharityItem} />),
       [],
     ),
-    [Tabs.PersonalDetails]: useMemo(() => TabScene(() => <Text>personal details</Text>), []),
+    [Tabs.PersonalDetails]: useMemo(
+      () =>
+        TabScene(() =>
+          <PersonalDetails
+            isShowFeed={isShowFeed}
+            feedList={feedList}
+            onPress={setShowFeed}
+            renderFeedListItem={renderFeedListItem}
+          />,
+        ),
+      [isShowFeed, feedList],
+    ),
   });
 
   return (

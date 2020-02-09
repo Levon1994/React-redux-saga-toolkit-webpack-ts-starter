@@ -10,7 +10,6 @@ export const Container = styled(Box).attrs(({ theme }) => ({
   row: true,
   align: 'center',
   spaceBetween: true,
-  mb: 10,
   bg: theme.colors.mainText,
   p: '10px',
   m: `${moderateScale(2, 0.5)}px`,
@@ -67,5 +66,4 @@ export const DonatedValue = styled(Text).attrs({
 
 export const Description = styled(Text).attrs(({ theme }) => ({
   color: theme.colors.main,
-  size: 12,
 }))``;

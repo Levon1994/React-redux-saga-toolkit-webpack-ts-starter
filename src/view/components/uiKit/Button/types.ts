@@ -9,4 +9,5 @@ export interface ButtonProps {
   bg?: string;
   size?: string;
   weight?: string;
+  color?: string | boolean;
 }

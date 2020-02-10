@@ -35,14 +35,14 @@ export const HomeScreen = () => {
     ),
     [Tabs.PersonalDetails]: useMemo(
       () =>
-        TabScene(() =>
+        TabScene(() => (
           <PersonalDetails
             isShowFeed={isShowFeed}
             feedList={feedList}
             onPress={setShowFeed}
             renderFeedListItem={renderFeedListItem}
-          />,
-        ),
+          />
+        )),
       [isShowFeed, feedList],
     ),
   });

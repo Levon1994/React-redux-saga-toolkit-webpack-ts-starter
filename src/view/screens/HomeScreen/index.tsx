@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
-import { KeyboardAvoidingView, TabLabel, TabScene } from 'view/components';
+import { TabLabel, TabScene } from 'view/components';
 import { MyImpactContainer } from 'view/containers/MyImpactContainer';
 import { PersonalDetails } from 'view/containers/PersonalDetails';
 import { CharityItem, FeedItem } from './components';
@@ -48,15 +48,13 @@ export const HomeScreen = () => {
   });
 
   return (
-    <KeyboardAvoidingView>
-      <TabView
-        renderScene={tabViewScenes}
-        onIndexChange={setTabIndex}
-        navigationState={{ index: tabIndex, routes: tabHome }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        renderTabBar={props => <StyledTabBar renderLabel={TabLabel} {...props} />}
-        lazy
-      />
-    </KeyboardAvoidingView>
+    <TabView
+      renderScene={tabViewScenes}
+      onIndexChange={setTabIndex}
+      navigationState={{ index: tabIndex, routes: tabHome }}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      renderTabBar={props => <StyledTabBar renderLabel={TabLabel} {...props} />}
+      lazy
+    />
   );
 };

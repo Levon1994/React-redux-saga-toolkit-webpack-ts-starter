@@ -2,10 +2,17 @@
   "name": "MyCharityChange",
   "version": "0.0.1",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/mccapp/mcc-mobile"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start"
+    "start": "react-native start",
+    "prettier": "prettier --write src/**/**/*.js",
+    "lint": "eslint --debug src/",
+    "lint:write": "eslint --debug src/ --fix"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.7.1",
@@ -81,6 +88,18 @@
   "rnpm": {
     "assets": [
       "./src/assets/fonts/"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint",
+      "git add"
     ]
   }
 }

@@ -36,6 +36,12 @@ target 'MyCharityChange' do
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
+  pod 'RNScreens', :path => '../node_modules/react-native-screens'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'MyCharityChangeTests' do
     inherit! :search_paths
     # Pods for testing

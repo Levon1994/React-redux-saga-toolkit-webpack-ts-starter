@@ -4,12 +4,14 @@ import { persistReducer } from 'redux-persist';
 import { RootState } from 'types';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { onboardingReducer } from 'modules/reviewOnboarding';
+
 const rootPersistConfig = {
   key: 'root',
   storage: AsyncStorage,
 };
 
-const appReducer = combineReducers({});
+const appReducer = combineReducers({ onboardingReducer });
 
 const rootReducer = (state: RootState | undefined, action: Action) => {
   // if (action.type === getType(resetStore)) {

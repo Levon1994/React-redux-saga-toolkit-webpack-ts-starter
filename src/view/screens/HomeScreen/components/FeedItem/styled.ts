@@ -6,7 +6,6 @@ import { Text } from 'view/components/uiKit/Text';
 
 export const DayBlock = styled(Box).attrs({
   row: true,
-  align: 'center',
   center: true,
   pb: `${moderateScale(16, 0.5)}px`,
 })`
@@ -15,7 +14,7 @@ export const DayBlock = styled(Box).attrs({
 
 export const HorizontalView = styled(Box).attrs({})`
   position: absolute;
-  top: 11;
+  top: 9;
   border-color: ${({ theme }) => theme.colors.horizontalView};
   border-width: 1;
 `;
@@ -28,6 +27,7 @@ export const DayNameBlock = styled(Box).attrs(({ theme }) => ({
 
 export const DayName = styled(Text).attrs(({ theme }) => ({
   size: 21,
+  lh: 21,
   color: theme.colors.secondaryText,
 }))``;
 

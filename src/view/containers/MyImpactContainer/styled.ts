@@ -5,9 +5,10 @@ import { Box } from 'view/components/uiKit/Box';
 import { Text } from 'view/components/uiKit/Text';
 import { Button } from 'view/components/uiKit/Button';
 
-export const Container = styled(Box).attrs({
+export const Container = styled(Box).attrs(({ theme }) => ({
   flex: 1,
-})``;
+  bg: theme.colors.mainText,
+}))``;
 
 //  header
 export const Header = styled(Box).attrs(({ theme }) => ({

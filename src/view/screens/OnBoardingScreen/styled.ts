@@ -1,18 +1,20 @@
 import styled from 'styled-components';
+import { Dimensions } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { Pagination } from 'react-native-snap-carousel';
 
-import { statusBarHeight, ScreenWidth, ScreenHeight } from 'utils/helpers';
+import { statusBarHeight, ScreenWidth } from 'utils/helpers';
 
 import { Box } from 'view/components/uiKit/Box';
 import { Text } from 'view/components/uiKit/Text';
 import { Button } from 'view/components/uiKit/Button';
 
 const controlsHeight = 145;
+const { height: screenHeight } = Dimensions.get('window');
 
 export const ScreenContainer = styled(Box).attrs(({ theme }) => ({
   width: ScreenWidth,
-  height: ScreenHeight - controlsHeight,
+  height: screenHeight - controlsHeight,
   center: true,
   align: 'center',
   bg: theme.colors.main,

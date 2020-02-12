@@ -24,7 +24,7 @@ export const TopHeaderBlock = styled(Box).attrs({
 
 export const UserNameBlock = styled(Box).attrs({
   flex: 2,
-  pr: '2px',
+  pr: '3px',
 })``;
 
 export const UserName = styled(Text).attrs({

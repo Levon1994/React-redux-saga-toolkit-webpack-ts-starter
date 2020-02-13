@@ -11,7 +11,10 @@ export const theme = {
     info: '#AAD5FF',
     horizontalView: '#e6eaee',
     feedPrice: '#AAA9A9',
+    error: '#F43428',
+    inputBorder: '#E6EAEE',
   },
+  defaultFontFamily: 'Roboto-Regular',
 };
 
 export type ThemeInterface = typeof theme;

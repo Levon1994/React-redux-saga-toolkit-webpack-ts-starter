@@ -80,4 +80,5 @@ export const StyledButton = styled(Button).attrs(({ theme }) => ({
   size: '14',
   bg: theme.colors.mainText,
   color: theme.colors.main,
+  height: 50,
 }))``;

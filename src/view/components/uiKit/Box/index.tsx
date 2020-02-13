@@ -39,5 +39,6 @@ export const Box = styled.View<BoxProps>`
     background: ${props.bg || 'transparent'};
     opacity: ${props.opacity || 1};
     border-radius: ${props.br || 0};
+    ${props.border ? `border: ${props.border};` : ''}
   `}
 `;

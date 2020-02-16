@@ -96,5 +96,5 @@ export const ShowHideFeedButton = styled(Button).attrs({
 export const FlatListBlock = styled(Box).attrs({
   pt: `${moderateScale(16, 0.5)}px`,
   pb: `${moderateScale(16, 0.5)}px`,
-  mh: '98%',
+  mb: 16,
 })``;

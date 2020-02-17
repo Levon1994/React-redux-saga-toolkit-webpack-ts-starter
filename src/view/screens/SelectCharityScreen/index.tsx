@@ -7,6 +7,7 @@ import { Box } from 'view/components/uiKit/Box';
 import { CheckBox } from 'view/components/uiKit/CheckBox';
 import { SearchInput } from 'view/components/uiKit/SearchInput';
 import { EmptyView } from 'view/components/EmptyView';
+import { FilterCheckbox } from 'view/components/FilterCheckbox';
 
 import {
   Container,
@@ -14,8 +15,6 @@ import {
   TopHeaderBlock,
   Title,
   BottomHeaderBlock,
-  ItemFilterWrapper,
-  FilterTitle,
   StyledKeyboardAvoidingView,
   MainBlock,
   ErrorBlock,
@@ -34,6 +33,7 @@ interface Props {
 
 export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
   const [checkSelected, setCheckSelected] = useState([]);
+  const [checkFilter, setFliterSelected] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearchInputChange = React.useCallback((value: string) => {
@@ -50,6 +50,7 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
       }
     }
     setCheckSelected(checkSelected);
+    // TODO:: setting checking charities from list
 
     // let qwer = listData.map((el) => {
     //   checkSelected.map((item) => {
@@ -65,6 +66,19 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
     // })
     // console.log('qwer: ', qwer);
   };
+
+  const toggleFilterCheckBox = (title, label, isCheck) => {
+    if (!isCheck) {
+      checkFilter.push({ label });
+    } else {
+      const index = checkFilter.map(e => e.label).indexOf(label);
+      if (index > -1) {
+        checkFilter.splice(index, 1);
+      }
+    }
+    setFliterSelected(checkFilter);
+  };
+
   const renderListItem = ({ item }: any) => (
     <ContainerList
       style={{
@@ -105,10 +119,17 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         >
-          {filterData.map(filter => (
-            <ItemFilterWrapper>
-              <FilterTitle key={filter.id}>{filter.title}</FilterTitle>
-            </ItemFilterWrapper>
+          {filterData.map(filterItem => (
+            <FilterCheckbox
+              key={filterItem.id}
+              filterItem={filterItem}
+              value={filterItem.id}
+              label={filterItem.id}
+              clicked={(title: any, label: any, isCheck: any) => {
+                toggleFilterCheckBox(title, label, isCheck);
+              }}
+              checkSelected={checkFilter}
+            />
           ))}
         </ScrollView>
       </Header>

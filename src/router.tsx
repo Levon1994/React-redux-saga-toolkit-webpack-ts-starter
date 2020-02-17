@@ -54,7 +54,7 @@ const HeadStack = (isOnBoardingReviewed: boolean) =>
       SelectCharity: SelectCharityScreen,
     },
     {
-      initialRouteName: isOnBoardingReviewed ? 'SelectCharity' : 'OnBoardingScreen',
+      initialRouteName: !isOnBoardingReviewed ? 'SelectCharity' : 'OnBoardingScreen',
     },
   );
 

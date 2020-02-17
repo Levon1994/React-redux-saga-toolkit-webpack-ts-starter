@@ -9,7 +9,7 @@ import { Box } from 'view/components/uiKit/Box';
 import { Text } from 'view/components/uiKit/Text';
 import { Button } from 'view/components/uiKit/Button';
 
-const controlsHeight = 145;
+const controlsHeight = 150;
 const { height: screenHeight } = Dimensions.get('window');
 
 export const ScreenContainer = styled(Box).attrs(({ theme }) => ({
@@ -19,6 +19,7 @@ export const ScreenContainer = styled(Box).attrs(({ theme }) => ({
   align: 'center',
   bg: theme.colors.main,
   ph: 16,
+  pt: 26,
 }))``;
 
 export const ImageContainer = styled(Box).attrs({
@@ -42,14 +43,14 @@ export const StyledImage = styled.Image.attrs({
 `;
 
 export const Title = styled(Text).attrs({
-  size: moderateScale(20, 2),
+  size: moderateScale(25, 0.2),
   center: true,
 })`
   padding-bottom: ${moderateScale(10, 0.2)};
 `;
 
 export const SubTitle = styled(Text).attrs(({ theme }) => ({
-  size: moderateScale(11, 2),
+  size: moderateScale(11, 0.2),
   center: true,
   color: theme.colors.progressValue,
 }))``;

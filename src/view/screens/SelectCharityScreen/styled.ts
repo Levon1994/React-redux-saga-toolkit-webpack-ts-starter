@@ -41,18 +41,6 @@ export const BottomHeaderBlock = styled(Box).attrs({
   mb: `${moderateScale(16, 0.2)}px`,
 })``;
 
-export const ItemFilterWrapper = styled(Box).attrs(({ theme }) => ({
-  width: 'auto',
-  bg: theme.colors.filterBackground,
-  br: 4,
-  mr: `${moderateScale(8, 0.2)}px`,
-}))``;
-
-export const FilterTitle = styled(Text).attrs({
-  size: 14,
-  m: '5px 10px',
-})``;
-
 // mainBlock
 export const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView.attrs({
   behavior: isIOS ? 'padding' : 'height',

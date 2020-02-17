@@ -13,6 +13,8 @@ export const theme = {
     feedPrice: '#AAA9A9',
     error: '#F43428',
     inputBorder: '#E6EAEE',
+    filterBackground: '#4785D1',
+    errorBackground: '#FDE1DF',
   },
   defaultFontFamily: 'Roboto-Regular',
 };

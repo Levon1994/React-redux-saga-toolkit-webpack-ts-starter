@@ -60,7 +60,8 @@ export const MainBlock = styled(Box).attrs({
 })``;
 
 export const FlatListBlock = styled(Box).attrs({
-  mh: '80%',
+  // mh: '80%',
+  mb: 70,
 })``;
 
 export const EditCharitiesBlock = styled(Box).attrs({

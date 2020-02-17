@@ -25,15 +25,11 @@ const defaultState: AuthState = {
 };
 
 export const authReducer = createReducer(defaultState, handle => [
-  handle(changeValue, (state, { payload, meta }) => {
-    // eslint-disable-next-line no-console
-    console.log('payload: ', payload, meta);
-    return {
-      ...state,
-      [payload]: {
-        value: meta,
-        error: validateField(payload, meta) || '',
-      },
-    };
-  }),
+  handle(changeValue, (state, { payload, meta }) => ({
+    ...state,
+    [payload]: {
+      value: meta,
+      error: validateField(payload, meta) || '',
+    },
+  })),
 ]);

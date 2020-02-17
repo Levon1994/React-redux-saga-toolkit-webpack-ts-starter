@@ -39,7 +39,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
             <InputWrapper>
               <Input
                 label="First Name"
-                placeholder="First Name"
+                placeholder="Alex"
                 maxLength={100}
                 textContentType="firstName"
                 value={values.firstName.value}
@@ -50,7 +50,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
             <InputWrapper>
               <Input
                 label="Last Name"
-                placeholder="Last Name"
+                placeholder="Doe"
                 maxLength={100}
                 textContentType="lastName"
                 value={values.lastName.value}
@@ -61,7 +61,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
             <InputWrapper>
               <Input
                 label="Email Address"
-                placeholder="Email Address"
+                placeholder="example@mail.com"
                 maxLength={100}
                 textContentType="email"
                 keyboardType="email-address"
@@ -86,7 +86,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
             </InputWrapper>
           </StyledScrollView>
           <ButtonWrapper>
-            <StyledButton label="Sign Up" onPress={() => navigation.navigate('Home')} />
+            <StyledButton label="Sign Up" onPress={() => navigation.navigate('SelectCharity')} />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>

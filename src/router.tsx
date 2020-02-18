@@ -13,6 +13,7 @@ import { OnBoardingScreen } from 'view/screens/OnBoardingScreen';
 import { SignUpScreen } from 'view/screens/SignUpScreen';
 import { SelectCharityScreen } from 'view/screens/SelectCharityScreen';
 import { AuthorizeCharityScreen } from 'view/screens/AuthorizeCharityScreen';
+import { AddCardScreen } from 'view/screens/AddCardScreen';
 
 import { HomeScreen } from 'view/screens/HomeScreen';
 
@@ -26,6 +27,7 @@ const AuthStack = createStackNavigator(
     SignUp: SignUpScreen,
     SelectCharity: SelectCharityScreen,
     AuthorizeCharity: AuthorizeCharityScreen,
+    AddCard: AddCardScreen,
   },
   {
     headerMode: 'none',
@@ -51,10 +53,10 @@ const HeadStack = (isOnBoardingReviewed: boolean) =>
       OnBoardingScreen,
       Auth: AuthStack,
       Home: HomeStack,
-      SelectCharity: SelectCharityScreen,
+      AddCard: AddCardScreen,
     },
     {
-      initialRouteName: !isOnBoardingReviewed ? 'SelectCharity' : 'OnBoardingScreen',
+      initialRouteName: isOnBoardingReviewed ? 'AddCard' : 'OnBoardingScreen',
     },
   );
 

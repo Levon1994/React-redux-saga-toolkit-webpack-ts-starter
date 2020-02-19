@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { onboardingReducer } from 'modules/reviewOnboarding';
 import { authReducer } from 'modules/auth';
+import { cardReducer } from 'modules/card';
 
 const rootPersistConfig = {
   key: 'root',
@@ -13,7 +14,7 @@ const rootPersistConfig = {
   whitelist: ['onboardingReducer'],
 };
 
-const appReducer = combineReducers({ onboardingReducer, authReducer });
+const appReducer = combineReducers({ onboardingReducer, authReducer, cardReducer });
 
 const rootReducer = (state: RootState | undefined, action: Action) => {
   // if (action.type === getType(resetStore)) {

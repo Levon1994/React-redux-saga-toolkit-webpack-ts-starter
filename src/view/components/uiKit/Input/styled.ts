@@ -1,5 +1,6 @@
 import { moderateScale } from 'react-native-size-matters';
 import styled, { css } from 'styled-components';
+import { TextInputMask } from 'react-native-masked-text';
 
 import { Text } from '../Text';
 import { Box } from '../Box';
@@ -12,6 +13,7 @@ export const InputContainer = styled(Box).attrs<ContainerProps>(({ error, theme 
   width: '100%',
   border: `1px solid ${error ? theme.colors.error : theme.colors.inputBorder}`,
   p: `${moderateScale(16, 0.2)}px`,
+  pr: `${moderateScale(2, 0.2)}px`,
   row: true,
   align: 'center',
   br: 4,
@@ -26,7 +28,8 @@ export const Label = styled(Text).attrs(({ theme }) => ({
 }))``;
 
 const inputCss = css`
-  width: 100%;
+  /* width: 100%; */
+  width: auto;
   height: ${moderateScale(17, 0.2)};
   padding: 0;
   font-size: ${moderateScale(14, 0.2)};
@@ -35,6 +38,10 @@ const inputCss = css`
 `;
 
 export const StyledInput = styled.TextInput`
+  ${inputCss};
+`;
+
+export const StyledMaskedInput = styled(TextInputMask)`
   ${inputCss};
 `;
 

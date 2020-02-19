@@ -40,7 +40,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
               <Input
                 label="First Name"
                 placeholder="Alex"
-                maxLength={100}
+                maxLength={50}
                 textContentType="name"
                 value={values.firstName.value}
                 onChangeText={(value: any) => changeValue('firstName', value)}
@@ -51,7 +51,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
               <Input
                 label="Last Name"
                 placeholder="Doe"
-                maxLength={100}
+                maxLength={50}
                 textContentType="name"
                 value={values.lastName.value}
                 onChangeText={(value: any) => changeValue('lastName', value)}
@@ -62,7 +62,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
               <Input
                 label="Email Address"
                 placeholder="example@mail.com"
-                maxLength={100}
+                maxLength={50}
                 textContentType="emailAddress"
                 keyboardType="email-address"
                 autoCompleteType="email"
@@ -76,7 +76,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
                 label="Password"
                 placeholder="Password"
                 secureTextEntry
-                maxLength={100}
+                maxLength={50}
                 textContentType="password"
                 autoCompleteType="password"
                 value={values.password.value}

@@ -15,6 +15,7 @@ export const theme = {
     inputBorder: '#E6EAEE',
     filterBackground: '#4785D1',
     errorBackground: '#FDE1DF',
+    scanBackground: '#153154',
   },
   defaultFontFamily: 'Roboto-Regular',
 };

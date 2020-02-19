@@ -10,6 +10,7 @@ import { InputProps } from './types';
 import { Box } from '../Box';
 import { Text } from '../Text';
 
+// eslint-disable-next-line no-unused-vars
 import { Label, InputContainer, StyledInput, StyledMaskedInput, ErrorText } from './styled';
 
 export const Input: React.FC<InputProps> = ({
@@ -112,6 +113,6 @@ export const Input: React.FC<InputProps> = ({
         )}
       </Box>
     </InputContainer>
-    {error && error.length > 0 && <ErrorText>{error}</ErrorText>}
+    {/* {error && error.length > 0 && <ErrorText>{error}</ErrorText>} */}
   </>
 );

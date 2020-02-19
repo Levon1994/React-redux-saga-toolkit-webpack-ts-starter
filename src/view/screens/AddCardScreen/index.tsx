@@ -1,9 +1,11 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { View } from 'react-native';
+// import { CardIOModule } from 'react-native-awesome-card-io';
 
 import { useAction } from 'utils/hooks';
+import { isIOS } from 'utils/helpers';
 import { Navigation, RootState } from 'types';
 
 import * as Actions from 'modules/card/actions';
@@ -32,9 +34,18 @@ interface Props {
 export const AddCardScreen: React.FC<Props> = ({ navigation }) => {
   const [isTooltipVisible, toogleTooltipVisible] = useState(false);
   const changeCardData = useAction(Actions.changeCardData);
+  const scanCard = useAction(Actions.scanCard);
   const { cardNumber, cardHolder, expiryDate, cvcValue } = useSelector(
     (state: RootState) => state.cardReducer,
   );
+
+  const handleScanIconPress = useCallback(() => {
+    if (isIOS) {
+      navigation.navigate('ScanCard');
+    } else {
+      scanCard();
+    }
+  }, []);
   return (
     <Container>
       {/* header */}
@@ -58,7 +69,7 @@ export const AddCardScreen: React.FC<Props> = ({ navigation }) => {
                 onChangeText={(value: any) => changeCardData('cardNumber', value)}
                 sourceLeftIcon={require('assets/img/cardIcon.png')}
                 sourceRightIcon={require('assets/img/scanIcon.png')}
-                handleIconPress={() => console.log('2')}
+                handleIconPress={handleScanIconPress}
                 // error={'Wrong'}
               />
             </InputWrapper>

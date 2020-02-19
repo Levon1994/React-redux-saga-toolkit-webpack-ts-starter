@@ -3,6 +3,8 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 target 'MyCharityChange' do
   # Pods for MyCharityChange
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -41,6 +43,8 @@ target 'MyCharityChange' do
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNAwesomeCardIO', :path => '../node_modules/react-native-awesome-card-io'
 
   target 'MyCharityChangeTests' do
     inherit! :search_paths

@@ -6599,6 +6599,13 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-i
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
+react-native-awesome-card-io@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-card-io/-/react-native-awesome-card-io-0.8.2.tgz#842f8df89a55f15db21b3d2a145b5c7e4de55269"
+  integrity sha512-nMeusW4M74pTFgc/HqKyaor7qKvLo/lJbZcqmFWWdxuyt4+ihcVZvhj/d1DSDXL098AJETvD+KVy98D7WSM3uQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-extra-dimensions-android@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/react-native-extra-dimensions-android/-/react-native-extra-dimensions-android-1.2.5.tgz#8ade91029aaac7519bf305116d39019e618a60f0"

@@ -1,8 +1,17 @@
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-console */
 import React from 'react';
-import { FlatList, ImageSourcePropType } from 'react-native';
+import { FlatList, ScrollView, RefreshControl } from 'react-native';
+
+import { UserProfile } from 'modules/user/types';
+import { UserCharity } from 'modules/charity/types';
+import * as Actions from 'modules/charity/actions';
 
 import { DonationComponent } from 'view/components';
 import { Box } from 'view/components/uiKit/Box';
+import { Loader } from 'view/components/uiKit/Loader';
+import { ScreenWidth } from 'utils/helpers';
 
 import {
   Container,
@@ -19,60 +28,93 @@ import {
   EditCharitiesButton,
 } from './styled';
 
-interface ListProps {
-  id: number;
-  logo: ImageSourcePropType;
-  charityName: string;
-  donate: string;
-}
-
 interface MyImpactProps {
-  list?: ListProps[];
-  renderListItem: (item: ListProps) => JSX.Element;
+  user: UserProfile;
+  isLoadingUserData: boolean;
+  userCharityData: UserCharity;
+  isLoadingCharityData: boolean;
+  renderListItem: (item: any) => JSX.Element;
+  onRefresh: typeof Actions.getUserCharity;
+  goToChooseCharity: any;
 }
 
-export const MyImpactContainer = ({ list, renderListItem }: MyImpactProps) => {
+export const MyImpactContainer = ({
+  renderListItem,
+  user: { first_name, last_name },
+  isLoadingUserData,
+  userCharityData,
+  isLoadingCharityData,
+  onRefresh,
+  goToChooseCharity,
+}: MyImpactProps) => {
   return (
     <Container>
       {/* header */}
-      <Header>
-        {/* top header */}
-        <TopHeaderBlock>
-          <UserNameBlock>
-            <UserName>John Smithhgfhfghfhfhf</UserName>
-          </UserNameBlock>
-          <ProfileViewBlock>
-            <ProfileViewButton label="Profile settings" onPress={() => console.log('1')} />
-          </ProfileViewBlock>
-        </TopHeaderBlock>
-        {/* bottom header */}
-        <BottomHeaderBlock>
-          <DonationComponent price={8.25} description="this week donation" isMargin />
-          <DonationComponent price={35.75} description="all time donation" />
-        </BottomHeaderBlock>
-      </Header>
-      {/* main block */}
-      <MainBlock>
-        {/* flatlist */}
-        <FlatListBlock>
-          <FlatList
-            data={list}
-            renderItem={renderListItem}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={item => String(item.id)}
-            bounces={false}
-            ItemSeparatorComponent={() => <Box height={10} />}
-            style={{
-              width: '100%',
+      {isLoadingUserData || isLoadingCharityData ? (
+        <Loader />
+      ) : (
+        <>
+          <Header>
+            {/* top header */}
+            <TopHeaderBlock>
+              <UserNameBlock>
+                <UserName>{`${first_name} ${last_name && last_name.charAt(0)}.`}</UserName>
+              </UserNameBlock>
+              <ProfileViewBlock>
+                <ProfileViewButton onPress={() => console.log('1')} />
+              </ProfileViewBlock>
+            </TopHeaderBlock>
+            {/* bottom header */}
+            <BottomHeaderBlock>
+              <DonationComponent
+                price={userCharityData.weekly_amount}
+                description="this week donation"
+                isMargin
+              />
+              <DonationComponent
+                price={userCharityData.all_time_amount}
+                description="all time donation"
+              />
+            </BottomHeaderBlock>
+          </Header>
+          {/* main block */}
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{
+              flex: 1,
+              width: ScreenWidth,
             }}
-          />
-        </FlatListBlock>
-        {/* button */}
-        <EditCharitiesBlock>
-          <EditCharitiesButton label="Add / Edit Charities" onPress={() => console.log('1')} />
-        </EditCharitiesBlock>
-      </MainBlock>
+            refreshControl={
+              <RefreshControl
+                refreshing={isLoadingUserData || isLoadingCharityData}
+                onRefresh={onRefresh}
+              />
+            }
+          >
+            <MainBlock>
+              {/* flatlist */}
+              <FlatListBlock>
+                <FlatList
+                  data={userCharityData.charities}
+                  renderItem={renderListItem}
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={index => String(index)}
+                  bounces={false}
+                  ItemSeparatorComponent={() => <Box height={10} />}
+                  style={{
+                    width: '100%',
+                  }}
+                />
+              </FlatListBlock>
+              {/* button */}
+              <EditCharitiesBlock>
+                <EditCharitiesButton onPress={goToChooseCharity} />
+              </EditCharitiesBlock>
+            </MainBlock>
+          </ScrollView>
+        </>
+      )}
     </Container>
   );
 };

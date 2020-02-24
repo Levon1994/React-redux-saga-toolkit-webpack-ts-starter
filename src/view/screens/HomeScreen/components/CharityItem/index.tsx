@@ -15,10 +15,9 @@ import {
 } from './styled';
 
 interface ListProps {
-  id: number;
   logo: ImageSourcePropType;
-  charityName: string;
-  donate: string;
+  name: string;
+  total_charity_amount: string;
 }
 
 interface CharityItemProps {
@@ -40,15 +39,15 @@ export const CharityItem = ({ item }: CharityItemProps) => (
   >
     <RightBlock>
       <LogoBlock>
-        <StyledImage source={item.logo} />
+        <StyledImage source={{ uri: item.logo }} />
       </LogoBlock>
       <CharityNameBlock>
-        <CharityName>{item.charityName}</CharityName>
+        <CharityName>{item.name}</CharityName>
       </CharityNameBlock>
     </RightBlock>
     <LeftBlock>
       <DonatedBlock>
-        <DonatedValue>{`$${item.donate}`}</DonatedValue>
+        <DonatedValue>{`$${item.total_charity_amount}`}</DonatedValue>
       </DonatedBlock>
       <Description>donated</Description>
     </LeftBlock>

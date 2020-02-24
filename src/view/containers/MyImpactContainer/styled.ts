@@ -40,6 +40,7 @@ export const ProfileViewBlock = styled(Box).attrs({
 })``;
 
 export const ProfileViewButton = styled(Button).attrs(({ theme }) => ({
+  label: 'Profile settings',
   bg: theme.colors.background,
   size: '12',
   height: '36',
@@ -69,6 +70,7 @@ export const EditCharitiesBlock = styled(Box).attrs({
 })``;
 
 export const EditCharitiesButton = styled(Button).attrs({
+  label: 'Add / Edit Charities',
   size: '14',
   height: '50',
   width: '100%',

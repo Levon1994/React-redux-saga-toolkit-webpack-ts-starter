@@ -40,7 +40,7 @@ const AuthStack = createStackNavigator(
 );
 
 const HomeStack = createStackNavigator(
-  { HomeScreen },
+  { HomeScreen, SelectCharity: SelectCharityScreen },
   {
     headerMode: 'none',
     defaultNavigationOptions: {
@@ -57,7 +57,7 @@ const HeadStack = (isOnBoardingReviewed: boolean) =>
       Home: HomeStack,
     },
     {
-      initialRouteName: isOnBoardingReviewed ? 'Auth' : 'OnBoardingScreen',
+      initialRouteName: isOnBoardingReviewed ? 'Home' : 'OnBoardingScreen',
     },
   );
 

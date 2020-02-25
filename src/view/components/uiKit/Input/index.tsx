@@ -30,7 +30,7 @@ export const Input: React.FC<InputProps> = ({
     if (error && error.length > 0) {
       return <ErrorText>{error}</ErrorText>;
     }
-    return false;
+    return null;
   };
   return (
     <>

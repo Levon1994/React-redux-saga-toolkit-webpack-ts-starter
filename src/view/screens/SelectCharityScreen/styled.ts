@@ -12,20 +12,30 @@ export const Container = styled(Box).attrs({
 })``;
 
 //  header
-export const Header = styled(Box).attrs(({ theme }) => ({
+export const Header = styled(Box).attrs(({ theme, isEditViewScreen }) => ({
   bg: theme.colors.main,
-  p: `${moderateScale(isIOS ? 60 : 35, 0.5)}px ${moderateScale(16, 0.5)}px ${moderateScale(
-    16,
-    0.5,
-  )}px`,
+  p: `${
+    isEditViewScreen ? moderateScale(isIOS ? 40 : 25, 0.5) : moderateScale(isIOS ? 60 : 35, 0.5)
+  }px ${moderateScale(16, 0.5)}px ${moderateScale(16, 0.5)}px`,
 }))``;
 
 export const TopHeaderBlock = styled(Box).attrs({
-  row: true,
-  align: 'center',
-  spaceBetween: true,
   pb: `${moderateScale(16, 0.5)}px`,
 })``;
+
+export const GoBackBlock = styled.TouchableOpacity`
+  width: 60;
+  height: 24;
+  margin-bottom: ${moderateScale(20, 0.2)}px;
+  justify-content: center;
+`;
+
+export const GoBackIcon = styled.Image.attrs({
+  source: require('assets/img/backIcon.png'),
+})`
+  width: 24;
+  height: 24;
+`;
 
 export const Title = styled(Text).attrs({
   size: 28,
@@ -81,7 +91,6 @@ export const ButtonWrapper = styled(Box).attrs({
 })``;
 
 export const StyledButton = styled(Button).attrs({
-  label: 'Next',
   height: 50,
   size: '14',
 })``;

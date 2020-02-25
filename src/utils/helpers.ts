@@ -13,3 +13,8 @@ export const statusBarHeight = isIOS ? getStatusBarHeight() : 0;
 export const bottomSpace = isIOS ? getBottomSpace() : 0;
 
 export const defaultScale = (size: number) => moderateScale(size, 0.2);
+
+export function pick<T extends object, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
+  const initialValue: any = {};
+  return keys.reduce((acc, key) => ({ ...acc, [key]: obj[key] }), initialValue);
+}

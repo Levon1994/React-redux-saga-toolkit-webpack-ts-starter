@@ -17,12 +17,10 @@ function* processRequestErrorSaga({
     // that falls out of the range of 2xx
     switch (error.response.status) {
       case 400: {
-        const {
-          data: { detail },
-        } = error.response;
-        Object.keys(detail).forEach(key => {
+        const { data } = error.response;
+        Object.keys(data).forEach(key => {
           // eslint-disable-next-line prefer-destructuring
-          errors[key] = detail[key][0];
+          errors[key] = data[key][0];
         });
         break;
       }

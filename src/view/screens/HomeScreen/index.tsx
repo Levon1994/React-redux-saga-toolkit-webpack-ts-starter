@@ -7,7 +7,6 @@ import { useAction } from 'utils/hooks';
 import { getUser } from 'modules/user/actions';
 import { getUserCharity } from 'modules/charity/actions';
 import { RootState, Navigation } from 'types';
-import Api from 'api/index';
 
 import { TabLabel, TabScene } from 'view/components';
 import { MyImpactContainer } from 'view/containers/MyImpactContainer';
@@ -38,11 +37,6 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   );
 
   useEffect(() => {
-    // Todo:change to real logic when implement signup
-    Api.setAuthToken(
-      // eslint-disable-next-line max-len
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODIyNzg5MDksIm5iZiI6MTU4MjI3ODkwOSwianRpIjoiM2FkMTcwMjUtNTlmNS00NDBkLWIzMTctMzNlY2QxNjQ3YWFmIiwiZXhwIjoxNTkwMDU0OTA5LCJpZGVudGl0eSI6InNvbWVAZW1hLmlsIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwidXNlcl9jbGFpbXMiOnsidHlwZSI6ImN1c3RvbWVyIn19.SJjCSym6TGHhLYOMm7t2A6lbzR4wEDCyO12VlRK67JY',
-    );
     getUserData();
     getUserCharityData();
   }, []);
@@ -67,7 +61,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             userCharityData={userCharityData}
             isLoadingCharityData={isLoadingCharityData}
             onRefresh={getUserCharityData}
-            goToChooseCharity={() => navigation.navigate('SelectCharity')}
+            goToChooseCharity={() => navigation.navigate('SelectCharity', { route: 'edit' })}
           />
         )),
       [user, isLoadingUserData, userCharityData, isLoadingCharityData],

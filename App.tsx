@@ -13,7 +13,6 @@ export const App: React.FC = () => {
   }, []);
   return (
     <ThemeProvider theme={theme}>
-      {/* <MainContainer /> */}
       <AppContainer />
     </ThemeProvider>
   );

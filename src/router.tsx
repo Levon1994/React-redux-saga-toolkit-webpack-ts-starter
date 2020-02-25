@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 import { isIOS } from 'utils/helpers';
 import { RootState } from 'types';
+import Api from 'api';
 
 import { OnBoardingScreen } from 'view/screens/OnBoardingScreen';
 
@@ -57,12 +58,17 @@ const HeadStack = (isOnBoardingReviewed: boolean) =>
       Home: HomeStack,
     },
     {
-      initialRouteName: isOnBoardingReviewed ? 'Home' : 'OnBoardingScreen',
+      initialRouteName: isOnBoardingReviewed ? 'Auth' : 'OnBoardingScreen',
     },
   );
 
 export const AppContainer = () => {
   const { isOnBoardingReviewed } = useSelector((state: RootState) => state.onboardingReducer);
+  const userToken = useSelector((state: RootState) => state.authReducer.userToken);
+
+  if (userToken) {
+    Api.setAuthToken(userToken);
+  }
 
   const Container = createAppContainer(HeadStack(isOnBoardingReviewed));
 

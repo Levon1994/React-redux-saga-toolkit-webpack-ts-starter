@@ -10,5 +10,5 @@ export type GetUserProfileResponse = AxiosResponse<{
 }>;
 
 export class UserProfile {
-  static getUserProfile = () => Api.get('v1/customer/3/profile');
+  static getUserProfile = (userId: number) => Api.get(`v1/customer/${userId}/profile`);
 }

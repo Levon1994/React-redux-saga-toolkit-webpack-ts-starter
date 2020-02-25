@@ -1,6 +1,5 @@
 import { Action, combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
-// import { getType } from 'deox';
 import { RootState } from 'types';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -13,7 +12,7 @@ import { charityReducer } from 'modules/charity';
 const rootPersistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['onboardingReducer'],
+  whitelist: ['onboardingReducer', 'userReducer', 'authReducer'],
 };
 
 const appReducer = combineReducers({
@@ -25,11 +24,6 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state: RootState | undefined, action: Action) => {
-  // if (action.type === getType(resetStore)) {
-  //   // eslint-disable-next-line no-param-reassign
-  //   state = undefined;
-  // }
-
   return appReducer(state, action);
 };
 

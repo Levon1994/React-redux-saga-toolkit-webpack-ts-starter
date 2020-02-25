@@ -2,6 +2,10 @@ import { createAction } from 'deox';
 import { ResponseErrors } from 'types/responseData';
 import { UserProfile } from './types';
 
+export const setUser = createAction('user/SET_USER', resolve => (payload: number) =>
+  resolve(payload),
+);
+
 export const getUser = createAction('user/GET_USER_REQUEST');
 
 export const getUserSuccess = createAction(

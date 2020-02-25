@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAction } from 'utils/hooks';
+import { pick } from 'utils/helpers';
 import { RootState, Navigation } from 'types';
 
 import * as Actions from 'modules/auth/actions';
@@ -23,9 +24,26 @@ interface Props {
   navigation: Navigation;
 }
 
-export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
+export const SignUpScreen: React.FC<Props> = React.memo(({ navigation }) => {
+  const { values, errors, registerStatus } = useSelector((state: RootState) => state.authReducer);
+  const { userId } = useSelector((state: RootState) => state.userReducer);
+
   const changeValue = useAction(Actions.changeValue);
-  const values = useSelector((state: RootState) => state.authReducer);
+  const auth = useAction(Actions.register);
+
+  React.useEffect(() => {
+    if (userId) {
+      navigation.navigate('SelectCharity', { route: 'choose' });
+    }
+  }, [userId]);
+
+  const isButtonDisabled = React.useMemo(() => {
+    const required = pick(values, ['firstName', 'lastName', 'email', 'password']);
+    return (
+      Object.values(required).some(v => !v.trim()) || Object.values(errors).some(v => !!v.trim())
+    );
+  }, [values, errors]);
+
   return (
     <Container>
       {/* header */}
@@ -41,10 +59,11 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
                 label="First Name"
                 placeholder="Alex"
                 maxLength={50}
+                key="firstName"
                 textContentType="name"
-                value={values.firstName.value}
-                onChangeText={(value: any) => changeValue('firstName', value)}
-                error={values.firstName.error}
+                value={values.firstName}
+                onChangeText={(value: string) => changeValue({ firstName: value })}
+                error={errors.firstName || errors.first_name}
               />
             </InputWrapper>
             <InputWrapper>
@@ -52,10 +71,11 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
                 label="Last Name"
                 placeholder="Doe"
                 maxLength={50}
+                key="lastName"
                 textContentType="name"
-                value={values.lastName.value}
-                onChangeText={(value: any) => changeValue('lastName', value)}
-                error={values.lastName.error}
+                value={values.lastName}
+                onChangeText={(value: string) => changeValue({ lastName: value })}
+                error={errors.lastName || errors.last_name}
               />
             </InputWrapper>
             <InputWrapper>
@@ -63,12 +83,13 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
                 label="Email Address"
                 placeholder="example@mail.com"
                 maxLength={50}
+                key="email"
                 textContentType="emailAddress"
                 keyboardType="email-address"
                 autoCompleteType="email"
-                value={values.email.value}
-                onChangeText={(value: any) => changeValue('email', value)}
-                error={values.email.error}
+                value={values.email}
+                onChangeText={(value: string) => changeValue({ email: value })}
+                error={errors.email}
               />
             </InputWrapper>
             <InputWrapper>
@@ -77,19 +98,25 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
                 placeholder="Password"
                 secureTextEntry
                 maxLength={50}
+                key="password"
                 textContentType="password"
                 autoCompleteType="password"
-                value={values.password.value}
-                onChangeText={(value: any) => changeValue('password', value)}
-                error={values.password.error}
+                value={values.password}
+                onChangeText={(value: string) => changeValue({ password: value })}
+                error={errors.password}
               />
             </InputWrapper>
           </StyledScrollView>
           <ButtonWrapper>
-            <StyledButton label="Sign Up" onPress={() => navigation.navigate('SelectCharity')} />
+            <StyledButton
+              disabled={isButtonDisabled}
+              onPress={auth}
+              loading={registerStatus}
+              reverseLoader
+            />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>
     </Container>
   );
-};
+});

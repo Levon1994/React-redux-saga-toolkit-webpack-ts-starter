@@ -1,11 +1,15 @@
-interface ValueField {
-  value: string;
-  error: string;
+import { ResponseErrors } from 'types/responseData';
+
+export interface Values {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
 
 export interface AuthState {
-  firstName: ValueField;
-  lastName: ValueField;
-  email: ValueField;
-  password: ValueField;
+  values: Values;
+  registerStatus: boolean;
+  errors: ResponseErrors;
+  userToken: string | null;
 }

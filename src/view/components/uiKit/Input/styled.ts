@@ -28,8 +28,6 @@ export const Label = styled(Text).attrs(({ theme }) => ({
 }))``;
 
 const inputCss = css`
-  /* width: 100%; */
-  width: auto;
   height: ${moderateScale(17, 0.2)};
   padding: 0;
   font-size: ${moderateScale(14, 0.2)};
@@ -39,10 +37,12 @@ const inputCss = css`
 
 export const StyledInput = styled.TextInput`
   ${inputCss};
+  width: 100%;
 `;
 
 export const StyledMaskedInput = styled(TextInputMask)`
   ${inputCss};
+  width: auto;
 `;
 
 export const ErrorText = styled(Text).attrs(({ theme }) => ({

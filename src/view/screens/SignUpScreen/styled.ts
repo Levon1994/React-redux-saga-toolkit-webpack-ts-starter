@@ -59,6 +59,7 @@ export const ButtonWrapper = styled(Box).attrs({
 })``;
 
 export const StyledButton = styled(Button).attrs({
+  label: 'Sign Up',
   height: 50,
   size: '14',
 })``;

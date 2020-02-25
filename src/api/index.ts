@@ -27,7 +27,7 @@ export class Api {
     return Api.getInstance().axiosInstance;
   }
 
-  static setAuthToken(token: string) {
+  static setAuthToken(token: string | null) {
     Api.getAxios().defaults.headers.Authorization = `Bearer ${token}`;
   }
 

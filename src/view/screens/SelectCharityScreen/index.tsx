@@ -13,12 +13,14 @@ import {
   Container,
   Header,
   TopHeaderBlock,
+  GoBackBlock,
+  GoBackIcon,
   Title,
   BottomHeaderBlock,
   StyledKeyboardAvoidingView,
   MainBlock,
-  ErrorBlock,
-  ErrorTitlte,
+  // ErrorBlock,
+  // ErrorTitlte,
   FlatListBlock,
   ButtonWrapper,
   StyledButton,
@@ -35,6 +37,8 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
   const [checkSelected, setCheckSelected] = useState([]);
   const [checkFilter, setFliterSelected] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const { route } = navigation.state.params;
+  const isEditViewScreen = route === 'edit';
 
   const handleSearchInputChange = React.useCallback((value: string) => {
     setSearchValue(value);
@@ -104,12 +108,25 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
       />
     </ContainerList>
   );
+
+  const goToNext = React.useCallback(() => {
+    if (isEditViewScreen) {
+      navigation.navigate('HomeScreen');
+    } else {
+      navigation.navigate('AuthorizeCharity');
+    }
+  }, [route]);
   return (
     <Container>
       {/* header */}
-      <Header>
+      <Header isEditViewScreen>
+        {isEditViewScreen && (
+          <GoBackBlock onPress={goToNext}>
+            <GoBackIcon />
+          </GoBackBlock>
+        )}
         <TopHeaderBlock>
-          <Title>Select your charity</Title>
+          <Title>{isEditViewScreen ? 'Edit charities' : 'Select your charity'}</Title>
         </TopHeaderBlock>
         <BottomHeaderBlock>
           <SearchInput value={searchValue} onChangeText={handleSearchInputChange} />
@@ -136,9 +153,10 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
       {/* main block */}
       <StyledKeyboardAvoidingView>
         <MainBlock>
-          <ErrorBlock>
+          {/* Todo: style screen when is error message */}
+          {/* <ErrorBlock>
             <ErrorTitlte>Please select at least one charity from the list below</ErrorTitlte>
-          </ErrorBlock>
+          </ErrorBlock> */}
           <FlatListBlock>
             {listData.length !== 0 ? (
               <FlatList
@@ -158,7 +176,7 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
             )}
           </FlatListBlock>
           <ButtonWrapper>
-            <StyledButton onPress={() => navigation.navigate('AuthorizeCharity')} />
+            <StyledButton onPress={goToNext} label={isEditViewScreen ? 'Save changes' : 'Next'} />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>

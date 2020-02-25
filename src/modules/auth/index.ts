@@ -2,34 +2,62 @@
 import { createReducer } from 'deox';
 
 import { validateField } from 'utils/validation';
-import { changeValue } from './actions';
+import { changeValue, register, registerSuccess, registerFail } from './actions';
 import { AuthState } from './types';
 
 const defaultState: AuthState = {
-  firstName: {
-    value: '',
-    error: '',
+  values: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   },
-  lastName: {
-    value: '',
-    error: '',
-  },
-  email: {
-    value: '',
-    error: '',
-  },
-  password: {
-    value: '',
-    error: '',
-  },
+  registerStatus: false,
+  errors: {},
+  userToken: null,
 };
 
 export const authReducer = createReducer(defaultState, handle => [
-  handle(changeValue, (state, { payload, meta }) => ({
-    ...state,
-    [payload]: {
-      value: meta,
-      error: validateField(payload, meta) || '',
+  handle(
+    changeValue,
+    (state, { payload }): AuthState => {
+      const key = Object.keys(payload);
+      const value = Object.values(payload);
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          ...payload,
+        },
+        errors: {
+          ...state.errors,
+          [key[0]]: validateField(key[0], String(value[0])),
+        },
+      };
     },
-  })),
+  ),
+  handle(
+    register,
+    (state): AuthState => ({
+      ...state,
+      errors: {},
+      registerStatus: true,
+    }),
+  ),
+  handle(
+    registerSuccess,
+    (state, { payload }): AuthState => ({
+      ...state,
+      registerStatus: false,
+      userToken: payload,
+    }),
+  ),
+  handle(
+    registerFail,
+    (state, { payload }): AuthState => ({
+      ...state,
+      registerStatus: false,
+      errors: payload,
+    }),
+  ),
 ]);

@@ -8,6 +8,7 @@ export interface UserProfile {
 }
 
 export interface UserState {
+  userId: number | null;
   user: UserProfile;
   isLoadingUserData: boolean;
   getUserDataError: ResponseErrors;

@@ -10,4 +10,6 @@ export interface ButtonProps {
   size?: string;
   weight?: string;
   color?: string | boolean;
+  loading?: boolean;
+  reverseLoader?: boolean;
 }

@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { moderateScale } from 'react-native-size-matters';
 
 import { Text } from 'view/components/uiKit/Text';
+import { Loader } from 'view/components/uiKit/Loader';
 import { ButtonProps } from './types';
 
 const StyledButton = styled.TouchableOpacity.attrs({
@@ -12,7 +13,7 @@ const StyledButton = styled.TouchableOpacity.attrs({
   ${({ theme, ...props }) => css`
     width: ${props.width};
     height: ${props.height};
-    background-color: ${props.bg || theme.colors.main};
+    background-color: ${props.disabled ? 'lightgrey' : props.bg || theme.colors.main};
   `};
   align-items: center;
   justify-content: center;
@@ -27,9 +28,20 @@ const ButtonLabel = styled(Text).attrs(({ size, lh, color }) => ({
   color,
 }))``;
 
-export const Button: React.FC<ButtonProps> = ({ label, ...restProps }) => (
-  <StyledButton {...restProps}>
-    <ButtonLabel {...restProps}>{label}</ButtonLabel>
+export const Button: React.FC<ButtonProps> = ({
+  label,
+  loading,
+  reverseLoader,
+  disabled,
+  onPress,
+  ...restProps
+}) => (
+  <StyledButton onPress={!disabled ? onPress : null} disabled={disabled} {...restProps}>
+    {loading ? (
+      <Loader reverse={reverseLoader} size={20} />
+    ) : (
+      <ButtonLabel {...restProps}>{label}</ButtonLabel>
+    )}
   </StyledButton>
 );
 

@@ -119,7 +119,7 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <Container>
       {/* header */}
-      <Header isEditViewScreen>
+      <Header isEditViewScreen={isEditViewScreen}>
         {isEditViewScreen && (
           <GoBackBlock onPress={goToNext}>
             <GoBackIcon />

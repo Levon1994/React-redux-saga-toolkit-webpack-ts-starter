@@ -685,7 +685,7 @@
 			baseConfigurationReference = 740DB716EA7F180F7A1BB678 /* Pods-MyCharityChange.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 59UY34K59P;
 				INFOPLIST_FILE = MyCharityChange/Info.plist;
@@ -707,7 +707,7 @@
 			baseConfigurationReference = AF227CEEA916961B1CF3202E /* Pods-MyCharityChange.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 59UY34K59P;
 				INFOPLIST_FILE = MyCharityChange/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

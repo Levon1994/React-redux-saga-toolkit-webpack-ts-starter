@@ -128,7 +128,7 @@ export const AddCardScreen: React.FC<Props> = ({ navigation }) => {
             <Text color="#1D65BC" size={16} mb={16}>
               Tax Deductible
             </Text>
-            <StyledButton onPress={() => navigation.navigate('AuthorizeCharity')} />
+            <StyledButton onPress={() => navigation.navigate('SelectWeeklyAmount')} />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>

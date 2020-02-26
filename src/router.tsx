@@ -12,10 +12,12 @@ import Api from 'api';
 import { OnBoardingScreen } from 'view/screens/OnBoardingScreen';
 
 import { SignUpScreen } from 'view/screens/SignUpScreen';
+
 import { SelectCharityScreen } from 'view/screens/SelectCharityScreen';
 import { AuthorizeCharityScreen } from 'view/screens/AuthorizeCharityScreen';
 import { AddCardScreen } from 'view/screens/AddCardScreen';
 import { ScanCardIOS } from 'view/screens/ScanCardScreen';
+import { SelectWeeklyAmountScreen } from 'view/screens/SelectWeeklyAmountScreen';
 
 import { HomeScreen } from 'view/screens/HomeScreen';
 
@@ -42,6 +44,7 @@ const CharityStack = createStackNavigator(
     AuthorizeCharity: AuthorizeCharityScreen,
     AddCard: AddCardScreen,
     ScanCard: ScanCardIOS,
+    SelectWeeklyAmount: SelectWeeklyAmountScreen,
   },
   {
     headerMode: 'none',

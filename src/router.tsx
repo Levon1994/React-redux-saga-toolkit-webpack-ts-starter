@@ -27,6 +27,17 @@ if (isIOS) {
 const AuthStack = createStackNavigator(
   {
     SignUp: SignUpScreen,
+  },
+  {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      cardStyle: { backgroundColor: '#FFFFFF' },
+    },
+  },
+);
+
+const CharityStack = createStackNavigator(
+  {
     SelectCharity: SelectCharityScreen,
     AuthorizeCharity: AuthorizeCharityScreen,
     AddCard: AddCardScreen,
@@ -50,15 +61,16 @@ const HomeStack = createStackNavigator(
   },
 );
 
-const HeadStack = (isOnBoardingReviewed: boolean) =>
+const HeadStack = (initialRouteName: string) =>
   createSwitchNavigator(
     {
       OnBoardingScreen,
       Auth: AuthStack,
+      CharityStack,
       Home: HomeStack,
     },
     {
-      initialRouteName: isOnBoardingReviewed ? 'Auth' : 'OnBoardingScreen',
+      initialRouteName,
     },
   );
 
@@ -70,7 +82,16 @@ export const AppContainer = () => {
     Api.setAuthToken(userToken);
   }
 
-  const Container = createAppContainer(HeadStack(isOnBoardingReviewed));
+  let initialRouteName = 'OnBoardingScreen';
+  if (isOnBoardingReviewed) {
+    initialRouteName = isOnBoardingReviewed ? 'Auth' : 'OnBoardingScreen';
+  }
+
+  if (userToken) {
+    initialRouteName = userToken ? 'CharityStack' : 'Auth';
+  }
+
+  const Container = createAppContainer(HeadStack(initialRouteName));
 
   return (
     <>

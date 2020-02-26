@@ -37,7 +37,7 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
   const [checkSelected, setCheckSelected] = useState([]);
   const [checkFilter, setFliterSelected] = useState([]);
   const [searchValue, setSearchValue] = useState('');
-  const { route } = navigation.state.params;
+  const route = navigation.state.params ? navigation.state.params.route : 'choose';
   const isEditViewScreen = route === 'edit';
 
   const handleSearchInputChange = React.useCallback((value: string) => {

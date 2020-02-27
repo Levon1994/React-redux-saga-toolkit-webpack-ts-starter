@@ -12,13 +12,26 @@ export const Container = styled(Box).attrs({
 })``;
 
 //  header
-export const Header = styled(Box).attrs(({ theme }) => ({
+export const Header = styled(Box).attrs(({ theme, isEditViewScreen }) => ({
   bg: theme.colors.main,
-  p: `${moderateScale(isIOS ? 60 : 35, 0.5)}px ${moderateScale(16, 0.5)}px ${moderateScale(
-    16,
-    0.5,
-  )}px`,
+  p: `${
+    isEditViewScreen ? moderateScale(isIOS ? 40 : 25, 0.5) : moderateScale(isIOS ? 60 : 35, 0.5)
+  }px ${moderateScale(16, 0.5)}px ${moderateScale(16, 0.5)}px`,
 }))``;
+
+export const GoBackBlock = styled.TouchableOpacity`
+  width: 60;
+  height: 24;
+  margin-bottom: ${moderateScale(20, 0.2)}px;
+  justify-content: center;
+`;
+
+export const GoBackIcon = styled.Image.attrs({
+  source: require('assets/img/backIcon.png'),
+})`
+  width: 24;
+  height: 24;
+`;
 
 export const TopHeaderBlock = styled(Box).attrs({
   row: true,
@@ -29,8 +42,6 @@ export const TopHeaderBlock = styled(Box).attrs({
 export const Title = styled(Text).attrs({
   size: 28,
   weight: 'bold',
-  numberOfLines: 1,
-  ellipsizeMode: 'tail',
 })``;
 
 // mainBlock
@@ -66,8 +77,13 @@ export const ButtonWrapper = styled(Box).attrs({
   align: 'center',
 })``;
 
+export const Deductible = styled(Text).attrs(({ theme }) => ({
+  size: 16,
+  color: theme.colors.main,
+  mb: 16,
+}))``;
+
 export const StyledButton = styled(Button).attrs({
-  label: 'Continue',
   height: 50,
   size: '14',
 })``;

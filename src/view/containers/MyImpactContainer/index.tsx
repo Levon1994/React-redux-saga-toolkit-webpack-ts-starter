@@ -36,6 +36,7 @@ interface MyImpactProps {
   renderListItem: (item: any) => JSX.Element;
   onRefresh: typeof Actions.getUserCharity;
   goToChooseCharity: any;
+  goToProfile: any;
 }
 
 export const MyImpactContainer = ({
@@ -46,6 +47,7 @@ export const MyImpactContainer = ({
   isLoadingCharityData,
   onRefresh,
   goToChooseCharity,
+  goToProfile,
 }: MyImpactProps) => {
   return (
     <Container>
@@ -61,7 +63,7 @@ export const MyImpactContainer = ({
                 <UserName>{`${first_name} ${last_name && last_name.charAt(0)}.`}</UserName>
               </UserNameBlock>
               <ProfileViewBlock>
-                <ProfileViewButton onPress={() => console.log('1')} />
+                <ProfileViewButton onPress={goToProfile} />
               </ProfileViewBlock>
             </TopHeaderBlock>
             {/* bottom header */}

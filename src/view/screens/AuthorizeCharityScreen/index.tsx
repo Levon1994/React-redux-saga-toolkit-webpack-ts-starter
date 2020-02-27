@@ -44,7 +44,7 @@ export const AuthorizeCharityScreen: React.FC<Props> = ({ navigation }) => (
         <AuthorizeIcon />
       </TopBlock>
       <ButtonWrapper>
-        <StyledButton onPress={() => navigation.navigate('AddCard')} />
+        <StyledButton onPress={() => navigation.navigate('AddCard', { route: 'create' })} />
       </ButtonWrapper>
     </MainBlock>
   </Container>

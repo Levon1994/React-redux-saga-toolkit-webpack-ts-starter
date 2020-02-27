@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import { ThemeContext } from 'styled-components';
 
 import { InputProps } from './types';
 
@@ -26,6 +27,7 @@ export const Input: React.FC<InputProps> = ({
   onClose,
   ...inputProps
 }) => {
+  const theme = useContext(ThemeContext);
   const errorText = () => {
     if (error && error.length > 0) {
       return <ErrorText>{error}</ErrorText>;
@@ -41,7 +43,12 @@ export const Input: React.FC<InputProps> = ({
             {sourceLeftIcon && (
               <Image
                 source={sourceLeftIcon}
-                style={{ width: 16, height: 16, marginRight: 9, tintColor: error && '#F43428' }}
+                style={{
+                  width: 16,
+                  height: 16,
+                  marginRight: 9,
+                  tintColor: error && theme.colors.errorIcon,
+                }}
                 resizeMode="contain"
               />
             )}
@@ -52,7 +59,7 @@ export const Input: React.FC<InputProps> = ({
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
                 autoCorrect={false}
-                placeholderTextColor="#AAA9A9"
+                placeholderTextColor={theme.colors.feedPrice}
                 {...inputProps}
               />
             )}
@@ -74,10 +81,12 @@ export const Input: React.FC<InputProps> = ({
                 >
                   <Image
                     source={require('assets/img/infoIcon.png')}
-                    style={{ width: 16, height: 16, marginRight: 12, tintColor: '#1D65BC' }}
+                    style={{ width: 16, height: 16, marginRight: 12, tintColor: theme.colors.main }}
                     resizeMode="contain"
                   />
-                  <Text color="black">The three-digit number on the back of your card</Text>
+                  <Text color={theme.colors.dark}>
+                    The three-digit number on the back of your card
+                  </Text>
                 </View>
               }
               placement="bottom"
@@ -88,7 +97,7 @@ export const Input: React.FC<InputProps> = ({
               }}
               tooltipStyle={{
                 width: '100%',
-                shadowColor: '#000',
+                shadowColor: theme.colors.dark,
                 shadowOffset: {
                   width: 0,
                   height: 0,

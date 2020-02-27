@@ -16,6 +16,9 @@ export const theme = {
     filterBackground: '#4785D1',
     errorBackground: '#FDE1DF',
     scanBackground: '#153154',
+    cardInfo: '#727272',
+    dark: '#000',
+    errorIcon: '#F43428',
   },
   defaultFontFamily: 'Roboto-Regular',
 };

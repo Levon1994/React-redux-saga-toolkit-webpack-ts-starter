@@ -11,7 +11,7 @@ export const StyledButton = styled.TouchableOpacity.attrs({
   ${({ theme, ...props }) => css`
     width: ${props.width || '100%'};
     height: ${props.height || moderateScale(45, 0.2)};
-    background-color: ${props.disabled ? 'lightgrey' : props.bg || theme.colors.main};
+    background-color: ${props.disabled ? theme.colors.inputBorder : props.bg || theme.colors.main};
   `};
   align-items: center;
   justify-content: center;

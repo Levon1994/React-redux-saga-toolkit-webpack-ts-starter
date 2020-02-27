@@ -64,6 +64,14 @@ export const CardBlock = styled(Box).attrs({
   align: 'center',
 })``;
 
+export const CardPlaceholder = styled.Image.attrs({
+  source: require('assets/img/cardPlaceholder.png'),
+})`
+  width: 16;
+  height: 13;
+  margin-right: 14;
+`;
+
 export const CardInfo = styled(Text).attrs(({ theme }) => ({
   size: 14,
   color: theme.colors.info,
@@ -78,6 +86,13 @@ export const EditIconBlock = styled(Box).attrs({
   flex: 1,
   align: 'flex-end',
 })``;
+
+export const EditIcon = styled.Image.attrs({
+  source: require('assets/img/editIcon.png'),
+})`
+  width: 13;
+  height: 13;
+`;
 
 // mainBlock
 export const MainBlock = styled(Box).attrs({

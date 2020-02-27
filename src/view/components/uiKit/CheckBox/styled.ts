@@ -5,12 +5,12 @@ import { Text } from '../Text';
 import { Box } from '../Box';
 
 export const CheckboxContainer = styled.TouchableOpacity`
-  background: ${props => (props.isCheck ? 'transparent' : props.theme.colors.main)};
+  background: ${({ isCheck, theme }) => (isCheck ? 'transparent' : theme.colors.main)};
   width: auto;
   border-radius: 20;
   margin-right: 6;
   margin-bottom: 8;
-  border-color: ${props => (props.isCheck ? props.theme.colors.secondaryText : 'transparent')};
+  border-color: ${({ isCheck, theme }) => (isCheck ? theme.colors.secondaryText : 'transparent')};
   border-width: 1;
 `;
 

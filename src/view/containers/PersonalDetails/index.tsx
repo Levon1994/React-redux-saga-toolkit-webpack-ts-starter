@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import React from 'react';
-import { Image, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { ProgressBar } from 'view/components/uiKit/ProgressBar';
 import { PersonalDetailsProps } from './types';
@@ -14,9 +15,11 @@ import {
   DonateInfo,
   BottomHeaderBlock,
   CardBlock,
+  CardPlaceholder,
   CardInfo,
   CardEndInfo,
   EditIconBlock,
+  EditIcon,
   MainBlock,
   ShowHideFeedButton,
   FlatListBlock,
@@ -50,15 +53,12 @@ export const PersonalDetails = ({
         {/* bottom header */}
         <BottomHeaderBlock onPress={() => console.log('12')}>
           <CardBlock>
-            <Image
-              source={require('assets/img/cardPlaceholder.png')}
-              style={{ width: 16, height: 13, marginRight: 14 }}
-            />
+            <CardPlaceholder />
             <CardInfo>Card ending </CardInfo>
             <CardEndInfo>7842</CardEndInfo>
           </CardBlock>
           <EditIconBlock>
-            <Image source={require('assets/img/editIcon.png')} style={{ width: 13, height: 13 }} />
+            <EditIcon />
           </EditIconBlock>
         </BottomHeaderBlock>
       </Header>

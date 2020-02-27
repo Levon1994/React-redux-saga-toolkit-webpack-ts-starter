@@ -20,6 +20,7 @@ import { ScanCardIOS } from 'view/screens/ScanCardScreen';
 import { SelectWeeklyAmountScreen } from 'view/screens/SelectWeeklyAmountScreen';
 
 import { HomeScreen } from 'view/screens/HomeScreen';
+import { ProfileSettingsScreen } from 'view/screens/ProfileSettingsScreen';
 
 if (isIOS) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -55,7 +56,13 @@ const CharityStack = createStackNavigator(
 );
 
 const HomeStack = createStackNavigator(
-  { HomeScreen, SelectCharity: SelectCharityScreen },
+  {
+    HomeScreen,
+    SelectCharity: SelectCharityScreen,
+    ProfileSettings: ProfileSettingsScreen,
+    AddCard: AddCardScreen,
+    ScanCard: ScanCardIOS,
+  },
   {
     headerMode: 'none',
     defaultNavigationOptions: {

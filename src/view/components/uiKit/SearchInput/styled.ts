@@ -4,15 +4,15 @@ import { moderateScale } from 'react-native-size-matters';
 
 export const Container = styled.View`
   flex-direction: row;
-  background-color: #367ccf;
+  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 20px;
   height: ${moderateScale(38, 0.2)};
   align-items: center;
   width: 100%;
 `;
 
-export const StyledInput = styled(TextInput).attrs(props => ({
-  placeholderTextColor: props.theme.colors.info,
+export const StyledInput = styled(TextInput).attrs(({ theme }) => ({
+  placeholderTextColor: theme.colors.info,
 }))`
   padding: 0;
   padding-left: ${moderateScale(40, 0.2)};
@@ -20,8 +20,8 @@ export const StyledInput = styled(TextInput).attrs(props => ({
   flex: 1;
   font-size: ${moderateScale(14, 0.2)};
   line-height: ${moderateScale(18, 0.2)};
-  font-family: ${props => props.theme.defaultFontFamily};
-  color: ${props => props.theme.colors.mainText};
+  font-family: ${({ theme }) => theme.defaultFontFamily};
+  color: ${({ theme }) => theme.colors.mainText};
 `;
 
 export const SearchIcon = styled.Image.attrs({
@@ -33,5 +33,6 @@ export const SearchIcon = styled.Image.attrs({
   width: ${moderateScale(18, 0.2)};
   height: ${moderateScale(18, 0.2)};
   z-index: 1;
-  tint-color: ${({ isSelected }) => (isSelected ? '#fff' : '#AAD5FF')};
+  tint-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.mainText : theme.colors.info};
 `;

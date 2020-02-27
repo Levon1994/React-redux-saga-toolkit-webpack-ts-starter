@@ -9,19 +9,19 @@ export const WeeklyGoalBlock = styled(Box).attrs({
   spaceBetween: true,
 })``;
 
-export const WeeklyTitle = styled(Text).attrs({
+export const WeeklyTitle = styled(Text).attrs(({ theme }) => ({
   size: 14,
-  color: '#AAA9A9',
-})``;
+  color: theme.colors.feedPrice,
+}))``;
 
-export const WeeklyValueWrapper = styled(Box).attrs({
+export const WeeklyValueWrapper = styled(Box).attrs(({ theme }) => ({
   align: 'center',
   center: true,
   width: '56px',
   height: '30px',
-  bg: '#1D65BC',
+  bg: theme.colors.main,
   br: 4,
-})``;
+}))``;
 
 export const WeeklyValue = styled(Text).attrs({
   size: 14,

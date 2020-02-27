@@ -62,6 +62,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             isLoadingCharityData={isLoadingCharityData}
             onRefresh={getUserCharityData}
             goToChooseCharity={() => navigation.navigate('SelectCharity', { route: 'edit' })}
+            goToProfile={() => navigation.navigate('ProfileSettings')}
           />
         )),
       [user, isLoadingUserData, userCharityData, isLoadingCharityData],

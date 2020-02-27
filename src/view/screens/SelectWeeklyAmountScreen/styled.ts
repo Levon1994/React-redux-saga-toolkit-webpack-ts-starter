@@ -26,10 +26,10 @@ export const Title = styled(Text).attrs({
   mb: 10,
 })``;
 
-export const SubTitle = styled(Text).attrs({
+export const SubTitle = styled(Text).attrs(({ theme }) => ({
   size: 14,
-  color: '#BFDCFF',
-})``;
+  color: theme.colors.progressValue,
+}))``;
 
 // mainBlock
 export const MainBlock = styled(Box).attrs({
@@ -44,10 +44,10 @@ export const WeeklyGoalBlock = styled(Box).attrs({
   spaceBetween: true,
 })``;
 
-export const WeeklyTitle = styled(Text).attrs({
+export const WeeklyTitle = styled(Text).attrs(({ theme }) => ({
   size: 14,
-  color: '#AAA9A9',
-})``;
+  color: theme.colors.feedPrice,
+}))``;
 
 export const WeeklyValueWrapper = styled(Box).attrs({
   align: 'center',

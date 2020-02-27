@@ -11,12 +11,13 @@ import { Navigation, RootState } from 'types';
 import * as Actions from 'modules/card/actions';
 
 import { Input } from 'view/components/uiKit/Input';
-import { Text } from 'view/components/uiKit/Text';
 import { Box } from 'view/components/uiKit/Box';
 
 import {
   Container,
   Header,
+  GoBackBlock,
+  GoBackIcon,
   TopHeaderBlock,
   Title,
   StyledKeyboardAvoidingView,
@@ -24,6 +25,7 @@ import {
   StyledScrollView,
   InputWrapper,
   ButtonWrapper,
+  Deductible,
   StyledButton,
 } from './styled';
 
@@ -38,6 +40,8 @@ export const AddCardScreen: React.FC<Props> = ({ navigation }) => {
   const { cardNumber, cardHolder, expiryDate, cvcValue } = useSelector(
     (state: RootState) => state.cardReducer,
   );
+  const route = navigation.state.params ? navigation.state.params.route : 'create';
+  const isEditViewScreen = route === 'edit';
 
   const handleScanIconPress = useCallback(() => {
     if (isIOS) {
@@ -46,12 +50,26 @@ export const AddCardScreen: React.FC<Props> = ({ navigation }) => {
       scanCard();
     }
   }, []);
+
+  const goToNext = React.useCallback(() => {
+    if (isEditViewScreen) {
+      navigation.navigate('ProfileSettings');
+    } else {
+      navigation.navigate('SelectWeeklyAmount');
+    }
+  }, [route]);
+
   return (
     <Container>
       {/* header */}
-      <Header>
+      <Header isEditViewScreen={isEditViewScreen}>
+        {isEditViewScreen && (
+          <GoBackBlock onPress={goToNext}>
+            <GoBackIcon />
+          </GoBackBlock>
+        )}
         <TopHeaderBlock>
-          <Title>Add your card</Title>
+          <Title>{isEditViewScreen ? 'Payment details' : 'Add your card'}</Title>
         </TopHeaderBlock>
       </Header>
       {/* main block */}
@@ -125,10 +143,8 @@ export const AddCardScreen: React.FC<Props> = ({ navigation }) => {
             </Box>
           </StyledScrollView>
           <ButtonWrapper>
-            <Text color="#1D65BC" size={16} mb={16}>
-              Tax Deductible
-            </Text>
-            <StyledButton onPress={() => navigation.navigate('SelectWeeklyAmount')} />
+            <Deductible>Tax Deductible</Deductible>
+            <StyledButton onPress={goToNext} label={isEditViewScreen ? 'Save' : 'Continue'} />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>

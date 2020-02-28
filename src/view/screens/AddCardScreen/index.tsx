@@ -53,7 +53,7 @@ export const AddCardScreen: React.FC<Props> = ({ navigation }) => {
 
   const goToNext = React.useCallback(() => {
     if (isEditViewScreen) {
-      navigation.navigate('ProfileSettings');
+      navigation.goBack();
     } else {
       navigation.navigate('SelectWeeklyAmount');
     }

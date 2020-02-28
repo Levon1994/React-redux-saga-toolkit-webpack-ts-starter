@@ -45,7 +45,12 @@ const CharityStack = createStackNavigator(
     AuthorizeCharity: AuthorizeCharityScreen,
     AddCard: AddCardScreen,
     ScanCard: ScanCardIOS,
-    SelectWeeklyAmount: SelectWeeklyAmountScreen,
+    SelectWeeklyAmount: {
+      screen: SelectWeeklyAmountScreen,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
+    },
   },
   {
     headerMode: 'none',
@@ -59,7 +64,12 @@ const HomeStack = createStackNavigator(
   {
     HomeScreen,
     SelectCharity: SelectCharityScreen,
-    ProfileSettings: ProfileSettingsScreen,
+    ProfileSettings: {
+      screen: ProfileSettingsScreen,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
+    },
     AddCard: AddCardScreen,
     ScanCard: ScanCardIOS,
   },
@@ -99,6 +109,7 @@ export const AppContainer = () => {
 
   if (userToken) {
     initialRouteName = userToken ? 'CharityStack' : 'Auth';
+    // initialRouteName = userToken ? 'Home' : 'Auth';
   }
 
   const Container = createAppContainer(HeadStack(initialRouteName));

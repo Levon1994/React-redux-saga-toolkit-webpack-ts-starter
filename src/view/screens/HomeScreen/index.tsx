@@ -5,7 +5,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { useAction } from 'utils/hooks';
 
 import { getUser } from 'modules/user/actions';
-import { getUserCharity } from 'modules/charity/actions';
+import { getUserCharity, getUserTransactions } from 'modules/charity/actions';
 import { RootState, Navigation } from 'types';
 
 import { TabLabel, TabScene } from 'view/components';
@@ -26,19 +26,26 @@ interface Props {
   navigation: Navigation;
 }
 
-export const HomeScreen: React.FC<Props> = ({ navigation }) => {
+export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [isShowFeed, setShowFeed] = useState(false);
+
+  const { user, isLoadingUserData } = useSelector((state: RootState) => state.userReducer);
+  const {
+    userCharityData,
+    isLoadingCharityData,
+    userTransactionsData,
+    isLoadingTransactionsData,
+  } = useSelector((state: RootState) => state.charityReducer);
+
   const getUserData = useAction(getUser);
   const getUserCharityData = useAction(getUserCharity);
-  const { user, isLoadingUserData } = useSelector((state: RootState) => state.userReducer);
-  const { userCharityData, isLoadingCharityData } = useSelector(
-    (state: RootState) => state.charityReducer,
-  );
+  const getUserTransactionsData = useAction(getUserTransactions);
 
   useEffect(() => {
     getUserData();
     getUserCharityData();
+    getUserTransactionsData();
   }, []);
 
   const tabHome = [
@@ -71,13 +78,16 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
       () =>
         TabScene(() => (
           <PersonalDetails
+            userTransactionsData={userTransactionsData}
+            isLoadingTransactionsData={isLoadingTransactionsData}
             isShowFeed={isShowFeed}
             feedList={feedList}
             onPress={setShowFeed}
             renderFeedListItem={renderFeedListItem}
+            editCard={() => navigation.navigate('AddCard', { route: 'edit' })}
           />
         )),
-      [isShowFeed, feedList],
+      [isShowFeed, feedList, userTransactionsData, isLoadingTransactionsData],
     ),
   });
 
@@ -91,4 +101,4 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
       lazy
     />
   );
-};
+});

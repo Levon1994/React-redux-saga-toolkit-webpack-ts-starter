@@ -5,7 +5,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { useAction } from 'utils/hooks';
 
 import { getUser } from 'modules/user/actions';
-import { getUserCharity, getUserTransactions } from 'modules/charity/actions';
+import { getUserCharity } from 'modules/charity/actions';
 import { RootState, Navigation } from 'types';
 
 import { TabLabel, TabScene } from 'view/components';
@@ -31,22 +31,22 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const [isShowFeed, setShowFeed] = useState(false);
 
   const { user, isLoadingUserData } = useSelector((state: RootState) => state.userReducer);
-  const {
-    userCharityData,
-    isLoadingCharityData,
-    userTransactionsData,
-    isLoadingTransactionsData,
-  } = useSelector((state: RootState) => state.charityReducer);
+  const { userCharityData, isLoadingCharityData } = useSelector(
+    (state: RootState) => state.charityReducer,
+  );
 
   const getUserData = useAction(getUser);
   const getUserCharityData = useAction(getUserCharity);
-  const getUserTransactionsData = useAction(getUserTransactions);
 
   useEffect(() => {
+    const route = navigation.state.params && navigation.state.params.route;
+    if (route) {
+      getUserData();
+      getUserCharityData();
+    }
     getUserData();
     getUserCharityData();
-    getUserTransactionsData();
-  }, []);
+  }, [navigation]);
 
   const tabHome = [
     { key: Tabs.MyImpact, title: 'My Impact' },
@@ -78,8 +78,8 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
       () =>
         TabScene(() => (
           <PersonalDetails
-            userTransactionsData={userTransactionsData}
-            isLoadingTransactionsData={isLoadingTransactionsData}
+            user={user}
+            isLoadingUserData={isLoadingUserData}
             isShowFeed={isShowFeed}
             feedList={feedList}
             onPress={setShowFeed}
@@ -87,7 +87,7 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
             editCard={() => navigation.navigate('AddCard', { route: 'edit' })}
           />
         )),
-      [isShowFeed, feedList, userTransactionsData, isLoadingTransactionsData],
+      [isShowFeed, feedList, user, isLoadingUserData],
     ),
   });
 

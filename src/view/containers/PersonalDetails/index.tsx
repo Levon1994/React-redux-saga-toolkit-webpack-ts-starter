@@ -32,8 +32,8 @@ export const PersonalDetails = ({
   onPress,
   renderFeedListItem,
   feedList,
-  userTransactionsData: { weekly_amount, weekly_goal, card },
-  isLoadingTransactionsData,
+  user: { weekly_amount, weekly_goal, card },
+  isLoadingUserData,
   editCard,
 }: PersonalDetailsProps) => {
   const showFeed = isShowFeed ? 'Hide feed' : 'Show feed';
@@ -41,7 +41,7 @@ export const PersonalDetails = ({
   return (
     <Container>
       {/* header */}
-      {isLoadingTransactionsData ? (
+      {isLoadingUserData ? (
         <Loader />
       ) : (
         <>

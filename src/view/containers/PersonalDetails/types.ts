@@ -1,11 +1,11 @@
-import { UserTransactions } from 'modules/charity/types';
+import { UserProfile } from 'modules/user/types';
 
 export interface PersonalDetailsProps {
   feedList?: any;
   renderFeedListItem: (item: any) => JSX.Element;
   isShowFeed: boolean;
   onPress: (isShowFeed: boolean) => void;
-  userTransactionsData: UserTransactions;
-  isLoadingTransactionsData: boolean;
+  user: UserProfile;
+  isLoadingUserData: boolean;
   editCard: any;
 }

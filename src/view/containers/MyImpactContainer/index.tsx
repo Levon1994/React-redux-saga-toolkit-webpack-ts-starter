@@ -101,7 +101,7 @@ export const MyImpactContainer = ({
                   renderItem={renderListItem}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
-                  keyExtractor={index => String(index)}
+                  keyExtractor={(item, index) => String(index)}
                   bounces={false}
                   ItemSeparatorComponent={() => <Box height={10} />}
                   style={{

@@ -6,6 +6,11 @@ export const setUser = createAction('user/SET_USER', resolve => (payload: number
   resolve(payload),
 );
 
+export const setWeeklyAmount = createAction(
+  'user/SET_WEEKLY_AMOUNT',
+  resolve => (payload: number) => resolve(payload),
+);
+
 export const getUser = createAction('user/GET_USER_REQUEST');
 
 export const getUserSuccess = createAction(

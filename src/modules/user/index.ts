@@ -1,14 +1,24 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { createReducer } from 'deox';
 
-import { setUser, getUser, getUserSuccess, getUserFail } from './actions';
+import { validateField } from 'utils/validation';
+
+import { changeValue } from 'modules/auth/actions';
+import { setUser, setWeeklyAmount, getUser, getUserSuccess, getUserFail } from './actions';
 import { UserState } from './types';
 
 const defaultState: UserState = {
   userId: null,
-  user: {},
+  user: {
+    first_name: '',
+    last_name: '',
+    email: '',
+    weekly_goal: 2,
+    weekly_amount: 0,
+  },
   isLoadingUserData: false,
   getUserDataError: {},
+  errors: {},
 };
 
 export const userReducer = createReducer(defaultState, handle => [
@@ -19,6 +29,16 @@ export const userReducer = createReducer(defaultState, handle => [
       userId: payload,
     }),
   ),
+  handle(
+    setWeeklyAmount,
+    (state, { payload }): UserState => ({
+      ...state,
+      user: {
+        ...state.user,
+        weekly_goal: payload,
+      },
+    }),
+  ),
   handle(getUser, state => ({
     ...state,
     isLoadingUserData: true,
@@ -27,8 +47,12 @@ export const userReducer = createReducer(defaultState, handle => [
     getUserSuccess,
     (state, { payload }): UserState => ({
       ...state,
-      user: payload,
+      user: {
+        ...state.user,
+        ...payload,
+      },
       isLoadingUserData: false,
+      errors: {},
     }),
   ),
   handle(
@@ -38,5 +62,23 @@ export const userReducer = createReducer(defaultState, handle => [
       isLoadingUserData: false,
       getUserDataError: payload,
     }),
+  ),
+  handle(
+    changeValue,
+    (state, { payload }): UserState => {
+      const key = Object.keys(payload);
+      const value = Object.values(payload);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...payload,
+        },
+        errors: {
+          ...state.errors,
+          [key[0]]: validateField(key[0], String(value[0])),
+        },
+      };
+    },
   ),
 ]);

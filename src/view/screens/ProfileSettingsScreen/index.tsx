@@ -42,6 +42,7 @@ interface Props {
 export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
   const [weeklyValue, setWeeklyAmount] = useState(2);
   const { values, errors } = useSelector((state: RootState) => state.authReducer);
+  const { userTransactionsData } = useSelector((state: RootState) => state.charityReducer);
 
   const changeValue = useAction(Actions.changeValue);
 
@@ -112,7 +113,9 @@ export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
                   </FeedIconBlock>
                   <PaymentInfoWrapper>
                     <PaymentTitle>Payment details</PaymentTitle>
-                    <PaymentInfo>Card ending 7842</PaymentInfo>
+                    <PaymentInfo>
+                      {`Card ending ${userTransactionsData.card.card_ending}`}
+                    </PaymentInfo>
                   </PaymentInfoWrapper>
                 </PaymentInfoBlock>
                 <StyledNextIcon />

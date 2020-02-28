@@ -13,9 +13,9 @@ function* registerSaga() {
   try {
     const { values } = yield select((state: RootState) => state.authReducer);
     const requestData = {
-      email: values.email,
-      first_name: values.firstName,
-      last_name: values.lastName,
+      email: values.email.trim(),
+      first_name: values.firstName.trim(),
+      last_name: values.lastName.trim(),
       password: values.password,
     };
     const { data } = yield Register.register(requestData);

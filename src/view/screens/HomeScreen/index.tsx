@@ -5,7 +5,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { useAction } from 'utils/hooks';
 
 import { getUser } from 'modules/user/actions';
-import { getUserCharity } from 'modules/charity/actions';
+import { getUserCharity, getUserFeed } from 'modules/charity/actions';
 import { RootState, Navigation } from 'types';
 
 import { TabLabel, TabScene } from 'view/components';
@@ -14,8 +14,6 @@ import { PersonalDetails } from 'view/containers/PersonalDetails';
 import { CharityItem, FeedItem } from './components';
 
 import { StyledTabBar } from './styled';
-
-import { feedList } from './fakeData';
 
 enum Tabs {
   MyImpact = 'MyImpact',
@@ -31,12 +29,13 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const [isShowFeed, setShowFeed] = useState(false);
 
   const { user, isLoadingUserData } = useSelector((state: RootState) => state.userReducer);
-  const { userCharityData, isLoadingCharityData } = useSelector(
+  const { userCharityData, isLoadingCharityData, userFeedData, isLoadingFeedData } = useSelector(
     (state: RootState) => state.charityReducer,
   );
 
   const getUserData = useAction(getUser);
   const getUserCharityData = useAction(getUserCharity);
+  const getUserFeedData = useAction(getUserFeed);
 
   useEffect(() => {
     const route = navigation.state.params && navigation.state.params.route;
@@ -46,6 +45,7 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
     }
     getUserData();
     getUserCharityData();
+    getUserFeedData();
   }, [navigation]);
 
   const tabHome = [
@@ -80,14 +80,15 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
           <PersonalDetails
             user={user}
             isLoadingUserData={isLoadingUserData}
+            userFeedData={userFeedData}
+            isLoadingFeedData={isLoadingFeedData}
             isShowFeed={isShowFeed}
-            feedList={feedList}
             onPress={setShowFeed}
             renderFeedListItem={renderFeedListItem}
             editCard={() => navigation.navigate('AddCard', { route: 'edit' })}
           />
         )),
-      [isShowFeed, feedList, user, isLoadingUserData],
+      [isShowFeed, user, isLoadingUserData, userFeedData],
     ),
   });
 

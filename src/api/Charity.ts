@@ -10,4 +10,5 @@ export type CharityResponse = AxiosResponse<{
 
 export class Charity {
   static getUserCharity = (userId: number) => Api.get(`v1/customer/${userId}/impact`);
+  static getUserFeed = (userId: number) => Api.get(`v1/customer/${userId}/transactions`);
 }

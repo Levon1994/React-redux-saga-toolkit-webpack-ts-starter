@@ -6,8 +6,18 @@ export interface UserCharity {
   weekly_amount: number;
 }
 
+export interface Feed {
+  [key: number]: {
+    description: string;
+    amount: number;
+    donat_amount: number;
+  };
+}
+
 export interface CharityState {
   userCharityData: UserCharity;
   isLoadingCharityData: boolean;
   getUserCharityError: ResponseErrors;
+  userFeedData: Feed[];
+  isLoadingFeedData: boolean;
 }

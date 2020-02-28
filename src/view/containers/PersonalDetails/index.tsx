@@ -31,17 +31,18 @@ export const PersonalDetails = ({
   isShowFeed,
   onPress,
   renderFeedListItem,
-  feedList,
   user: { weekly_amount, weekly_goal, card },
   isLoadingUserData,
   editCard,
+  userFeedData,
+  isLoadingFeedData,
 }: PersonalDetailsProps) => {
   const showFeed = isShowFeed ? 'Hide feed' : 'Show feed';
   const progressData = (weekly_amount * 100) / weekly_goal;
   return (
     <Container>
       {/* header */}
-      {isLoadingUserData ? (
+      {isLoadingUserData || isLoadingFeedData ? (
         <Loader />
       ) : (
         <>
@@ -85,11 +86,11 @@ export const PersonalDetails = ({
             {isShowFeed && (
               <FlatListBlock>
                 <FlatList
-                  data={feedList}
+                  data={userFeedData}
                   renderItem={renderFeedListItem}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
-                  keyExtractor={item => String(item.id)}
+                  keyExtractor={(item, index) => String(index)}
                   bounces={false}
                   style={{
                     width: '100%',

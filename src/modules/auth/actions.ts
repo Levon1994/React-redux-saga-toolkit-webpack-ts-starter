@@ -1,11 +1,12 @@
 import { createAction } from 'deox';
 
 import { ResponseErrors } from 'types/responseData';
+import { UserProfile } from 'modules/user/types';
 import { Values } from './types';
 
 export const changeValue = createAction(
   'auth/CHANGE_VALUE',
-  resolve => (payload: Partial<Values>) => resolve(payload),
+  resolve => (payload: Partial<Values> | Partial<UserProfile>) => resolve(payload),
 );
 
 export const register = createAction('auth/REGISTER_REQUEST');

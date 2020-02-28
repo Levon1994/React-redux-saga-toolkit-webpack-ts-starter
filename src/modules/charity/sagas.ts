@@ -2,7 +2,7 @@
 import { put, takeLatest, delay, select } from 'redux-saga/effects';
 import { getType } from 'deox';
 
-import { Charity, CharityResponse, TransactionsResponse } from 'api/Charity';
+import { Charity, CharityResponse } from 'api/Charity';
 import { RootState } from 'types';
 
 import { processRequestError } from 'modules/errors/actions';
@@ -10,9 +10,9 @@ import {
   getUserCharity,
   getUserCharitySuccess,
   getUserCharityFail,
-  getUserTransactions,
-  getUserTransactionsSuccess,
-  // getUserTransactionsFail,
+  getUserFeed,
+  getUserFeedSuccess,
+  getUserFeedFail,
 } from './actions';
 
 function* getUserCharitySaga() {
@@ -25,15 +25,15 @@ function* getUserCharitySaga() {
   }
 }
 
-function* getUserTransactionsSaga() {
+function* getUserFeedSaga() {
   try {
     const { userId } = yield select((state: RootState) => state.userReducer);
-    const { data }: TransactionsResponse = yield Charity.getUserTransactions(userId);
-    console.log('data: ', data);
-    yield put(getUserTransactionsSuccess(data));
+    const { data }: CharityResponse = yield Charity.getUserFeed(userId);
+    const feedArray: any[] = [];
+    Object.entries(data).forEach(([key, value]) => feedArray.push({ [key]: value }));
+    yield put(getUserFeedSuccess(feedArray));
   } catch (e) {
-    console.log('e: ', e);
-    // yield put(processRequestError({ error: e, failAction: getUserTransactionsFail }));
+    yield put(processRequestError({ error: e, failAction: getUserFeedFail }));
   }
 }
 
@@ -47,5 +47,5 @@ export function* watchCharityPeriodically() {
 
 export function* watchCharity() {
   yield takeLatest(getType(getUserCharity), getUserCharitySaga);
-  yield takeLatest(getType(getUserTransactions), getUserTransactionsSaga);
+  yield takeLatest(getType(getUserFeed), getUserFeedSaga);
 }

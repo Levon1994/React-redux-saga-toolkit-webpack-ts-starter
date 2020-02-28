@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAction } from 'utils/hooks';
@@ -7,6 +7,7 @@ import { useAction } from 'utils/hooks';
 import { Navigation, RootState } from 'types';
 
 import * as Actions from 'modules/auth/actions';
+import { setWeeklyAmount } from 'modules/user/actions';
 
 import { WeeklyGoal } from 'view/components';
 import { Input } from 'view/components/uiKit/Input';
@@ -39,18 +40,21 @@ interface Props {
   navigation: Navigation;
 }
 
-export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
-  const [weeklyValue, setWeeklyAmount] = useState(2);
-  const { values, errors } = useSelector((state: RootState) => state.authReducer);
-  const { userTransactionsData } = useSelector((state: RootState) => state.charityReducer);
+export const ProfileSettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
+  const { user, errors } = useSelector((state: RootState) => state.userReducer);
 
+  const changeWeeklyAmount = useAction(setWeeklyAmount);
   const changeValue = useAction(Actions.changeValue);
+
+  const goBack = useCallback(() => {
+    navigation.navigate('HomeScreen', { route: 'notUpdate' });
+  }, []);
 
   return (
     <Container>
       {/* header */}
       <Header>
-        <GoBackBlock onPress={() => navigation.navigate('HomeScreen')}>
+        <GoBackBlock onPress={goBack}>
           <GoBackIcon />
         </GoBackBlock>
         <Title>Profile settings</Title>
@@ -61,8 +65,8 @@ export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
           <StyledScrollView>
             <Box mb={10}>
               <WeeklyGoal
-                weeklyValue={weeklyValue}
-                onValueChange={(value: number) => setWeeklyAmount(value)}
+                weeklyValue={user.weekly_goal}
+                onValueChange={(value: number) => changeWeeklyAmount(value)}
               />
             </Box>
             <Box mb={15}>
@@ -73,9 +77,9 @@ export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
                   maxLength={50}
                   key="firstName"
                   textContentType="name"
-                  value={values.firstName}
-                  onChangeText={(value: string) => changeValue({ firstName: value })}
-                  error={errors.firstName || errors.first_name}
+                  value={user.first_name}
+                  onChangeText={(value: string) => changeValue({ first_name: value })}
+                  error={errors && errors.first_name}
                 />
               </InputWrapper>
               <InputWrapper>
@@ -85,9 +89,9 @@ export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
                   maxLength={50}
                   key="lastName"
                   textContentType="name"
-                  value={values.lastName}
-                  onChangeText={(value: string) => changeValue({ lastName: value })}
-                  error={errors.lastName || errors.last_name}
+                  value={user.last_name}
+                  onChangeText={(value: string) => changeValue({ last_name: value })}
+                  error={errors && errors.last_name}
                 />
               </InputWrapper>
               <InputWrapper>
@@ -99,9 +103,9 @@ export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
                   textContentType="emailAddress"
                   keyboardType="email-address"
                   autoCompleteType="email"
-                  value={values.email}
+                  value={user.email}
                   onChangeText={(value: string) => changeValue({ email: value })}
-                  error={errors.email}
+                  error={errors && errors.email}
                 />
               </InputWrapper>
             </Box>
@@ -113,9 +117,7 @@ export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
                   </FeedIconBlock>
                   <PaymentInfoWrapper>
                     <PaymentTitle>Payment details</PaymentTitle>
-                    <PaymentInfo>
-                      {`Card ending ${userTransactionsData.card.card_ending}`}
-                    </PaymentInfo>
+                    <PaymentInfo>{`Card ending ${user.card.card_ending}`}</PaymentInfo>
                   </PaymentInfoWrapper>
                 </PaymentInfoBlock>
                 <StyledNextIcon />
@@ -129,4 +131,4 @@ export const ProfileSettingsScreen: React.FC<Props> = ({ navigation }) => {
       </StyledKeyboardAvoidingView>
     </Container>
   );
-};
+});

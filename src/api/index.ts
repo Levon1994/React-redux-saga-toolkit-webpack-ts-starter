@@ -31,10 +31,6 @@ export class Api {
     Api.getAxios().defaults.headers.Authorization = `Bearer ${token}`;
   }
 
-  static clearAuthToken() {
-    Api.getAxios().defaults.headers.Authorization = null;
-  }
-
   static get<T = any>(
     url: string,
     params: object = {},

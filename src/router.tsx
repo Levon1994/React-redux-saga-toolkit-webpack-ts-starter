@@ -108,8 +108,8 @@ export const AppContainer = () => {
   }
 
   if (userToken) {
-    initialRouteName = userToken ? 'CharityStack' : 'Auth';
-    // initialRouteName = userToken ? 'Home' : 'Auth';
+    // initialRouteName = userToken ? 'CharityStack' : 'Auth';
+    initialRouteName = userToken ? 'Home' : 'Auth';
   }
 
   const Container = createAppContainer(HeadStack(initialRouteName));

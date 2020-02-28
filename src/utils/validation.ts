@@ -12,6 +12,16 @@ export const validateField = (name: string, value: string): string => {
       if (length > 0 && !value.match(/^[A-Za-z\s]+$/))
         return 'Last Name must contain only alphabetical charachters';
       break;
+    case 'first_name':
+      if (length > 30) return 'Maximum Name length is 30 characters';
+      if (length > 0 && !value.match(/^[A-Za-z\s]+$/))
+        return 'First Name must contain only alphabetical charachters';
+      break;
+    case 'last_name':
+      if (length > 30) return 'Maximum Name length is 30 characters';
+      if (length > 0 && !value.match(/^[A-Za-z\s]+$/))
+        return 'Last Name must contain only alphabetical charachters';
+      break;
     case 'email':
       if (!value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) return 'Invalid email format';
       if (length > 100) return 'Maximum email length is 100 characters';

@@ -1,6 +1,6 @@
 import { createAction } from 'deox';
 import { ResponseErrors } from 'types/responseData';
-import { UserCharity, UserTransactions } from './types';
+import { UserCharity, Feed } from './types';
 
 export const getUserCharity = createAction('charity/GET_USER_CHARITY_REQUEST');
 
@@ -14,14 +14,14 @@ export const getUserCharityFail = createAction(
   resolve => (payload: ResponseErrors) => resolve(payload),
 );
 
-export const getUserTransactions = createAction('charity/GET_USER_TRANSACTIONS_REQUEST');
+export const getUserFeed = createAction('charity/GET_USER_FEED_REQUEST');
 
-export const getUserTransactionsSuccess = createAction(
-  'charity/GET_USER_TRANSACTIONS_SUCCESS',
-  resolve => (payload: UserTransactions) => resolve(payload),
+export const getUserFeedSuccess = createAction(
+  'charity/GET_USER_FEED_SUCCESS',
+  resolve => (payload: Feed[]) => resolve(payload),
 );
 
-export const getUserTransactionsFail = createAction(
-  'charity/GET_USER_TRANSACTIONS_FAIL',
+export const getUserFeedFail = createAction(
+  'charity/GET_USER_FEED_FAIL',
   resolve => (payload: ResponseErrors) => resolve(payload),
 );

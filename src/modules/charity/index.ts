@@ -7,18 +7,18 @@ import {
   getUserCharity,
   getUserCharitySuccess,
   getUserCharityFail,
-  getUserTransactions,
-  getUserTransactionsSuccess,
-  getUserTransactionsFail,
+  getUserFeed,
+  getUserFeedSuccess,
+  getUserFeedFail,
 } from './actions';
 import { CharityState } from './types';
 
 const defaultState: CharityState = {
   userCharityData: {},
+  userFeedData: [],
   isLoadingCharityData: false,
+  isLoadingFeedData: false,
   getUserCharityError: {},
-  userTransactionsData: {},
-  isLoadingTransactionsData: false,
 };
 
 export const charityReducer = createReducer(defaultState, handle => [
@@ -42,27 +42,24 @@ export const charityReducer = createReducer(defaultState, handle => [
       getUserCharityError: payload,
     }),
   ),
-  handle(getUserTransactions, state => ({
+  handle(getUserFeed, state => ({
     ...state,
-    isLoadingTransactionsData: true,
+    isLoadingFeedData: true,
   })),
   handle(
-    getUserTransactionsSuccess,
-    (state, { payload }): CharityState => {
-      console.log('payload', payload);
-      return {
-        ...state,
-        userTransactionsData: payload,
-        isLoadingTransactionsData: false,
-      };
-    },
-  ),
-  handle(
-    getUserTransactionsFail,
+    getUserFeedSuccess,
     (state, { payload }): CharityState => ({
       ...state,
-      isLoadingTransactionsData: false,
-      // getUserCharityError: payload,
+      userFeedData: payload,
+      isLoadingFeedData: false,
+    }),
+  ),
+  handle(
+    getUserFeedFail,
+    (state, { payload }): CharityState => ({
+      ...state,
+      isLoadingFeedData: false,
+      getUserCharityError: payload,
     }),
   ),
 ]);

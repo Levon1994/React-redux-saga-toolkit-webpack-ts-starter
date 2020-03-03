@@ -2,7 +2,7 @@
 import { put, takeLatest, delay, select } from 'redux-saga/effects';
 import { getType } from 'deox';
 
-import { Charity, CharityResponse } from 'api/Charity';
+import { Charity, CharityResponse, FeedResponse } from 'api/Charity';
 import { RootState } from 'types';
 
 import { processRequestError } from 'modules/errors/actions';
@@ -28,10 +28,13 @@ function* getUserCharitySaga() {
 function* getUserFeedSaga() {
   try {
     const { userId } = yield select((state: RootState) => state.userReducer);
-    const { data }: CharityResponse = yield Charity.getUserFeed(userId);
-    const feedArray: any[] = [];
-    Object.entries(data).forEach(([key, value]) => feedArray.push({ [key]: value }));
-    yield put(getUserFeedSuccess(feedArray));
+    const { next_page } = yield select((state: RootState) => state.charityReducer);
+    let page = 1;
+    if (next_page) {
+      page = next_page;
+    }
+    const { data }: FeedResponse = yield Charity.getUserFeed(userId, page);
+    yield put(getUserFeedSuccess(data));
   } catch (e) {
     yield put(processRequestError({ error: e, failAction: getUserFeedFail }));
   }

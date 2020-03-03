@@ -12,11 +12,13 @@ import { register, registerSuccess, registerFail } from './actions';
 function* registerSaga() {
   try {
     const { values } = yield select((state: RootState) => state.authReducer);
+    // TODO:: change device token to real data
     const requestData = {
       email: values.email.trim(),
       first_name: values.firstName.trim(),
       last_name: values.lastName.trim(),
       password: values.password,
+      device_token: 'sometoken',
     };
     const { data } = yield Register.register(requestData);
     Api.setAuthToken(data.access_token);

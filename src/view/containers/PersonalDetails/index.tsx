@@ -1,11 +1,18 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
+
+import { RootState } from 'types';
+import { useAction } from 'utils/hooks';
+
+import { getUserFeed } from 'modules/charity/actions';
 
 import { ProgressBar } from 'view/components/uiKit/ProgressBar';
 import { Loader } from 'view/components/uiKit/Loader';
+import { FeedItem } from './FeedItem';
 
-import { PersonalDetailsProps } from './types';
 import {
   Container,
   Header,
@@ -27,22 +34,31 @@ import {
   FlatListBlock,
 } from './styled';
 
-export const PersonalDetails = ({
-  isShowFeed,
-  onPress,
-  renderFeedListItem,
-  user: { weekly_amount, weekly_goal, card },
-  isLoadingUserData,
-  editCard,
-  userFeedData,
-  isLoadingFeedData,
-}: PersonalDetailsProps) => {
+export const PersonalDetails = ({ editCard }: any) => {
+  const [isShowFeed, setShowFeed] = useState(false);
+
+  const getUserFeedData = useAction(getUserFeed);
+
+  const {
+    user: { weekly_amount, weekly_goal, card },
+    isLoadingUserData,
+  } = useSelector((state: RootState) => state.userReducer);
+  const { userFeedData, next_page } = useSelector((state: RootState) => state.charityReducer);
+
   const showFeed = isShowFeed ? 'Hide feed' : 'Show feed';
   const progressData = (weekly_amount * 100) / weekly_goal;
+
+  const renderFeedListItem = ({ item }: any) => <FeedItem item={item} />;
+
+  const loadMoreItems = () => {
+    if (next_page) {
+      getUserFeedData();
+    }
+  };
   return (
     <Container>
       {/* header */}
-      {isLoadingUserData || isLoadingFeedData ? (
+      {isLoadingUserData ? (
         <Loader />
       ) : (
         <>
@@ -80,7 +96,7 @@ export const PersonalDetails = ({
               label={showFeed}
               bg={isShowFeed ? '#E4EDF7' : '#1D65BC'}
               color={isShowFeed && '#1D65BC'}
-              onPress={() => onPress(!isShowFeed)}
+              onPress={() => setShowFeed(!isShowFeed)}
             />
             {/* flatlist */}
             {isShowFeed && (
@@ -91,7 +107,8 @@ export const PersonalDetails = ({
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => String(index)}
-                  bounces={false}
+                  onEndReachedThreshold={0.1}
+                  onEndReached={loadMoreItems}
                   style={{
                     width: '100%',
                   }}

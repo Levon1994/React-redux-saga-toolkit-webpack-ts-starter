@@ -18,7 +18,7 @@ export const getUserFeed = createAction('charity/GET_USER_FEED_REQUEST');
 
 export const getUserFeedSuccess = createAction(
   'charity/GET_USER_FEED_SUCCESS',
-  resolve => (payload: Feed[]) => resolve(payload),
+  resolve => (payload: Feed) => resolve(payload),
 );
 
 export const getUserFeedFail = createAction(

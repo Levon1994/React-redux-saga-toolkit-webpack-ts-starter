@@ -8,10 +8,12 @@ import { UserProfile } from 'modules/user/types';
 import { UserCharity } from 'modules/charity/types';
 import * as Actions from 'modules/charity/actions';
 
+import { ScreenWidth } from 'utils/helpers';
+
 import { DonationComponent } from 'view/components';
 import { Box } from 'view/components/uiKit/Box';
 import { Loader } from 'view/components/uiKit/Loader';
-import { ScreenWidth } from 'utils/helpers';
+import { CharityItem } from './CharityItem';
 
 import {
   Container,
@@ -33,14 +35,12 @@ interface MyImpactProps {
   isLoadingUserData: boolean;
   userCharityData: UserCharity;
   isLoadingCharityData: boolean;
-  renderListItem: (item: any) => JSX.Element;
   onRefresh: typeof Actions.getUserCharity;
   goToChooseCharity: any;
   goToProfile: any;
 }
 
 export const MyImpactContainer = ({
-  renderListItem,
   user: { first_name, last_name },
   isLoadingUserData,
   userCharityData,
@@ -49,6 +49,7 @@ export const MyImpactContainer = ({
   goToChooseCharity,
   goToProfile,
 }: MyImpactProps) => {
+  const renderCharityItem = ({ item }: any) => <CharityItem item={item} />;
   return (
     <Container>
       {/* header */}
@@ -98,7 +99,7 @@ export const MyImpactContainer = ({
               <FlatListBlock>
                 <FlatList
                   data={userCharityData.charities}
-                  renderItem={renderListItem}
+                  renderItem={renderCharityItem}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => String(index)}

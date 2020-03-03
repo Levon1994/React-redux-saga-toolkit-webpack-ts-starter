@@ -16,9 +16,10 @@ import { CharityState } from './types';
 const defaultState: CharityState = {
   userCharityData: {},
   userFeedData: [],
+  next_page: null,
   isLoadingCharityData: false,
-  isLoadingFeedData: false,
   getUserCharityError: {},
+  isLoadMore: true,
 };
 
 export const charityReducer = createReducer(defaultState, handle => [
@@ -44,21 +45,25 @@ export const charityReducer = createReducer(defaultState, handle => [
   ),
   handle(getUserFeed, state => ({
     ...state,
-    isLoadingFeedData: true,
   })),
   handle(
     getUserFeedSuccess,
-    (state, { payload }): CharityState => ({
-      ...state,
-      userFeedData: payload,
-      isLoadingFeedData: false,
-    }),
+    (state, { payload }): CharityState => {
+      const feedArray: any[] = [];
+      Object.entries(payload.donations).forEach(([key, value]) => feedArray.push({ [key]: value }));
+      const nextFeed = state.userFeedData;
+      const newArrayFeed = [...nextFeed, ...feedArray];
+      return {
+        ...state,
+        userFeedData: newArrayFeed,
+        next_page: payload.next_page,
+      };
+    },
   ),
   handle(
     getUserFeedFail,
     (state, { payload }): CharityState => ({
       ...state,
-      isLoadingFeedData: false,
       getUserCharityError: payload,
     }),
   ),

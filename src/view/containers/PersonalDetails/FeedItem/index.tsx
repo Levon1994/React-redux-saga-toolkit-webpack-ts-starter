@@ -24,7 +24,10 @@ interface FeedItemProps {
 export const FeedItem = ({ item }: FeedItemProps) => {
   const convertDate = moment(Object.keys(item).toString()).calendar();
   const getMonthDate = moment(Object.keys(item).toString()).format('ll');
-  const dayTitle = convertDate.substr(0, convertDate.indexOf(' '));
+  const dayTitle =
+    convertDate.indexOf('Last') > -1
+      ? getMonthDate.substr(0, getMonthDate.indexOf(','))
+      : convertDate.substr(0, convertDate.indexOf(' '));
   return (
     <>
       <DayBlock>

@@ -6,6 +6,12 @@ export interface UserCharity {
   weekly_amount: number;
 }
 
+export interface FeedData {
+  donations: {};
+  next_page: null | number;
+  pages: number;
+}
+
 export interface Feed {
   [key: number]: {
     description: string;
@@ -19,5 +25,6 @@ export interface CharityState {
   isLoadingCharityData: boolean;
   getUserCharityError: ResponseErrors;
   userFeedData: Feed[];
-  isLoadingFeedData: boolean;
+  next_page: number | null;
+  page: number;
 }

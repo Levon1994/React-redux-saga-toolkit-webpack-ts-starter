@@ -1,6 +1,6 @@
 import { ActionCreator, bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo, useRef, useEffect, useCallback } from 'react';
 import { Action } from 'deox';
 
 export function useAction<T extends ActionCreator<Action<string>>>(action: T): T {
@@ -15,3 +15,19 @@ export function usePrevious<T>(value: T): T | void {
   }, [value]);
   return ref.current;
 }
+
+export const useInfiniteScroll = (callback: () => void) => {
+  const onEndReached = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      callback();
+    }
+  }, [callback]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', onEndReached);
+    return () => window.removeEventListener('scroll', onEndReached);
+  }, [onEndReached]);
+};

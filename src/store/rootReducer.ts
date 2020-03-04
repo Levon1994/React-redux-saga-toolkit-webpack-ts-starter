@@ -8,6 +8,7 @@ import { authReducer } from 'modules/auth';
 import { cardReducer } from 'modules/card';
 import { userReducer } from 'modules/user';
 import { charityReducer } from 'modules/charity';
+import { notificationsReducer } from 'modules/notifications';
 
 const rootPersistConfig = {
   key: 'root',
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   cardReducer,
   userReducer,
   charityReducer,
+  notificationsReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: Action) => {

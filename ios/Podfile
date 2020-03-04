@@ -46,6 +46,10 @@ target 'MyCharityChange' do
 
   pod 'RNAwesomeCardIO', :path => '../node_modules/react-native-awesome-card-io'
 
+  # Required by RNFirebase
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+
   target 'MyCharityChangeTests' do
     inherit! :search_paths
     # Pods for testing

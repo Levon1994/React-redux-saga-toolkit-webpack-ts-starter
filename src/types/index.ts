@@ -4,6 +4,7 @@ import { AuthState } from 'modules/auth/types';
 import { CardState } from 'modules/card/types';
 import { UserState } from 'modules/user/types';
 import { CharityState } from 'modules/charity/types';
+import { NotificationsState } from 'modules/notifications/types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface RootState {
@@ -12,6 +13,7 @@ export interface RootState {
   cardReducer: CardState;
   userReducer: UserState;
   charityReducer: CharityState;
+  notificationsReducer: NotificationsState;
 }
 
 export type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;

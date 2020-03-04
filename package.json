@@ -33,6 +33,7 @@
     "react-native": "0.61.5",
     "react-native-awesome-card-io": "^0.8.2",
     "react-native-extra-dimensions-android": "^1.2.5",
+    "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "^1.5.6",
     "react-native-indicators": "^0.17.0",
     "react-native-iphone-x-helper": "^1.2.1",

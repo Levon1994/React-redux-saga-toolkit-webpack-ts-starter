@@ -179,6 +179,13 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-firebase')
+  // Firebase dependencies
+    implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.firebase:firebase-core:16.0.9"
+    implementation "com.google.firebase:firebase-messaging:18.0.0"
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+    
     implementation project(':react-native-awesome-card-io')
     implementation project(':react-native-extra-dimensions-android')
     implementation project(':react-native-gesture-handler')
@@ -205,3 +212,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'

@@ -6,6 +6,7 @@ import { watchCard } from 'modules/card/sagas';
 import { watchUserProfile } from 'modules/user/sagas';
 import { watchCharity, watchCharityPeriodically } from 'modules/charity/sagas';
 import { watchNotifications } from 'modules/notifications/sagas';
+import { watchBankSystem } from 'modules/bank/sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -16,5 +17,6 @@ export default function* rootSaga() {
     watchCharity(),
     watchCharityPeriodically(),
     watchNotifications(),
+    watchBankSystem(),
   ]);
 }

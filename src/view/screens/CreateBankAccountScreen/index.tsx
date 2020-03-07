@@ -32,9 +32,6 @@ interface Props {
 export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const route = navigation.state.params && navigation.state.params;
   console.log('route: ', route);
-  // const goBack = useCallback(() => {
-  //   navigation.navigate('HomeScreen', { route: 'notUpdate' });
-  // }, []);
 
   return (
     <Container>

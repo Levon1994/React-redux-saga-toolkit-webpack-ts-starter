@@ -48,9 +48,8 @@ export const BanksListScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const doSearch = React.useCallback(value => {
     clearTimeout(delayTimer);
     delayTimer = setTimeout(() => {
-      // Do the fetch data
       getBanksList(value);
-    }, 2000); // Will do the  the fetch data after 2000 ms, or 2 s
+    }, 1000); // Will do the the fetch data after 1000 ms, or 1 s
   }, []);
 
   const listView = showFullList ? (

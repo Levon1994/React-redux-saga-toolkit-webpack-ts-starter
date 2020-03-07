@@ -110,7 +110,7 @@ const HeadStack = (initialRouteName: string) =>
 
 export const AppContainer = () => {
   const { isOnBoardingReviewed } = useSelector((state: RootState) => state.onboardingReducer);
-  const userToken = useSelector((state: RootState) => state.authReducer.userToken);
+  const userToken = useSelector((state: RootState) => state.userReducer.userToken);
 
   if (userToken) {
     Api.setAuthToken(userToken);

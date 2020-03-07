@@ -19,6 +19,7 @@ const defaultState: UserState = {
   isLoadingUserData: false,
   getUserDataError: {},
   errors: {},
+  userToken: null,
 };
 
 export const userReducer = createReducer(defaultState, handle => [
@@ -26,7 +27,8 @@ export const userReducer = createReducer(defaultState, handle => [
     setUser,
     (state, { payload }): UserState => ({
       ...state,
-      userId: payload,
+      userId: payload.user_id,
+      userToken: payload.access_token,
     }),
   ),
   handle(
@@ -53,6 +55,7 @@ export const userReducer = createReducer(defaultState, handle => [
       },
       isLoadingUserData: false,
       errors: {},
+      getUserDataError: {},
     }),
   ),
   handle(

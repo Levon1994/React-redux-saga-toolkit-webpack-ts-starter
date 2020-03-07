@@ -1,6 +1,6 @@
 import { createAction } from 'deox';
 import { ResponseErrors } from 'types/responseData';
-import { BanksList } from './types';
+import { BanksList, BanksState } from './types';
 
 export const getBanksList = createAction(
   'bank/GET_BANKS_LIST_REQUEST',
@@ -27,4 +27,9 @@ export const getTopBanksSuccess = createAction(
 export const getTopBanksFail = createAction(
   'bank/GET_TOP_BANKS_FAIL',
   resolve => (payload: ResponseErrors) => resolve(payload),
+);
+
+export const changeValue = createAction(
+  'bank/CHANGE_VALUE',
+  resolve => (payload: Partial<BanksState>) => resolve(payload),
 );

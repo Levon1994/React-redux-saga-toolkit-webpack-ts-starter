@@ -14,7 +14,7 @@ import { bankReducer } from 'modules/bank';
 const rootPersistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['onboardingReducer', 'userReducer', 'authReducer'],
+  whitelist: ['onboardingReducer', 'userReducer'],
 };
 
 const appReducer = combineReducers({

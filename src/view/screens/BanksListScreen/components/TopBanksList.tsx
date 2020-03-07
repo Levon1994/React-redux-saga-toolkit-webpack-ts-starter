@@ -36,7 +36,7 @@ export const TopBanksList: React.FC<Props> = React.memo(({ navigation }) => {
             }}
           >
             <TopLogoBlock>
-              <TopStyledImage source={{ uri: item.logo_square }} />
+              {item.logo && <TopStyledImage source={{ uri: item.logo }} />}
             </TopLogoBlock>
           </TouchableOpacity>
         </ContainerTopList>
@@ -45,19 +45,21 @@ export const TopBanksList: React.FC<Props> = React.memo(({ navigation }) => {
   };
   return (
     <TopFlatListBlock>
-      <FlatList
-        key={2}
-        data={topBanks}
-        renderItem={renderTopBanks}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        style={{
-          width: '100%',
-        }}
-      />
+      {topBanks.length > 0 && (
+        <FlatList
+          key={2}
+          data={topBanks.slice(0, 8)}
+          renderItem={renderTopBanks}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => String(index)}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          style={{
+            width: '100%',
+          }}
+        />
+      )}
     </TopFlatListBlock>
   );
 });

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
@@ -6,11 +7,11 @@ import { FlatList, ScrollView, RefreshControl } from 'react-native';
 
 import { UserProfile } from 'modules/user/types';
 import { UserCharity } from 'modules/charity/types';
-import * as Actions from 'modules/charity/actions';
 
 import { ScreenWidth } from 'utils/helpers';
+import { ResponseErrors } from 'types/responseData';
 
-import { DonationComponent } from 'view/components';
+import { DonationComponent, globalErrorBlock } from 'view/components';
 import { Box } from 'view/components/uiKit/Box';
 import { Loader } from 'view/components/uiKit/Loader';
 import { CharityItem } from './CharityItem';
@@ -35,9 +36,11 @@ interface MyImpactProps {
   isLoadingUserData: boolean;
   userCharityData: UserCharity;
   isLoadingCharityData: boolean;
-  onRefresh: typeof Actions.getUserCharity;
+  onRefresh: any;
   goToChooseCharity: any;
   goToProfile: any;
+  getUserCharityError: ResponseErrors;
+  getUserDataError: ResponseErrors;
 }
 
 export const MyImpactContainer = ({
@@ -48,6 +51,8 @@ export const MyImpactContainer = ({
   onRefresh,
   goToChooseCharity,
   goToProfile,
+  getUserCharityError,
+  getUserDataError,
 }: MyImpactProps) => {
   const renderCharityItem = ({ item }: any) => <CharityItem item={item} />;
   return (
@@ -57,29 +62,32 @@ export const MyImpactContainer = ({
         <Loader />
       ) : (
         <>
-          <Header>
-            {/* top header */}
-            <TopHeaderBlock>
-              <UserNameBlock>
-                <UserName>{`${first_name} ${last_name && last_name.charAt(0)}.`}</UserName>
-              </UserNameBlock>
-              <ProfileViewBlock>
-                <ProfileViewButton onPress={goToProfile} />
-              </ProfileViewBlock>
-            </TopHeaderBlock>
-            {/* bottom header */}
-            <BottomHeaderBlock>
-              <DonationComponent
-                price={userCharityData.weekly_amount}
-                description="this week donation"
-                isMargin
-              />
-              <DonationComponent
-                price={userCharityData.all_time_amount}
-                description="all time donation"
-              />
-            </BottomHeaderBlock>
-          </Header>
+          {globalErrorBlock(getUserCharityError) || globalErrorBlock(getUserDataError)}
+          {Object.keys(getUserCharityError).length > 0 || Object.keys(getUserDataError).length > 0 || (
+            <Header>
+              {/* top header */}
+              <TopHeaderBlock>
+                <UserNameBlock>
+                  <UserName>{`${first_name} ${last_name && last_name.charAt(0)}.`}</UserName>
+                </UserNameBlock>
+                <ProfileViewBlock>
+                  <ProfileViewButton onPress={goToProfile} />
+                </ProfileViewBlock>
+              </TopHeaderBlock>
+              {/* bottom header */}
+              <BottomHeaderBlock>
+                <DonationComponent
+                  price={userCharityData.weekly_amount}
+                  description="this week donation"
+                  isMargin
+                />
+                <DonationComponent
+                  price={userCharityData.all_time_amount}
+                  description="all time donation"
+                />
+              </BottomHeaderBlock>
+            </Header>
+          )}
           {/* main block */}
           <ScrollView
             keyboardShouldPersistTaps="handled"

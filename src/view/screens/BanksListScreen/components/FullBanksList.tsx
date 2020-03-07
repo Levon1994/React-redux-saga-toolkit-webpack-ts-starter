@@ -41,7 +41,12 @@ export const FullBanksList: React.FC<Props> = React.memo(({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate('CreateBankAccount', { item })}>
           <RightBlock>
             <LogoBlock>
-              <StyledImage source={{ uri: item.logo_square }} />
+              {item.logo && (
+                <StyledImage
+                  source={{ uri: item.logo }}
+                  style={{ width: '100%', height: '100%' }}
+                />
+              )}
             </LogoBlock>
             <CharityNameBlock>
               <CharityName>{item.name}</CharityName>
@@ -53,7 +58,7 @@ export const FullBanksList: React.FC<Props> = React.memo(({ navigation }) => {
   };
   return (
     <FlatListBlock>
-      {banksList.length !== 0 ? (
+      {banksList.length > 0 ? (
         <FlatList
           key={1}
           data={banksList}

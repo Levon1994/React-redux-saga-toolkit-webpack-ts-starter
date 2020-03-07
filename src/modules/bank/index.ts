@@ -10,8 +10,8 @@ import {
   getTopBanks,
   getTopBanksSuccess,
   getTopBanksFail,
+  changeValue,
 } from './actions';
-import { changeValue } from '../auth/actions';
 import { BanksState } from './types';
 
 const defaultState: BanksState = {

@@ -22,8 +22,8 @@ function* registerSaga() {
     };
     const { data } = yield Register.register(requestData);
     Api.setAuthToken(data.access_token);
-    yield put(setUser(data.user_id));
-    yield put(registerSuccess(data.access_token));
+    yield put(setUser(data));
+    yield put(registerSuccess());
   } catch (e) {
     yield put(processRequestError({ error: e, failAction: registerFail }));
   }

@@ -95,12 +95,10 @@ export const LogoBlock = styled(Box).attrs({
 })``;
 
 export const StyledImage = styled.Image.attrs({
-  resizeMode: 'cover',
+  resizeMode: 'contain',
 })`
   width: 60;
   height: 70;
-  border-width: 1;
-  border-color: red;
 `;
 
 export const CharityNameBlock = styled(Box).attrs({
@@ -132,7 +130,7 @@ export const TopLogoBlock = styled(Box).attrs({
 })``;
 
 export const TopStyledImage = styled.Image.attrs({
-  resizeMode: 'cover',
+  resizeMode: 'contain',
 })`
   width: 100%;
   height: 100%;

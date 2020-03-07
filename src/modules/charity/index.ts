@@ -9,6 +9,7 @@ import {
   getUserCharityFail,
   getUserFeed,
   getUserFeedSuccess,
+  getMoreUserFeedSuccess,
   getUserFeedFail,
 } from './actions';
 import { CharityState } from './types';
@@ -20,6 +21,7 @@ const defaultState: CharityState = {
   isLoadingCharityData: false,
   getUserCharityError: {},
   isLoadMore: true,
+  getUserFeedError: {},
 };
 
 export const charityReducer = createReducer(defaultState, handle => [
@@ -33,6 +35,7 @@ export const charityReducer = createReducer(defaultState, handle => [
       ...state,
       userCharityData: payload,
       isLoadingCharityData: false,
+      getUserCharityError: {},
     }),
   ),
   handle(
@@ -47,7 +50,7 @@ export const charityReducer = createReducer(defaultState, handle => [
     ...state,
   })),
   handle(
-    getUserFeedSuccess,
+    getMoreUserFeedSuccess,
     (state, { payload }): CharityState => {
       const feedArray: any[] = [];
       Object.entries(payload.donations).forEach(([key, value]) => feedArray.push({ [key]: value }));
@@ -61,10 +64,23 @@ export const charityReducer = createReducer(defaultState, handle => [
     },
   ),
   handle(
+    getUserFeedSuccess,
+    (state, { payload }): CharityState => {
+      const feedArray: any[] = [];
+      Object.entries(payload.donations).forEach(([key, value]) => feedArray.push({ [key]: value }));
+      return {
+        ...state,
+        userFeedData: feedArray,
+        next_page: payload.next_page,
+        getUserFeedError: {},
+      };
+    },
+  ),
+  handle(
     getUserFeedFail,
     (state, { payload }): CharityState => ({
       ...state,
-      getUserCharityError: payload,
+      getUserFeedError: payload,
     }),
   ),
 ]);

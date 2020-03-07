@@ -14,7 +14,6 @@ const defaultState: AuthState = {
   },
   registerStatus: false,
   errors: {},
-  userToken: null,
 };
 
 export const authReducer = createReducer(defaultState, handle => [
@@ -46,10 +45,9 @@ export const authReducer = createReducer(defaultState, handle => [
   ),
   handle(
     registerSuccess,
-    (state, { payload }): AuthState => ({
+    (state): AuthState => ({
       ...state,
       registerStatus: false,
-      userToken: payload,
     }),
   ),
   handle(

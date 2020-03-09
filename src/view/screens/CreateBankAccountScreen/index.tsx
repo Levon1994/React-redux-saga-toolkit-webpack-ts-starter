@@ -25,6 +25,8 @@ import {
   InputWrapper,
   ButtonWrapper,
   StyledButton,
+  ErrorBlock,
+  ErrorTitlte,
 } from './styled';
 
 interface Props {
@@ -36,8 +38,15 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
   const { values, errors, isLoadingCreateBankAccount } = useSelector(
     (state: RootState) => state.bankReducer,
   );
+  const { createdBankAccountStatus } = useSelector((state: RootState) => state.userReducer);
   const changeValue = useAction(Actions.changeValue);
   const createBankAccount = useAction(Actions.createBankAccount);
+
+  React.useEffect(() => {
+    if (createdBankAccountStatus) {
+      navigation.navigate('AddCard');
+    }
+  }, [createdBankAccountStatus]);
 
   const isButtonDisabled = React.useMemo(() => {
     const required = pick(values, ['loginId', 'password']);
@@ -52,6 +61,11 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
         </GoBackBlock>
         <Title>Add account</Title>
       </Header>
+      {Object.keys(errors).length === 1 && Object.keys(errors)[0] === 'object_error' && (
+        <ErrorBlock>
+          <ErrorTitlte>{Object.values(errors)}</ErrorTitlte>
+        </ErrorBlock>
+      )}
       {/* main block */}
       <StyledKeyboardAvoidingView>
         <MainBlock>

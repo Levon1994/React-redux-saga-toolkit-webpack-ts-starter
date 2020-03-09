@@ -39,10 +39,7 @@ export const createBankAccount = createAction(
   resolve => (payload: string) => resolve(payload),
 );
 
-export const createBankAccountSuccess = createAction(
-  'bank/CREATE_BANK_ACCOUNT_SUCCESS',
-  resolve => (payload: any) => resolve(payload),
-);
+export const createBankAccountSuccess = createAction('bank/CREATE_BANK_ACCOUNT_SUCCESS');
 
 export const createBankAccountFail = createAction(
   'bank/CREATE_BANK_ACCOUNT_FAIL',

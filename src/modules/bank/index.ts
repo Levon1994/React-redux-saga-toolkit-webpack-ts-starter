@@ -88,21 +88,20 @@ export const bankReducer = createReducer(defaultState, handle => [
   ),
   handle(createBankAccount, state => ({
     ...state,
-    // isLoadingCreateBankAccount: true,
+    isLoadingCreateBankAccount: true,
   })),
   handle(
     createBankAccountSuccess,
-    (state, { payload }): BanksState => ({
+    (state): BanksState => ({
       ...state,
-      // banksList: payload,
-      // isLoadingCreateBankAccount: false,
+      isLoadingCreateBankAccount: false,
     }),
   ),
   handle(
     createBankAccountFail,
     (state, { payload }): BanksState => ({
       ...state,
-      // isLoadingCreateBankAccount: false,
+      isLoadingCreateBankAccount: false,
       errors: payload,
     }),
   ),

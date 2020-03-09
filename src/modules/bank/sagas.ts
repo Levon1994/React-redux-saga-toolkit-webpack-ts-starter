@@ -6,6 +6,7 @@ import { BankSystemResponse, BankSystem } from 'api/BankSystem';
 import { RootState } from 'types';
 
 import { processRequestError } from 'modules/errors/actions';
+import { setStatusCreatedBankAccount } from 'modules/user/actions';
 import {
   getBanksList,
   getBanksListSuccess,
@@ -14,8 +15,8 @@ import {
   getTopBanksSuccess,
   getTopBanksFail,
   createBankAccount,
-  // createBankAccountSuccess,
-  // createBankAccountFail,
+  createBankAccountSuccess,
+  createBankAccountFail,
 } from './actions';
 
 function* getBanksListSaga({ payload }: ActionType<typeof getBanksList>) {
@@ -37,23 +38,30 @@ function* getTopBanksSaga() {
 }
 
 function* createBankAccountSaga({ payload }: ActionType<typeof createBankAccount>) {
+  console.log('payload: ', payload);
   try {
     const { values } = yield select((state: RootState) => state.bankReducer);
     const { userId } = yield select((state: RootState) => state.userReducer);
     const requestData = {
       user_id: userId,
-      bank_id: payload,
+      // test mode
+      bank_id: 'AU00000',
+      // real mode
+      // bank_id: payload,
       loginId: values.loginId.trim(),
       password: values.password.trim(),
-      secondaryLoginId: values.secondaryLoginId.trim(),
-      securityCode: values.securityCode.trim(),
     };
-    const { data } = yield BankSystem.createUserBankAccount(requestData);
-    console.log('data: ', data);
-    // yield put(createBankAccountSuccess());
+    if (values.secondaryLoginId.trim().length > 0) {
+      requestData.secondaryLoginId = values.secondaryLoginId.trim();
+    }
+    if (values.securityCode.trim().length > 0) {
+      requestData.securityCode = values.securityCode.trim();
+    }
+    yield BankSystem.createUserBankAccount(requestData);
+    yield put(setStatusCreatedBankAccount());
+    yield put(createBankAccountSuccess());
   } catch (e) {
-    console.log('e: ', e.response);
-    // yield put(processRequestError({ error: e, failAction: createBankAccountFail }));
+    yield put(processRequestError({ error: e, failAction: createBankAccountFail }));
   }
 }
 

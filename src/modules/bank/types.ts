@@ -25,7 +25,6 @@ export interface Values {
 export interface BanksState {
   banksList: BanksList[];
   topBanks: BanksList[];
-  searchValue: string;
   isLoadingBanksList: boolean;
   isLoadingTopBanksList: boolean;
   getBanksListError: ResponseErrors;

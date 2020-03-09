@@ -102,7 +102,7 @@ export const StyledImage = styled.Image.attrs({
 `;
 
 export const CharityNameBlock = styled(Box).attrs({
-  width: '75%',
+  width: '72%',
 })``;
 
 export const CharityName = styled(Text).attrs(({ theme }) => ({

@@ -137,3 +137,16 @@ export const StyledButton = styled(Button).attrs({
   height: 50,
   size: '14',
 })``;
+
+// error
+export const ErrorBlock = styled(Box).attrs(({ theme }) => ({
+  bg: theme.colors.errorBackground,
+  br: 4,
+  center: true,
+  align: 'center',
+  p: '9px',
+}))``;
+
+export const ErrorTitlte = styled(Text).attrs(({ theme }) => ({
+  color: theme.colors.error,
+}))``;

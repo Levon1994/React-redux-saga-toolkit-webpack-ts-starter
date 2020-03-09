@@ -9,7 +9,7 @@ export const ErrorBlock = styled(Box).attrs(({ theme }) => ({
   center: true,
   align: 'center',
   p: '9px',
-  mb: 16,
+  mb: 10,
 }))``;
 
 export const ErrorTitlte = styled(Text).attrs(({ theme }) => ({

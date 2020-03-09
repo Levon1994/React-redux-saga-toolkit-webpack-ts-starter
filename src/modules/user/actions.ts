@@ -12,6 +12,8 @@ export const setWeeklyAmount = createAction(
   resolve => (payload: number) => resolve(payload),
 );
 
+export const setStatusCreatedBankAccount = createAction('user/SET_STATUS_CREATED_BANK_ACCOUNT');
+
 export const getUser = createAction('user/GET_USER_REQUEST');
 
 export const getUserSuccess = createAction(

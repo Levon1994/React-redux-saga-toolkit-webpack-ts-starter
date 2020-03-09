@@ -4,7 +4,14 @@ import { createReducer } from 'deox';
 import { validateField } from 'utils/validation';
 
 import { changeValue } from 'modules/auth/actions';
-import { setUser, setWeeklyAmount, getUser, getUserSuccess, getUserFail } from './actions';
+import {
+  setUser,
+  setWeeklyAmount,
+  setStatusCreatedBankAccount,
+  getUser,
+  getUserSuccess,
+  getUserFail,
+} from './actions';
 import { UserState } from './types';
 
 const defaultState: UserState = {
@@ -20,6 +27,7 @@ const defaultState: UserState = {
   getUserDataError: {},
   errors: {},
   userToken: null,
+  createdBankAccountStatus: false,
 };
 
 export const userReducer = createReducer(defaultState, handle => [
@@ -39,6 +47,13 @@ export const userReducer = createReducer(defaultState, handle => [
         ...state.user,
         weekly_goal: payload,
       },
+    }),
+  ),
+  handle(
+    setStatusCreatedBankAccount,
+    (state): UserState => ({
+      ...state,
+      createdBankAccountStatus: true,
     }),
   ),
   handle(getUser, state => ({

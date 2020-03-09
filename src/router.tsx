@@ -55,8 +55,27 @@ const CreateBankAccountStack = createStackNavigator(
 
 const CharityStack = createStackNavigator(
   {
-    // SelectCharity: SelectCharityScreen,
+    SelectCharity: SelectCharityScreen,
     AuthorizeCharity: CreateBankAccountStack,
+    AddCard: AddCardScreen,
+    ScanCard: ScanCardIOS,
+    SelectWeeklyAmount: {
+      screen: SelectWeeklyAmountScreen,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
+    },
+  },
+  {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      cardStyle: { backgroundColor: '#FFFFFF' },
+    },
+  },
+);
+
+const AddCardStack = createStackNavigator(
+  {
     AddCard: AddCardScreen,
     ScanCard: ScanCardIOS,
     SelectWeeklyAmount: {
@@ -101,6 +120,7 @@ const HeadStack = (initialRouteName: string) =>
       OnBoardingScreen,
       Auth: AuthStack,
       CharityStack,
+      AddCardStack,
       Home: HomeStack,
     },
     {
@@ -111,6 +131,9 @@ const HeadStack = (initialRouteName: string) =>
 export const AppContainer = () => {
   const { isOnBoardingReviewed } = useSelector((state: RootState) => state.onboardingReducer);
   const userToken = useSelector((state: RootState) => state.userReducer.userToken);
+  const createdBankAccountStatus = useSelector(
+    (state: RootState) => state.userReducer.createdBankAccountStatus,
+  );
 
   if (userToken) {
     Api.setAuthToken(userToken);
@@ -124,6 +147,10 @@ export const AppContainer = () => {
   if (userToken) {
     initialRouteName = userToken ? 'CharityStack' : 'Auth';
     // initialRouteName = userToken ? 'Home' : 'Auth';
+  }
+
+  if (createdBankAccountStatus) {
+    initialRouteName = userToken ? 'AddCardStack' : 'Auth';
   }
 
   const Container = createAppContainer(HeadStack(initialRouteName));

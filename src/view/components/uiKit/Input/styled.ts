@@ -12,7 +12,7 @@ interface ContainerProps {
 export const InputContainer = styled(Box).attrs<ContainerProps>(({ error, theme }) => ({
   width: '100%',
   border: `1px solid ${error ? theme.colors.error : theme.colors.inputBorder}`,
-  p: `${moderateScale(16, 0.2)}px`,
+  p: `0px ${moderateScale(16, 0.2)}px 0px`,
   pr: `${moderateScale(2, 0.2)}px`,
   row: true,
   align: 'center',
@@ -28,8 +28,9 @@ export const Label = styled(Text).attrs(({ theme }) => ({
 }))``;
 
 const inputCss = css`
-  height: ${moderateScale(17, 0.2)};
-  padding: 0;
+  height: 100%;
+  padding: ${moderateScale(16, 0.2)}px;
+  padding-left: 0;
   font-size: ${moderateScale(14, 0.2)};
   font-family: ${({ theme }) => theme.defaultFontFamily};
   color: ${({ theme }) => theme.colors.secondaryText};

@@ -1,7 +1,7 @@
 export const SCREENS = [
   {
     title: 'Choose your charity',
-    text: 'It’s a simple as selecting from the many\ncharities we’ve partnered with.',
+    text: 'It’s as simple as selecting from the many\ncharities we’ve partnered with.',
     image: require('assets/img/onboarding-screen-1.png'),
   },
   {

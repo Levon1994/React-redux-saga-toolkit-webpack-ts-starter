@@ -11,9 +11,7 @@ export const changeValue = createAction(
 
 export const register = createAction('auth/REGISTER_REQUEST');
 
-export const registerSuccess = createAction('auth/REGISTER_SUCCESS', resolve => (payload: string) =>
-  resolve(payload),
-);
+export const registerSuccess = createAction('auth/REGISTER_SUCCESS');
 
 export const registerFail = createAction(
   'auth/REGISTER_FAIL',

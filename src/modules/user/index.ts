@@ -4,7 +4,14 @@ import { createReducer } from 'deox';
 import { validateField } from 'utils/validation';
 
 import { changeValue } from 'modules/auth/actions';
-import { setUser, setWeeklyAmount, getUser, getUserSuccess, getUserFail } from './actions';
+import {
+  setUser,
+  setWeeklyAmount,
+  setStatusCreatedBankAccount,
+  getUser,
+  getUserSuccess,
+  getUserFail,
+} from './actions';
 import { UserState } from './types';
 
 const defaultState: UserState = {
@@ -19,6 +26,8 @@ const defaultState: UserState = {
   isLoadingUserData: false,
   getUserDataError: {},
   errors: {},
+  userToken: null,
+  createdBankAccountStatus: false,
 };
 
 export const userReducer = createReducer(defaultState, handle => [
@@ -26,7 +35,8 @@ export const userReducer = createReducer(defaultState, handle => [
     setUser,
     (state, { payload }): UserState => ({
       ...state,
-      userId: payload,
+      userId: payload.user_id,
+      userToken: payload.access_token,
     }),
   ),
   handle(
@@ -37,6 +47,13 @@ export const userReducer = createReducer(defaultState, handle => [
         ...state.user,
         weekly_goal: payload,
       },
+    }),
+  ),
+  handle(
+    setStatusCreatedBankAccount,
+    (state): UserState => ({
+      ...state,
+      createdBankAccountStatus: true,
     }),
   ),
   handle(getUser, state => ({
@@ -53,6 +70,7 @@ export const userReducer = createReducer(defaultState, handle => [
       },
       isLoadingUserData: false,
       errors: {},
+      getUserDataError: {},
     }),
   ),
   handle(

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
@@ -6,9 +7,9 @@ import { FlatList, ScrollView, RefreshControl } from 'react-native';
 
 import { UserProfile } from 'modules/user/types';
 import { UserCharity } from 'modules/charity/types';
-import * as Actions from 'modules/charity/actions';
 
 import { ScreenWidth } from 'utils/helpers';
+import { ResponseErrors } from 'types/responseData';
 
 import { DonationComponent } from 'view/components';
 import { Box } from 'view/components/uiKit/Box';
@@ -28,6 +29,8 @@ import {
   FlatListBlock,
   EditCharitiesBlock,
   EditCharitiesButton,
+  ErrorBlock,
+  ErrorTitlte,
 } from './styled';
 
 interface MyImpactProps {
@@ -35,9 +38,11 @@ interface MyImpactProps {
   isLoadingUserData: boolean;
   userCharityData: UserCharity;
   isLoadingCharityData: boolean;
-  onRefresh: typeof Actions.getUserCharity;
+  onRefresh: any;
   goToChooseCharity: any;
   goToProfile: any;
+  getUserCharityError: ResponseErrors;
+  getUserDataError: ResponseErrors;
 }
 
 export const MyImpactContainer = ({
@@ -48,8 +53,13 @@ export const MyImpactContainer = ({
   onRefresh,
   goToChooseCharity,
   goToProfile,
+  getUserCharityError,
+  getUserDataError,
 }: MyImpactProps) => {
   const renderCharityItem = ({ item }: any) => <CharityItem item={item} />;
+  const isShowError =
+    Object.values(getUserCharityError).length > 0 || Object.values(getUserDataError).length > 0;
+
   return (
     <Container>
       {/* header */}
@@ -80,6 +90,15 @@ export const MyImpactContainer = ({
               />
             </BottomHeaderBlock>
           </Header>
+          {/* error */}
+          {isShowError && (
+            <ErrorBlock>
+              <ErrorTitlte>
+                {`${Object.values(getUserCharityError) ||
+                  Object.values(getUserDataError)} Cannot update your data.`}
+              </ErrorTitlte>
+            </ErrorBlock>
+          )}
           {/* main block */}
           <ScrollView
             keyboardShouldPersistTaps="handled"

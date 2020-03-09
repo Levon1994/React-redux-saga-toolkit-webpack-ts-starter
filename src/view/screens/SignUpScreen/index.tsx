@@ -8,6 +8,7 @@ import { RootState, Navigation } from 'types';
 import * as Actions from 'modules/auth/actions';
 
 import { Input } from 'view/components/uiKit/Input';
+import { globalErrorBlock } from 'view/components';
 import {
   Container,
   Header,
@@ -40,7 +41,8 @@ export const SignUpScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const isButtonDisabled = React.useMemo(() => {
     const required = pick(values, ['firstName', 'lastName', 'email', 'password']);
     return (
-      Object.values(required).some(v => !v.trim()) || Object.values(errors).some(v => !!v.trim())
+      Object.values(required).some(v => !v.trim()) ||
+      (Object.keys(errors)[0] !== 'object_error' && Object.values(errors).some(v => !!v.trim()))
     );
   }, [values, errors]);
 
@@ -53,6 +55,9 @@ export const SignUpScreen: React.FC<Props> = React.memo(({ navigation }) => {
       {/* main block */}
       <StyledKeyboardAvoidingView>
         <MainBlock>
+          {Object.keys(errors).length === 1 &&
+            Object.keys(errors)[0] === 'object_error' &&
+            globalErrorBlock(errors)}
           <StyledScrollView>
             <InputWrapper>
               <Input

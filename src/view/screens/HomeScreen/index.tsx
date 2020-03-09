@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { TabView, SceneMap } from 'react-native-tab-view';
@@ -25,8 +26,10 @@ interface Props {
 export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
-  const { user, isLoadingUserData } = useSelector((state: RootState) => state.userReducer);
-  const { userCharityData, isLoadingCharityData } = useSelector(
+  const { user, isLoadingUserData, getUserDataError } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
+  const { userCharityData, isLoadingCharityData, getUserCharityError } = useSelector(
     (state: RootState) => state.charityReducer,
   );
 
@@ -42,8 +45,14 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
     }
     getUserData();
     getUserCharityData();
-    getUserFeedData();
+    getUserFeedData(false);
   }, [navigation]);
+
+  const onRefresh = () => {
+    getUserData();
+    getUserCharityData();
+    getUserFeedData(false);
+  };
 
   const tabHome = [
     { key: Tabs.MyImpact, title: 'My Impact' },
@@ -59,7 +68,9 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
             isLoadingUserData={isLoadingUserData}
             userCharityData={userCharityData}
             isLoadingCharityData={isLoadingCharityData}
-            onRefresh={getUserCharityData}
+            getUserCharityError={getUserCharityError}
+            getUserDataError={getUserDataError}
+            onRefresh={onRefresh}
             goToChooseCharity={() => navigation.navigate('SelectCharity', { route: 'edit' })}
             goToProfile={() => navigation.navigate('ProfileSettings')}
           />
@@ -69,7 +80,10 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
     [Tabs.PersonalDetails]: useMemo(
       () =>
         TabScene(() => (
-          <PersonalDetails editCard={() => navigation.navigate('AddCard', { route: 'edit' })} />
+          <PersonalDetails
+            editCard={() => navigation.navigate('AddCard', { route: 'edit' })}
+            onRefresh={onRefresh}
+          />
         )),
       [],
     ),

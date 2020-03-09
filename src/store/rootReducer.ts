@@ -9,11 +9,12 @@ import { cardReducer } from 'modules/card';
 import { userReducer } from 'modules/user';
 import { charityReducer } from 'modules/charity';
 import { notificationsReducer } from 'modules/notifications';
+import { bankReducer } from 'modules/bank';
 
 const rootPersistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['onboardingReducer', 'userReducer', 'authReducer'],
+  whitelist: ['onboardingReducer', 'userReducer', 'charityReducer'],
 };
 
 const appReducer = combineReducers({
@@ -23,6 +24,7 @@ const appReducer = combineReducers({
   userReducer,
   charityReducer,
   notificationsReducer,
+  bankReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: Action) => {

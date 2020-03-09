@@ -113,3 +113,16 @@ export const FlatListBlock = styled(Box).attrs({
   pb: `${moderateScale(16, 0.5)}px`,
   mb: 16,
 })``;
+
+export const ErrorBlock = styled(Box).attrs(({ theme }) => ({
+  bg: theme.colors.errorBackground,
+  br: 4,
+  center: true,
+  align: 'center',
+  p: '9px',
+}))``;
+
+export const ErrorTitlte = styled(Text).attrs(({ theme }) => ({
+  color: theme.colors.error,
+  center: true,
+}))``;

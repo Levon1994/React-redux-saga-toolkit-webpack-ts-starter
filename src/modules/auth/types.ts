@@ -11,5 +11,4 @@ export interface AuthState {
   values: Values;
   registerStatus: boolean;
   errors: ResponseErrors;
-  userToken: string | null;
 }

@@ -27,4 +27,5 @@ export interface CharityState {
   userFeedData: Feed[];
   next_page: number | null;
   page: number;
+  getUserFeedError: ResponseErrors;
 }

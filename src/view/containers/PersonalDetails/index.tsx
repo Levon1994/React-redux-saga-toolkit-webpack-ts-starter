@@ -1,11 +1,12 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ScrollView, RefreshControl } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { RootState } from 'types';
 import { useAction } from 'utils/hooks';
+import { ScreenWidth } from 'utils/helpers';
 
 import { getUserFeed } from 'modules/charity/actions';
 
@@ -32,9 +33,11 @@ import {
   MainBlock,
   ShowHideFeedButton,
   FlatListBlock,
+  ErrorBlock,
+  ErrorTitlte,
 } from './styled';
 
-export const PersonalDetails = ({ editCard }: any) => {
+export const PersonalDetails = ({ editCard, onRefresh }: any) => {
   const [isShowFeed, setShowFeed] = useState(false);
 
   const getUserFeedData = useAction(getUserFeed);
@@ -42,8 +45,11 @@ export const PersonalDetails = ({ editCard }: any) => {
   const {
     user: { weekly_amount, weekly_goal, card },
     isLoadingUserData,
+    getUserDataError,
   } = useSelector((state: RootState) => state.userReducer);
-  const { userFeedData, next_page } = useSelector((state: RootState) => state.charityReducer);
+  const { userFeedData, next_page, getUserFeedError } = useSelector(
+    (state: RootState) => state.charityReducer,
+  );
 
   const showFeed = isShowFeed ? 'Hide feed' : 'Show feed';
   const progressData = (weekly_amount * 100) / weekly_goal;
@@ -52,9 +58,13 @@ export const PersonalDetails = ({ editCard }: any) => {
 
   const loadMoreItems = () => {
     if (next_page) {
-      getUserFeedData();
+      getUserFeedData(true);
     }
   };
+
+  const isShowError =
+    Object.values(getUserFeedError).length > 0 || Object.values(getUserDataError).length > 0;
+
   return (
     <Container>
       {/* header */}
@@ -89,33 +99,51 @@ export const PersonalDetails = ({ editCard }: any) => {
               </EditIconBlock>
             </BottomHeaderBlock>
           </Header>
+          {/* error */}
+          {isShowError && (
+            <ErrorBlock>
+              <ErrorTitlte>
+                {`${Object.values(getUserFeedError) ||
+                  Object.values(getUserFeedError)} Cannot update your data.`}
+              </ErrorTitlte>
+            </ErrorBlock>
+          )}
           {/* main block */}
-          <MainBlock>
-            {/* show/hide button */}
-            <ShowHideFeedButton
-              label={showFeed}
-              bg={isShowFeed ? '#E4EDF7' : '#1D65BC'}
-              color={isShowFeed && '#1D65BC'}
-              onPress={() => setShowFeed(!isShowFeed)}
-            />
-            {/* flatlist */}
-            {isShowFeed && (
-              <FlatListBlock>
-                <FlatList
-                  data={userFeedData}
-                  renderItem={renderFeedListItem}
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={(item, index) => String(index)}
-                  onEndReachedThreshold={0.1}
-                  onEndReached={loadMoreItems}
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              </FlatListBlock>
-            )}
-          </MainBlock>
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{
+              flex: 1,
+              width: ScreenWidth,
+            }}
+            refreshControl={<RefreshControl refreshing={isLoadingUserData} onRefresh={onRefresh} />}
+          >
+            <MainBlock>
+              {/* show/hide button */}
+              <ShowHideFeedButton
+                label={showFeed}
+                bg={isShowFeed ? '#E4EDF7' : '#1D65BC'}
+                color={isShowFeed && '#1D65BC'}
+                onPress={() => setShowFeed(!isShowFeed)}
+              />
+              {/* flatlist */}
+              {isShowFeed && (
+                <FlatListBlock>
+                  <FlatList
+                    data={userFeedData}
+                    renderItem={renderFeedListItem}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => String(index)}
+                    onEndReachedThreshold={0.1}
+                    onEndReached={loadMoreItems}
+                    style={{
+                      width: '100%',
+                    }}
+                  />
+                </FlatListBlock>
+              )}
+            </MainBlock>
+          </ScrollView>
         </>
       )}
     </Container>

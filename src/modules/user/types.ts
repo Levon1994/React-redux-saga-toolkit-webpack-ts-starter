@@ -16,4 +16,6 @@ export interface UserState {
   isLoadingUserData: boolean;
   getUserDataError: ResponseErrors;
   errors: ResponseErrors;
+  userToken: string | null;
+  createdBankAccountStatus: boolean;
 }

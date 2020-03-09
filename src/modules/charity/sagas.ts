@@ -35,7 +35,6 @@ function* getUserFeedSaga({ payload }: ActionType<typeof getUserFeed>) {
       page = next_page;
     }
     const { data }: FeedResponse = yield Charity.getUserFeed(userId, page);
-    console.log('data: ', data);
     if (payload) {
       yield put(getMoreUserFeedSuccess(data));
     } else {
@@ -48,7 +47,7 @@ function* getUserFeedSaga({ payload }: ActionType<typeof getUserFeed>) {
 
 export function* watchCharityPeriodically() {
   while (true) {
-    // get charity 5 times per day
+    // get charity and user feed 5 times per day
     yield delay(17280000);
     yield put(getUserCharity());
     yield put(getUserFeed(false));

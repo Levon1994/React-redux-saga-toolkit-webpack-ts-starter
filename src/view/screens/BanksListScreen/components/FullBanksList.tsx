@@ -38,7 +38,7 @@ export const FullBanksList: React.FC<Props> = React.memo(({ navigation }) => {
           elevation: 4,
         }}
       >
-        <TouchableOpacity onPress={() => navigation.navigate('CreateBankAccount', { item })}>
+        <TouchableOpacity onPress={() => navigation.navigate('CreateBankAccount', item)}>
           <RightBlock>
             <LogoBlock>
               {item.logo && (

@@ -11,7 +11,7 @@ import { UserCharity } from 'modules/charity/types';
 import { ScreenWidth } from 'utils/helpers';
 import { ResponseErrors } from 'types/responseData';
 
-import { DonationComponent, globalErrorBlock } from 'view/components';
+import { DonationComponent } from 'view/components';
 import { Box } from 'view/components/uiKit/Box';
 import { Loader } from 'view/components/uiKit/Loader';
 import { CharityItem } from './CharityItem';
@@ -29,6 +29,8 @@ import {
   FlatListBlock,
   EditCharitiesBlock,
   EditCharitiesButton,
+  ErrorBlock,
+  ErrorTitlte,
 } from './styled';
 
 interface MyImpactProps {
@@ -55,6 +57,9 @@ export const MyImpactContainer = ({
   getUserDataError,
 }: MyImpactProps) => {
   const renderCharityItem = ({ item }: any) => <CharityItem item={item} />;
+  const isShowError =
+    Object.values(getUserCharityError).length > 0 || Object.values(getUserDataError).length > 0;
+
   return (
     <Container>
       {/* header */}
@@ -62,31 +67,37 @@ export const MyImpactContainer = ({
         <Loader />
       ) : (
         <>
-          {globalErrorBlock(getUserCharityError) || globalErrorBlock(getUserDataError)}
-          {Object.keys(getUserCharityError).length > 0 || Object.keys(getUserDataError).length > 0 || (
-            <Header>
-              {/* top header */}
-              <TopHeaderBlock>
-                <UserNameBlock>
-                  <UserName>{`${first_name} ${last_name && last_name.charAt(0)}.`}</UserName>
-                </UserNameBlock>
-                <ProfileViewBlock>
-                  <ProfileViewButton onPress={goToProfile} />
-                </ProfileViewBlock>
-              </TopHeaderBlock>
-              {/* bottom header */}
-              <BottomHeaderBlock>
-                <DonationComponent
-                  price={userCharityData.weekly_amount}
-                  description="this week donation"
-                  isMargin
-                />
-                <DonationComponent
-                  price={userCharityData.all_time_amount}
-                  description="all time donation"
-                />
-              </BottomHeaderBlock>
-            </Header>
+          <Header>
+            {/* top header */}
+            <TopHeaderBlock>
+              <UserNameBlock>
+                <UserName>{`${first_name} ${last_name && last_name.charAt(0)}.`}</UserName>
+              </UserNameBlock>
+              <ProfileViewBlock>
+                <ProfileViewButton onPress={goToProfile} />
+              </ProfileViewBlock>
+            </TopHeaderBlock>
+            {/* bottom header */}
+            <BottomHeaderBlock>
+              <DonationComponent
+                price={userCharityData.weekly_amount}
+                description="this week donation"
+                isMargin
+              />
+              <DonationComponent
+                price={userCharityData.all_time_amount}
+                description="all time donation"
+              />
+            </BottomHeaderBlock>
+          </Header>
+          {/* error */}
+          {isShowError && (
+            <ErrorBlock>
+              <ErrorTitlte>
+                {`${Object.values(getUserCharityError) ||
+                  Object.values(getUserDataError)} Cannot update your data.`}
+              </ErrorTitlte>
+            </ErrorBlock>
           )}
           {/* main block */}
           <ScrollView

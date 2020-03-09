@@ -32,7 +32,6 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const { userCharityData, isLoadingCharityData, getUserCharityError } = useSelector(
     (state: RootState) => state.charityReducer,
   );
-  console.log('getUserCharityError', getUserCharityError, getUserDataError);
 
   const getUserData = useAction(getUser);
   const getUserCharityData = useAction(getUserCharity);

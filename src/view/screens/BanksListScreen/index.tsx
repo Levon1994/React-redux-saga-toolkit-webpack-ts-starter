@@ -32,7 +32,7 @@ interface Props {
 export const BanksListScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const [showFullList, setshowFullList] = useState(false);
 
-  const { isLoadingBanksList, isLoadingTopBanksList, searchValue, getBanksListError } = useSelector(
+  const { isLoadingBanksList, isLoadingTopBanksList, getBanksListError } = useSelector(
     (state: RootState) => state.bankReducer,
   );
 
@@ -67,11 +67,7 @@ export const BanksListScreen: React.FC<Props> = React.memo(({ navigation }) => {
         </TopHeaderBlock>
         {showFullList && (
           <BottomHeaderBlock>
-            <SearchInput
-              placeholder="Search all banks"
-              value={searchValue}
-              onChangeText={doSearch}
-            />
+            <SearchInput placeholder="Search all banks" value="" onChangeText={doSearch} />
           </BottomHeaderBlock>
         )}
       </Header>

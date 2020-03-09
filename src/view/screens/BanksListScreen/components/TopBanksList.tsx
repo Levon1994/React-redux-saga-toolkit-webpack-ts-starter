@@ -30,7 +30,7 @@ export const TopBanksList: React.FC<Props> = React.memo(({ navigation }) => {
           }}
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate('CreateBankAccount', { item })}
+            onPress={() => navigation.navigate('CreateBankAccount', item)}
             style={{
               width: '100%',
             }}

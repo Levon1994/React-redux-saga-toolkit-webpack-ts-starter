@@ -17,8 +17,19 @@ export type BankSystemResponse = AxiosResponse<{
   }[];
 }>;
 
+interface BankAccountBody {
+  user_id: number;
+  bank_id: string;
+  loginId: string;
+  password: string;
+  secondaryLoginId?: string;
+  securityCode?: string;
+}
+
 export class BankSystem {
   static getBanksList = (searchValue: string) =>
     Api.get(`v1/basiq/institutions?search=${searchValue}`);
   static getTopBanks = () => Api.get(`v1/basiq/institutions?tier=1`);
+  static createUserBankAccount = (params: BankAccountBody) =>
+    Api.post(`v1/basiq/connections`, params);
 }

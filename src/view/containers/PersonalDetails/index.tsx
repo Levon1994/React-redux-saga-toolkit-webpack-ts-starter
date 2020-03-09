@@ -12,7 +12,6 @@ import { getUserFeed } from 'modules/charity/actions';
 
 import { ProgressBar } from 'view/components/uiKit/ProgressBar';
 import { Loader } from 'view/components/uiKit/Loader';
-import { globalErrorBlock } from 'view/components';
 import { FeedItem } from './FeedItem';
 
 import {
@@ -34,6 +33,8 @@ import {
   MainBlock,
   ShowHideFeedButton,
   FlatListBlock,
+  ErrorBlock,
+  ErrorTitlte,
 } from './styled';
 
 export const PersonalDetails = ({ editCard, onRefresh }: any) => {
@@ -49,7 +50,6 @@ export const PersonalDetails = ({ editCard, onRefresh }: any) => {
   const { userFeedData, next_page, getUserFeedError } = useSelector(
     (state: RootState) => state.charityReducer,
   );
-  console.log('userFeedData: ', userFeedData);
 
   const showFeed = isShowFeed ? 'Hide feed' : 'Show feed';
   const progressData = (weekly_amount * 100) / weekly_goal;
@@ -62,6 +62,9 @@ export const PersonalDetails = ({ editCard, onRefresh }: any) => {
     }
   };
 
+  const isShowError =
+    Object.values(getUserFeedError).length > 0 || Object.values(getUserDataError).length > 0;
+
   return (
     <Container>
       {/* header */}
@@ -69,35 +72,41 @@ export const PersonalDetails = ({ editCard, onRefresh }: any) => {
         <Loader />
       ) : (
         <>
-          {globalErrorBlock(getUserFeedError) || globalErrorBlock(getUserDataError)}
-          {Object.keys(getUserFeedError).length > 0 || Object.keys(getUserDataError).length > 0 || (
-            <Header>
-              {/* top header */}
-              <TopHeaderBlock>
-                <TitleBlock>
-                  <Title>Weekly goal</Title>
-                </TitleBlock>
-                <ProgressBarBlock>
-                  {/* progressbar */}
-                  <ProgressBar progressValue={`${progressData}%`} />
-                </ProgressBarBlock>
-                <DonateBlock>
-                  <DonateInfo>{`Donate $${weekly_amount} of $${weekly_goal}`}</DonateInfo>
-                  <DonateInfo>Tax Deductible</DonateInfo>
-                </DonateBlock>
-              </TopHeaderBlock>
-              {/* bottom header */}
-              <BottomHeaderBlock onPress={editCard}>
-                <CardBlock>
-                  <CardPlaceholder />
-                  <CardInfo>Card ending </CardInfo>
-                  <CardEndInfo>{card.card_ending}</CardEndInfo>
-                </CardBlock>
-                <EditIconBlock>
-                  <EditIcon />
-                </EditIconBlock>
-              </BottomHeaderBlock>
-            </Header>
+          <Header>
+            {/* top header */}
+            <TopHeaderBlock>
+              <TitleBlock>
+                <Title>Weekly goal</Title>
+              </TitleBlock>
+              <ProgressBarBlock>
+                {/* progressbar */}
+                <ProgressBar progressValue={`${progressData}%`} />
+              </ProgressBarBlock>
+              <DonateBlock>
+                <DonateInfo>{`Donate $${weekly_amount} of $${weekly_goal}`}</DonateInfo>
+                <DonateInfo>Tax Deductible</DonateInfo>
+              </DonateBlock>
+            </TopHeaderBlock>
+            {/* bottom header */}
+            <BottomHeaderBlock onPress={editCard}>
+              <CardBlock>
+                <CardPlaceholder />
+                <CardInfo>Card ending </CardInfo>
+                <CardEndInfo>{card.card_ending}</CardEndInfo>
+              </CardBlock>
+              <EditIconBlock>
+                <EditIcon />
+              </EditIconBlock>
+            </BottomHeaderBlock>
+          </Header>
+          {/* error */}
+          {isShowError && (
+            <ErrorBlock>
+              <ErrorTitlte>
+                {`${Object.values(getUserFeedError) ||
+                  Object.values(getUserFeedError)} Cannot update your data.`}
+              </ErrorTitlte>
+            </ErrorBlock>
           )}
           {/* main block */}
           <ScrollView
@@ -110,15 +119,12 @@ export const PersonalDetails = ({ editCard, onRefresh }: any) => {
           >
             <MainBlock>
               {/* show/hide button */}
-              {Object.keys(getUserFeedError).length > 0 ||
-                Object.keys(getUserDataError).length > 0 || (
-                  <ShowHideFeedButton
-                    label={showFeed}
-                    bg={isShowFeed ? '#E4EDF7' : '#1D65BC'}
-                    color={isShowFeed && '#1D65BC'}
-                    onPress={() => setShowFeed(!isShowFeed)}
-                  />
-                )}
+              <ShowHideFeedButton
+                label={showFeed}
+                bg={isShowFeed ? '#E4EDF7' : '#1D65BC'}
+                color={isShowFeed && '#1D65BC'}
+                onPress={() => setShowFeed(!isShowFeed)}
+              />
               {/* flatlist */}
               {isShowFeed && (
                 <FlatListBlock>

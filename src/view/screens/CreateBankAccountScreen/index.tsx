@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 import React from 'react';
-// import { useSelector } from 'react-redux';
+import { Image } from 'react-native';
+import { useSelector } from 'react-redux';
 
-// import { useAction } from 'utils/hooks';
+import { useAction } from 'utils/hooks';
+import { pick } from 'utils/helpers';
 
-import { Navigation } from 'types';
+import { Navigation, RootState } from 'types';
 
-// import * as Actions from 'modules/auth/actions';
+import * as Actions from 'modules/bank/actions';
 
 import { Input } from 'view/components/uiKit/Input';
 import { Box } from 'view/components/uiKit/Box';
@@ -31,8 +33,16 @@ interface Props {
 
 export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const route = navigation.state.params && navigation.state.params;
-  console.log('route: ', route);
+  const { values, errors, isLoadingCreateBankAccount } = useSelector(
+    (state: RootState) => state.bankReducer,
+  );
+  const changeValue = useAction(Actions.changeValue);
+  const createBankAccount = useAction(Actions.createBankAccount);
 
+  const isButtonDisabled = React.useMemo(() => {
+    const required = pick(values, ['loginId', 'password']);
+    return Object.values(required).some(v => !v.trim());
+  }, [values]);
   return (
     <Container>
       {/* header */}
@@ -47,6 +57,13 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
         <MainBlock>
           <StyledScrollView>
             {/* Todo:: add bank's logo */}
+            {route.logo && (
+              <Image
+                source={{ uri: route.logo }}
+                style={{ width: '20%', height: '20%', marginBottom: 5 }}
+                resizeMode="contain"
+              />
+            )}
             <Box mb={15}>
               <InputWrapper>
                 <Input
@@ -55,11 +72,9 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
                   maxLength={50}
                   key="loginId"
                   textContentType="name"
-                  value=""
-                  onChangeText={(value: string) => console.log(value)}
-                  // value={user.first_name}
-                  // onChangeText={(value: string) => changeValue({ first_name: value })}
-                  // error={errors && errors.first_name}
+                  value={values.loginId}
+                  onChangeText={(value: string) => changeValue({ loginId: value })}
+                  error={errors && errors.loginId}
                 />
               </InputWrapper>
               <InputWrapper>
@@ -70,49 +85,48 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
                   secureTextEntry
                   key="password"
                   textContentType="name"
-                  value=""
-                  onChangeText={(value: string) => console.log(value)}
-                  // value={user.last_name}
-                  // onChangeText={(value: string) => changeValue({ last_name: value })}
-                  // error={errors && errors.last_name}
+                  value={values.password}
+                  onChangeText={(value: string) => changeValue({ password: value })}
+                  error={errors && errors.password}
                 />
               </InputWrapper>
-              {route.item.securityCodeCaption && (
+              {route.securityCodeCaption && (
                 <InputWrapper>
                   <Input
-                    label={route.item.securityCodeCaption}
-                    placeholder={route.item.securityCodeCaption}
+                    label={route.securityCodeCaption}
+                    placeholder={route.securityCodeCaption}
                     maxLength={50}
                     key="securityCode"
                     textContentType="name"
-                    value=""
-                    onChangeText={(value: string) => console.log(value)}
-                    // value={user.last_name}
-                    // onChangeText={(value: string) => changeValue({ last_name: value })}
-                    // error={errors && errors.last_name}
+                    value={values.securityCode}
+                    onChangeText={(value: string) => changeValue({ securityCode: value })}
+                    error={errors && errors.securityCode}
                   />
                 </InputWrapper>
               )}
-              {route.item.secondaryLoginIdCaption && (
+              {route.secondaryLoginIdCaption && (
                 <InputWrapper>
                   <Input
-                    label={route.item.secondaryLoginIdCaption}
-                    placeholder={route.item.secondaryLoginIdCaption}
+                    label={route.secondaryLoginIdCaption}
+                    placeholder={route.secondaryLoginIdCaption}
                     maxLength={50}
                     key="secondaryLoginId"
                     textContentType="name"
-                    value=""
-                    onChangeText={(value: string) => console.log(value)}
-                    // value={user.last_name}
-                    // onChangeText={(value: string) => changeValue({ last_name: value })}
-                    // error={errors && errors.last_name}
+                    value={values.secondaryLoginId}
+                    onChangeText={(value: string) => changeValue({ secondaryLoginId: value })}
+                    error={errors && errors.secondaryLoginId}
                   />
                 </InputWrapper>
               )}
             </Box>
           </StyledScrollView>
           <ButtonWrapper>
-            <StyledButton onPress={() => console.log('screen')} />
+            <StyledButton
+              onPress={() => createBankAccount(route.bank_id)}
+              disabled={isButtonDisabled}
+              loading={isLoadingCreateBankAccount}
+              reverseLoader
+            />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>

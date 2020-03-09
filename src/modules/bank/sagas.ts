@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, select } from 'redux-saga/effects';
 import { getType, ActionType } from 'deox';
 
 import { BankSystemResponse, BankSystem } from 'api/BankSystem';
+import { RootState } from 'types';
 
 import { processRequestError } from 'modules/errors/actions';
 import {
@@ -12,17 +13,16 @@ import {
   getTopBanks,
   getTopBanksSuccess,
   getTopBanksFail,
+  createBankAccount,
+  // createBankAccountSuccess,
+  // createBankAccountFail,
 } from './actions';
 
 function* getBanksListSaga({ payload }: ActionType<typeof getBanksList>) {
-  console.log('payload: ', payload);
   try {
-    // const { searchValue } = yield select((state: RootState) => state.bankReducer);
     const { data }: BankSystemResponse = yield BankSystem.getBanksList(payload);
-    console.log('data: ', data);
     yield put(getBanksListSuccess(data));
   } catch (e) {
-    console.log('e: ', e.response);
     yield put(processRequestError({ error: e, failAction: getBanksListFail }));
   }
 }
@@ -30,15 +30,35 @@ function* getBanksListSaga({ payload }: ActionType<typeof getBanksList>) {
 function* getTopBanksSaga() {
   try {
     const { data }: BankSystemResponse = yield BankSystem.getTopBanks();
-    console.log('data: ', data);
     yield put(getTopBanksSuccess(data));
   } catch (e) {
-    console.log('e: ', e.response);
     yield put(processRequestError({ error: e, failAction: getTopBanksFail }));
+  }
+}
+
+function* createBankAccountSaga({ payload }: ActionType<typeof createBankAccount>) {
+  try {
+    const { values } = yield select((state: RootState) => state.bankReducer);
+    const { userId } = yield select((state: RootState) => state.userReducer);
+    const requestData = {
+      user_id: userId,
+      bank_id: payload,
+      loginId: values.loginId.trim(),
+      password: values.password.trim(),
+      secondaryLoginId: values.secondaryLoginId.trim(),
+      securityCode: values.securityCode.trim(),
+    };
+    const { data } = yield BankSystem.createUserBankAccount(requestData);
+    console.log('data: ', data);
+    // yield put(createBankAccountSuccess());
+  } catch (e) {
+    console.log('e: ', e.response);
+    // yield put(processRequestError({ error: e, failAction: createBankAccountFail }));
   }
 }
 
 export function* watchBankSystem() {
   yield takeLatest(getType(getBanksList), getBanksListSaga);
   yield takeLatest(getType(getTopBanks), getTopBanksSaga);
+  yield takeLatest(getType(createBankAccount), createBankAccountSaga);
 }

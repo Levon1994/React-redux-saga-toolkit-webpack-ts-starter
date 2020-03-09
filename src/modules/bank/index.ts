@@ -11,16 +11,26 @@ import {
   getTopBanksSuccess,
   getTopBanksFail,
   changeValue,
+  createBankAccount,
+  createBankAccountSuccess,
+  createBankAccountFail,
 } from './actions';
 import { BanksState } from './types';
 
 const defaultState: BanksState = {
   banksList: [],
   topBanks: [],
-  searchValue: '',
   isLoadingBanksList: false,
   isLoadingTopBanksList: false,
   getBanksListError: {},
+  values: {
+    loginId: '',
+    password: '',
+    secondaryLoginId: '',
+    securityCode: '',
+  },
+  errors: {},
+  isLoadingCreateBankAccount: false,
 };
 
 export const bankReducer = createReducer(defaultState, handle => [
@@ -67,11 +77,33 @@ export const bankReducer = createReducer(defaultState, handle => [
   handle(
     changeValue,
     (state, { payload }): BanksState => {
-      console.log('payload: ', payload);
       return {
         ...state,
-        ...payload,
+        values: {
+          ...state.values,
+          ...payload,
+        },
       };
     },
+  ),
+  handle(createBankAccount, state => ({
+    ...state,
+    // isLoadingCreateBankAccount: true,
+  })),
+  handle(
+    createBankAccountSuccess,
+    (state, { payload }): BanksState => ({
+      ...state,
+      // banksList: payload,
+      // isLoadingCreateBankAccount: false,
+    }),
+  ),
+  handle(
+    createBankAccountFail,
+    (state, { payload }): BanksState => ({
+      ...state,
+      // isLoadingCreateBankAccount: false,
+      errors: payload,
+    }),
   ),
 ]);

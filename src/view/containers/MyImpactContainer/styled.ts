@@ -61,7 +61,6 @@ export const MainBlock = styled(Box).attrs({
 })``;
 
 export const FlatListBlock = styled(Box).attrs({
-  // mh: '80%',
   mb: 70,
 })``;
 
@@ -76,3 +75,16 @@ export const EditCharitiesButton = styled(Button).attrs({
   width: '100%',
   weight: 'bold',
 })``;
+
+export const ErrorBlock = styled(Box).attrs(({ theme }) => ({
+  bg: theme.colors.errorBackground,
+  br: 4,
+  center: true,
+  align: 'center',
+  p: '9px',
+}))``;
+
+export const ErrorTitlte = styled(Text).attrs(({ theme }) => ({
+  color: theme.colors.error,
+  center: true,
+}))``;

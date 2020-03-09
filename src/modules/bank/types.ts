@@ -15,6 +15,13 @@ export interface BanksList {
   };
 }
 
+export interface Values {
+  loginId: string;
+  password: string;
+  secondaryLoginId: string;
+  securityCode: string;
+}
+
 export interface BanksState {
   banksList: BanksList[];
   topBanks: BanksList[];
@@ -22,4 +29,7 @@ export interface BanksState {
   isLoadingBanksList: boolean;
   isLoadingTopBanksList: boolean;
   getBanksListError: ResponseErrors;
+  values: Values;
+  errors: ResponseErrors;
+  isLoadingCreateBankAccount: boolean;
 }

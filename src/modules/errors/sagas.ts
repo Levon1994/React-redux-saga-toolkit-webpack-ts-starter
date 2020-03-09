@@ -32,7 +32,7 @@ function* processRequestErrorSaga({
   } else if (error.request) {
     // The request was made but no response was received
     if (error.request.status === 0) {
-      errors[globalErrorName] = 'Network error';
+      errors[globalErrorName] = 'Network error. Check your internet connection.';
     }
   } else {
     // Something happened in setting up the request that triggered an Error

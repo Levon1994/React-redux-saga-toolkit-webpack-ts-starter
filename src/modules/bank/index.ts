@@ -14,6 +14,7 @@ import {
   createBankAccount,
   createBankAccountSuccess,
   createBankAccountFail,
+  resetBankReducer,
 } from './actions';
 import { BanksState } from './types';
 
@@ -37,6 +38,7 @@ export const bankReducer = createReducer(defaultState, handle => [
   handle(getBanksList, state => ({
     ...state,
     isLoadingBanksList: true,
+    getBanksListError: {},
   })),
   handle(
     getBanksListSuccess,
@@ -57,6 +59,7 @@ export const bankReducer = createReducer(defaultState, handle => [
   handle(getTopBanks, state => ({
     ...state,
     isLoadingTopBanksList: true,
+    getBanksListError: {},
   })),
   handle(
     getTopBanksSuccess,
@@ -89,6 +92,7 @@ export const bankReducer = createReducer(defaultState, handle => [
   handle(createBankAccount, state => ({
     ...state,
     isLoadingCreateBankAccount: true,
+    errors: {},
   })),
   handle(
     createBankAccountSuccess,
@@ -105,4 +109,14 @@ export const bankReducer = createReducer(defaultState, handle => [
       errors: payload,
     }),
   ),
+  handle(resetBankReducer, state => ({
+    ...state,
+    values: {
+      loginId: '',
+      password: '',
+      secondaryLoginId: '',
+      securityCode: '',
+    },
+    errors: {},
+  })),
 ]);

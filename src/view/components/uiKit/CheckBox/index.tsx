@@ -57,11 +57,9 @@ export class CheckBox extends Component {
           }}
         >
           <RightBlock>
-            <LogoBlock>
-              <StyledImage source={item.logo} />
-            </LogoBlock>
+            <LogoBlock>{item.logo && <StyledImage source={{ uri: item.logo }} />}</LogoBlock>
             <CharityNameBlock>
-              <CharityName>{item.charityName}</CharityName>
+              <CharityName>{item.name}</CharityName>
             </CharityNameBlock>
           </RightBlock>
           <LeftBlock>

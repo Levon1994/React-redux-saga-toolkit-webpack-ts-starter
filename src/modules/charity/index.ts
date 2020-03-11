@@ -4,6 +4,14 @@
 import { createReducer } from 'deox';
 
 import {
+  getCharitiesList,
+  getCharitiesListSuccess,
+  getCharitiesListFail,
+  getFilterCharity,
+  getFilterCharitySuccess,
+  getFilterCharityFail,
+  setFilterSelected,
+  changeValue,
   getUserCharity,
   getUserCharitySuccess,
   getUserCharityFail,
@@ -22,9 +30,71 @@ const defaultState: CharityState = {
   getUserCharityError: {},
   isLoadMore: true,
   getUserFeedError: {},
+  charitiesList: [],
+  isLoadingCharitiesList: false,
+  getCharitiesListError: {},
+  searchValue: '',
+  filterList: [],
+  checkFilter: [],
 };
 
 export const charityReducer = createReducer(defaultState, handle => [
+  handle(getCharitiesList, state => ({
+    ...state,
+    isLoadingCharitiesList: true,
+  })),
+  handle(
+    getCharitiesListSuccess,
+    (state, { payload }): CharityState => ({
+      ...state,
+      charitiesList: payload,
+      isLoadingCharitiesList: false,
+      getCharitiesListError: {},
+    }),
+  ),
+  handle(
+    getCharitiesListFail,
+    (state, { payload }): CharityState => ({
+      ...state,
+      isLoadingCharitiesList: false,
+      getCharitiesListError: payload,
+    }),
+  ),
+  handle(getFilterCharity, state => ({
+    ...state,
+    // isLoadingCharitiesList: true,
+  })),
+  handle(
+    getFilterCharitySuccess,
+    (state, { payload }): CharityState => ({
+      ...state,
+      filterList: payload,
+      // isLoadingCharitiesList: false,
+      // getCharitiesListError: {},
+    }),
+  ),
+  handle(
+    getFilterCharityFail,
+    (state, { payload }): CharityState => ({
+      ...state,
+      // isLoadingCharitiesList: false,
+      // getCharitiesListError: payload,
+    }),
+  ),
+  handle(
+    setFilterSelected,
+    (state, { payload }): CharityState => ({
+      ...state,
+      checkFilter: payload,
+    }),
+  ),
+  handle(
+    changeValue,
+    (state, { payload }): CharityState => ({
+      ...state,
+      searchValue: payload,
+    }),
+  ),
   handle(getUserCharity, state => ({
     ...state,
     isLoadingCharityData: true,

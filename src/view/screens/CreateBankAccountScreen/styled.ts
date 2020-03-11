@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styled from 'styled-components';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -150,3 +151,47 @@ export const ErrorBlock = styled(Box).attrs(({ theme }) => ({
 export const ErrorTitlte = styled(Text).attrs(({ theme }) => ({
   color: theme.colors.error,
 }))``;
+
+// create bank account info view
+export const InfoBlock = styled(Box).attrs(({ theme }) => ({
+  height: '100%',
+  bg: 'rgba(0, 0, 0, 0.8)',
+  position: 'absolute',
+  center: true,
+  align: 'center',
+}))``;
+
+export const LoaderBlock = styled(Box).attrs({
+  height: '30px',
+  mb: 20,
+})``;
+
+export const InfoTextBlock = styled(Box).attrs({
+  mb: 45,
+  p: '0px 40px',
+  align: 'center',
+})``;
+
+export const InfoText = styled(Text).attrs(({ theme }) => ({
+  size: 20,
+  lh: 25,
+  center: true,
+}))``;
+
+export const StepBlock = styled(Box).attrs({
+  row: true,
+  align: 'center',
+})``;
+
+export const StepText = styled(Text).attrs(({ theme }) => ({
+  size: 16,
+  lh: 20,
+}))``;
+
+export const StepIcon = styled.Image.attrs({
+  source: require('assets/img/checkCreateBank.png'),
+})`
+  width: 18;
+  height: 18;
+  margin-right: 10;
+`;

@@ -13,21 +13,21 @@ export class FilterCheckbox extends Component {
 
   componentDidMount() {
     const { label, checkSelected } = this.props;
-    // const newCheck = checkSelected.map((i: { label: any }) => i.label);
-    // newCheck.map((i: any) => {
-    //   if (i === label) {
-    //     this.setState({
-    //       isCheck: true,
-    //     });
-    //   }
-    // });
+    const newCheck = checkSelected.map((i: { label: any }) => i.label);
+    newCheck.map((i: any) => {
+      if (i === label) {
+        this.setState({
+          isCheck: true,
+        });
+      }
+    });
   }
 
   checkClicked = checkSelected => {
     const { clicked, value, label } = this.props;
     const { isCheck } = this.state;
     this.setState({ isCheck: !isCheck });
-    clicked && clicked(value, label, isCheck);
+    clicked && clicked(label, isCheck);
   };
 
   render() {
@@ -42,7 +42,7 @@ export class FilterCheckbox extends Component {
       >
         <ItemFilterWrapper isCheck={isCheck}>
           <FilterTitle key={filterItem.id} isCheck={isCheck}>
-            {filterItem.title}
+            {filterItem.name}
           </FilterTitle>
         </ItemFilterWrapper>
       </TouchableOpacity>

@@ -57,10 +57,13 @@ function* createBankAccountSaga({ payload }: ActionType<typeof createBankAccount
     if (values.securityCode.trim().length > 0) {
       requestData.securityCode = values.securityCode.trim();
     }
-    yield BankSystem.createUserBankAccount(requestData);
+    console.log('requestData: ', requestData);
+    const data = yield BankSystem.createUserBankAccount(requestData);
+    console.log('data: ', data);
     yield put(setStatusCreatedBankAccount());
     yield put(createBankAccountSuccess());
   } catch (e) {
+    console.log('e: ', e.response);
     yield put(processRequestError({ error: e, failAction: createBankAccountFail }));
   }
 }

@@ -42,21 +42,12 @@ export const MainBlock = styled(Box).attrs({
   flex: 1,
 })``;
 
-export const StyledScrollView = styled.ScrollView.attrs({
-  keyboardShouldPersistTaps: 'handled',
-  showsVerticalScrollIndicator: false,
-})`
-  width: 100%;
-  flex: 1;
-  margin-bottom: 15;
-`;
-
-export const FlatListBlock = styled(Box).attrs({
-  mb: 16,
-})``;
-
 export const TopFlatListBlock = styled(Box).attrs({
   mb: 66,
+})``;
+
+export const FlatListBlock = styled(Box).attrs({
+  mb: 10,
 })``;
 
 export const ButtonWrapper = styled(Box).attrs({

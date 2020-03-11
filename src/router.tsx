@@ -146,7 +146,6 @@ export const AppContainer = () => {
 
   if (userToken) {
     initialRouteName = userToken ? 'CharityStack' : 'Auth';
-    // initialRouteName = userToken ? 'Home' : 'Auth';
   }
 
   if (createdBankAccountStatus) {

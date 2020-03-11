@@ -7,7 +7,7 @@ export class Api {
 
   constructor() {
     this.axiosInstance = axios.create({
-      timeout: 5000,
+      timeout: 120000,
       baseURL: config.API_URI,
       headers: {
         Accept: 'application/json',

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { put, takeEvery } from 'redux-saga/effects';
 import { getType, ActionType } from 'deox';
 
@@ -20,7 +21,11 @@ function* processRequestErrorSaga({
         const { data } = error.response;
         Object.keys(data).forEach(key => {
           // eslint-disable-next-line prefer-destructuring
-          errors[key] = data[key][0];
+          if (key === 'detail') {
+            errors[key] = data[key];
+          } else {
+            errors[key] = data[key][0];
+          }
         });
         break;
       }

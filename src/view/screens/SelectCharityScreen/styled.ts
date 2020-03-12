@@ -73,18 +73,19 @@ export const ErrorBlock = styled(Box).attrs(({ theme }) => ({
   center: true,
   align: 'center',
   p: '9px',
-  mb: 16,
+  mb: 10,
 }))``;
 
 export const ErrorTitlte = styled(Text).attrs(({ theme }) => ({
   color: theme.colors.error,
+  center: true,
 }))``;
 
-export const FlatListBlock = styled(Box).attrs({
-  mb: 70,
+export const FlatListBlock = styled(Box).attrs(({ isShowInfo }) => ({
+  mb: isShowInfo ? 100 : 70,
   center: true,
   align: 'center',
-})``;
+}))``;
 
 export const ButtonWrapper = styled(Box).attrs({
   mt: 'auto',

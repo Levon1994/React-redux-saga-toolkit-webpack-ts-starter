@@ -1,11 +1,19 @@
 import { createAction } from 'deox';
 import { ResponseErrors } from 'types/responseData';
-import { UserCharity, FeedData, Charity, Filter, CheckedFilter } from './types';
+import { UserCharity, FeedData, Charity, Filter, CheckedFilter, CheckSelected } from './types';
 
-export const getCharitiesList = createAction('charity/GET_CHARITIES_LIST_REQUEST');
+export const getCharitiesList = createAction(
+  'charity/GET_CHARITIES_LIST_REQUEST',
+  resolve => (payload: boolean) => resolve(payload),
+);
 
 export const getCharitiesListSuccess = createAction(
   'charity/GET_CHARITIES_LIST_SUCCESS',
+  resolve => (payload: Charity[]) => resolve(payload),
+);
+
+export const setCheckedGetCharitiesListSuccess = createAction(
+  'charity/SET_CHECKED_GET_CHARITIES_LIST_SUCCESS',
   resolve => (payload: Charity[]) => resolve(payload),
 );
 
@@ -29,6 +37,11 @@ export const getFilterCharityFail = createAction(
 export const setFilterSelected = createAction(
   'charity/SET_FILTER_SELECTED',
   resolve => (payload: CheckedFilter[]) => resolve(payload),
+);
+
+export const setCheckedSelected = createAction(
+  'charity/SET_CHECKED_SELECTED',
+  resolve => (payload: CheckSelected[]) => resolve(payload),
 );
 
 export const changeValue = createAction('charity/CHANGE_VALUE', resolve => (payload: string) =>
@@ -66,3 +79,14 @@ export const getUserFeedFail = createAction(
   'charity/GET_USER_FEED_FAIL',
   resolve => (payload: ResponseErrors) => resolve(payload),
 );
+
+export const createUserCharity = createAction('charity/CREATE_USER_CHARITY_REQUEST');
+
+export const createUserCharitySuccess = createAction('charity/CREATE_USER_CHARITY_SUCCESS');
+
+export const createUserCharityFail = createAction(
+  'charity/CREATE_USER_CHARITY_FAIL',
+  resolve => (payload: ResponseErrors) => resolve(payload),
+);
+
+export const resetCharityReducer = createAction('charity/RESET_CHARITY_REDUCER');

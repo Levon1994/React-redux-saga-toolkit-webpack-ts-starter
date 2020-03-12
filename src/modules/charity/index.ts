@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/camelcase */
@@ -6,6 +7,7 @@ import { createReducer } from 'deox';
 import {
   getCharitiesList,
   getCharitiesListSuccess,
+  setCheckedGetCharitiesListSuccess,
   getCharitiesListFail,
   getFilterCharity,
   getFilterCharitySuccess,
@@ -19,6 +21,11 @@ import {
   getUserFeedSuccess,
   getMoreUserFeedSuccess,
   getUserFeedFail,
+  createUserCharity,
+  createUserCharitySuccess,
+  createUserCharityFail,
+  setCheckedSelected,
+  resetCharityReducer,
 } from './actions';
 import { CharityState } from './types';
 
@@ -36,6 +43,10 @@ const defaultState: CharityState = {
   searchValue: '',
   filterList: [],
   checkFilter: [],
+  checkSelected: [],
+  isCreatedUserCharity: false,
+  isLoadingCreatedUserCharity: false,
+  createdUserCharityError: {},
 };
 
 export const charityReducer = createReducer(defaultState, handle => [
@@ -51,6 +62,24 @@ export const charityReducer = createReducer(defaultState, handle => [
       isLoadingCharitiesList: false,
       getCharitiesListError: {},
     }),
+  ),
+  handle(
+    setCheckedGetCharitiesListSuccess,
+    (state, { payload }): CharityState => {
+      const selectedArray: any = [];
+      payload.map(el => {
+        if (el.is_selected) {
+          selectedArray.push({ label: el.id });
+        }
+      });
+      return {
+        ...state,
+        checkSelected: selectedArray,
+        charitiesList: payload,
+        isLoadingCharitiesList: false,
+        getCharitiesListError: {},
+      };
+    },
   ),
   handle(
     getCharitiesListFail,
@@ -93,6 +122,13 @@ export const charityReducer = createReducer(defaultState, handle => [
     (state, { payload }): CharityState => ({
       ...state,
       searchValue: payload,
+    }),
+  ),
+  handle(
+    setCheckedSelected,
+    (state, { payload }): CharityState => ({
+      ...state,
+      checkSelected: payload,
     }),
   ),
   handle(getUserCharity, state => ({
@@ -153,4 +189,28 @@ export const charityReducer = createReducer(defaultState, handle => [
       getUserFeedError: payload,
     }),
   ),
+  handle(createUserCharity, state => ({
+    ...state,
+    isLoadingCreatedUserCharity: true,
+    createdUserCharityError: {},
+  })),
+  handle(createUserCharitySuccess, state => ({
+    ...state,
+    isCreatedUserCharity: true,
+    isLoadingCreatedUserCharity: false,
+    createdUserCharityError: {},
+  })),
+  handle(
+    createUserCharityFail,
+    (state, { payload }): CharityState => ({
+      ...state,
+      isLoadingCreatedUserCharity: false,
+      createdUserCharityError: payload,
+    }),
+  ),
+  handle(resetCharityReducer, state => ({
+    ...state,
+    isCreatedUserCharity: false,
+    createdUserCharityError: {},
+  })),
 ]);

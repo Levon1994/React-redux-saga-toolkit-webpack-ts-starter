@@ -21,6 +21,10 @@ export type FeedResponse = AxiosResponse<{
   pages: number;
 }>;
 
+interface CharityCreateBody {
+  charity_ids: number[];
+}
+
 export class Charity {
   static getCharitiesList = (userId: number, searchValue: string, filterData: string) =>
     Api.get(`v1/customer/${userId}/charities?category=${filterData}&search=${searchValue}`);
@@ -31,4 +35,7 @@ export class Charity {
 
   static getUserFeed = (userId: number, page: number) =>
     Api.get(`v1/customer/${userId}/transactions?page=${page}`);
+
+  static createUserCharity = (userId: number, params: CharityCreateBody) =>
+    Api.put(`v1/customer/${userId}/charities`, params);
 }

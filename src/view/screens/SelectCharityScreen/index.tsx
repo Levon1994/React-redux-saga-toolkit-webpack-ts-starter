@@ -11,6 +11,9 @@ import {
   getFilterCharity,
   setFilterSelected,
   changeValue,
+  setCheckedSelected,
+  createUserCharity,
+  resetCharityReducer,
 } from 'modules/charity/actions';
 
 import { Box } from 'view/components/uiKit/Box';
@@ -30,8 +33,8 @@ import {
   BottomHeaderBlock,
   StyledKeyboardAvoidingView,
   MainBlock,
-  // ErrorBlock,
-  // ErrorTitlte,
+  ErrorBlock,
+  ErrorTitlte,
   FlatListBlock,
   ButtonWrapper,
   StyledButton,
@@ -45,8 +48,9 @@ interface Props {
 }
 
 export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
-  const [checkSelected, setCheckSelected] = useState([]);
+  const [notSelected, setNotSelected] = useState(1);
   const [isAll, setAllFilter] = useState(true);
+  const [isShowInfo, setShowInfo] = useState(false);
   const route = navigation.state.params ? navigation.state.params.route : 'choose';
   const isEditViewScreen = route === 'edit';
 
@@ -56,20 +60,42 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
     filterList,
     checkFilter,
     searchValue,
+    checkSelected,
+    isCreatedUserCharity,
+    isLoadingCreatedUserCharity,
+    createdUserCharityError,
+    getCharitiesListError,
   } = useSelector((state: RootState) => state.charityReducer);
-  console.log('charitiesList', charitiesList);
 
   const fetchCharitiesList = useAction(getCharitiesList);
   const fetchFilterCharity = useAction(getFilterCharity);
   const setFilterSelect = useAction(setFilterSelected);
   const changeSearchValue = useAction(changeValue);
+  const setCheckSelected = useAction(setCheckedSelected);
+  const createUserCharities = useAction(createUserCharity);
+  const resetReducer = useAction(resetCharityReducer);
+
+  const isShowError =
+    Object.values(createdUserCharityError).length > 0 ||
+    Object.values(getCharitiesListError).length > 0;
 
   useEffect(() => {
-    fetchCharitiesList();
+    resetReducer();
+    fetchCharitiesList(true);
     fetchFilterCharity();
   }, []);
 
-  const toggleCheckBox = (title, label, isCheck) => {
+  useEffect(() => {
+    if (isCreatedUserCharity) {
+      if (isEditViewScreen) {
+        navigation.navigate('HomeScreen', { route: 'update' });
+      } else {
+        navigation.navigate('AuthorizeCharity');
+      }
+    }
+  }, [isCreatedUserCharity]);
+
+  const toggleCheckBox = (title: number, label: number, isCheck: boolean) => {
     if (!isCheck) {
       checkSelected.push({ label });
     } else {
@@ -78,22 +104,15 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
         checkSelected.splice(index, 1);
       }
     }
+    if (checkSelected.length >= 1) {
+      setShowInfo(false);
+    }
+    if (checkSelected.length === 3) {
+      setNotSelected(0.5);
+    } else {
+      setNotSelected(1);
+    }
     setCheckSelected(checkSelected);
-    // TODO:: setting checking charities from list
-
-    // let qwer = listData.map((el) => {
-    //   checkSelected.map((item) => {
-    //     if (item.label === el.id && !el.isSelected) {
-    //       console.log('el: ', el);
-    //       el['isSelected'] = true;
-    //     } else {
-    //       el['isSelected'] = false;
-    //     }
-    //     // console.log('item: ', item.label);
-    //   })
-    //   // console.log('el: ', el.id);
-    // })
-    // console.log('qwer: ', qwer);
   };
 
   let delayTimer: number;
@@ -101,7 +120,7 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
     changeSearchValue(value);
     clearTimeout(delayTimer);
     delayTimer = setTimeout(() => {
-      fetchCharitiesList();
+      fetchCharitiesList(false);
     }, 1000); // Will do the the fetch data after 1000 ms, or 1 s
   }, []);
 
@@ -124,57 +143,60 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
       }
       clearTimeout(delayFilterTimer);
       delayFilterTimer = setTimeout(() => {
-        fetchCharitiesList();
+        fetchCharitiesList(false);
       }, 1000);
     },
     [checkFilter],
   );
 
   const goToNext = React.useCallback(() => {
-    if (isEditViewScreen) {
-      navigation.navigate('HomeScreen');
+    if (checkSelected.length === 0) {
+      setShowInfo(true);
     } else {
-      navigation.navigate('AuthorizeCharity');
+      createUserCharities();
     }
-  }, [route]);
+  }, [route, checkSelected]);
 
   const changeFilter = React.useCallback(() => {
     setAllFilter(true);
     setFilterSelect([]);
-    fetchCharitiesList();
+    fetchCharitiesList(false);
   }, [checkFilter]);
 
-  const renderListItem = ({ item }: any) => (
-    <ContainerList
-      style={{
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4,
-      }}
-    >
-      <CheckBox
-        key={item.id}
-        value={item.id}
-        label={item.id}
-        item={item}
-        clicked={(title: any, label: any, isCheck: any) => {
-          toggleCheckBox(title, label, isCheck);
+  const renderListItem = ({ item }: any) => {
+    return (
+      <ContainerList
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.23,
+          shadowRadius: 2.62,
+          elevation: 4,
         }}
-        checkSelected={checkSelected}
-      />
-    </ContainerList>
-  );
+      >
+        <CheckBox
+          key={item.id}
+          value={item.id}
+          label={item.id}
+          item={item}
+          clicked={(title: any, label: any, isCheck: any) => {
+            toggleCheckBox(title, label, isCheck);
+          }}
+          checkSelected={checkSelected}
+          notSelected={notSelected}
+        />
+      </ContainerList>
+    );
+  };
   return (
     <Container>
       {/* header */}
       <Header isEditViewScreen={isEditViewScreen}>
         {isEditViewScreen && (
-          <GoBackBlock onPress={goToNext}>
+          <GoBackBlock onPress={() => navigation.goBack()}>
             <GoBackIcon />
           </GoBackBlock>
         )}
@@ -219,11 +241,20 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
             <Loader />
           ) : (
             <>
-              {/* Todo: style screen when is error message */}
-              {/* <ErrorBlock>
-              <ErrorTitlte>Please select at least one charity from the list below</ErrorTitlte>
-            </ErrorBlock> */}
-              <FlatListBlock>
+              {isShowInfo && (
+                <ErrorBlock>
+                  <ErrorTitlte>Please select at least one charity from the list below</ErrorTitlte>
+                </ErrorBlock>
+              )}
+              {isShowError && (
+                <ErrorBlock>
+                  <ErrorTitlte>
+                    {String(Object.values(createdUserCharityError)) ||
+                      String(Object.values(getCharitiesListError))}
+                  </ErrorTitlte>
+                </ErrorBlock>
+              )}
+              <FlatListBlock isShowInfo={isShowInfo || isShowError}>
                 {charitiesList.length !== 0 ? (
                   <FlatList
                     data={charitiesList}
@@ -245,6 +276,8 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
                 <StyledButton
                   onPress={goToNext}
                   label={isEditViewScreen ? 'Save changes' : 'Next'}
+                  loading={isLoadingCreatedUserCharity}
+                  reverseLoader
                 />
               </ButtonWrapper>
             </>

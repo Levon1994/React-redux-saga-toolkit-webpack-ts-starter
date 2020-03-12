@@ -38,9 +38,7 @@ export const CharityItem = ({ item }: CharityItemProps) => (
     }}
   >
     <RightBlock>
-      <LogoBlock>
-        <StyledImage source={{ uri: item.logo }} />
-      </LogoBlock>
+      <LogoBlock>{item.logo && <StyledImage source={{ uri: item.logo }} />}</LogoBlock>
       <CharityNameBlock>
         <CharityName>{item.name}</CharityName>
       </CharityNameBlock>

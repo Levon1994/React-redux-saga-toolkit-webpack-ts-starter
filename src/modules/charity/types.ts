@@ -36,6 +36,10 @@ export interface CheckedFilter {
   label: string;
 }
 
+export interface CheckSelected {
+  label: number;
+}
+
 export interface CharityState {
   userCharityData: UserCharity;
   isLoadingCharityData: boolean;
@@ -50,4 +54,8 @@ export interface CharityState {
   filterList: Filter[];
   checkFilter: CheckedFilter[];
   searchValue: string;
+  checkSelected: CheckSelected[];
+  isCreatedUserCharity: boolean;
+  isLoadingCreatedUserCharity: boolean;
+  createdUserCharityError: ResponseErrors;
 }

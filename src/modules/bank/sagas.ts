@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { put, takeLatest, select } from 'redux-saga/effects';
 import { getType, ActionType } from 'deox';
@@ -38,7 +39,6 @@ function* getTopBanksSaga() {
 }
 
 function* createBankAccountSaga({ payload }: ActionType<typeof createBankAccount>) {
-  console.log('payload: ', payload);
   try {
     const { values } = yield select((state: RootState) => state.bankReducer);
     const { userId } = yield select((state: RootState) => state.userReducer);
@@ -57,13 +57,10 @@ function* createBankAccountSaga({ payload }: ActionType<typeof createBankAccount
     if (values.securityCode.trim().length > 0) {
       requestData.securityCode = values.securityCode.trim();
     }
-    console.log('requestData: ', requestData);
-    const data = yield BankSystem.createUserBankAccount(requestData);
-    console.log('data: ', data);
+    yield BankSystem.createUserBankAccount(requestData);
     yield put(setStatusCreatedBankAccount());
     yield put(createBankAccountSuccess());
   } catch (e) {
-    console.log('e: ', e.response);
     yield put(processRequestError({ error: e, failAction: createBankAccountFail }));
   }
 }

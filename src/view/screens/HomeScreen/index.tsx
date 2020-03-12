@@ -6,7 +6,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { useAction } from 'utils/hooks';
 
 import { getUser } from 'modules/user/actions';
-import { getUserCharity, getUserFeed } from 'modules/charity/actions';
+import { getUserCharity, getUserFeed, resetCharityReducer } from 'modules/charity/actions';
 import { RootState, Navigation } from 'types';
 
 import { TabLabel, TabScene } from 'view/components';
@@ -36,6 +36,7 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const getUserData = useAction(getUser);
   const getUserCharityData = useAction(getUserCharity);
   const getUserFeedData = useAction(getUserFeed);
+  const resetReducer = useAction(resetCharityReducer);
 
   useEffect(() => {
     const route = navigation.state.params && navigation.state.params.route;
@@ -71,7 +72,10 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
             getUserCharityError={getUserCharityError}
             getUserDataError={getUserDataError}
             onRefresh={onRefresh}
-            goToChooseCharity={() => navigation.navigate('SelectCharity', { route: 'edit' })}
+            goToChooseCharity={() => {
+              resetReducer();
+              navigation.navigate('SelectCharity', { route: 'edit' });
+            }}
             goToProfile={() => navigation.navigate('ProfileSettings')}
           />
         )),

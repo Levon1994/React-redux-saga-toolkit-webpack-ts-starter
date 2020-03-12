@@ -9,6 +9,7 @@ import { processRequestError } from 'modules/errors/actions';
 import {
   getCharitiesList,
   getCharitiesListSuccess,
+  setCheckedGetCharitiesListSuccess,
   getCharitiesListFail,
   getFilterCharity,
   getFilterCharitySuccess,
@@ -20,21 +21,25 @@ import {
   getUserFeedSuccess,
   getMoreUserFeedSuccess,
   getUserFeedFail,
+  createUserCharity,
+  createUserCharitySuccess,
+  createUserCharityFail,
 } from './actions';
 
-function* getCharitiesListSaga() {
+function* getCharitiesListSaga({ payload }: ActionType<typeof getCharitiesList>) {
   try {
     const { userId } = yield select((state: RootState) => state.userReducer);
     const { searchValue, checkFilter } = yield select((state: RootState) => state.charityReducer);
     const filterData: string[] = [];
     checkFilter.map((el: { label: string }) => filterData.push(el.label));
-    console.log('checkFilter: ', filterData.join(', '));
-    const { data }: ListCharitiesResponse = yield Charity.getCharitiesList(
-      userId,
-      searchValue,
-      filterData.join(', '),
-    );
-    yield put(getCharitiesListSuccess(data));
+    const search = payload ? '' : searchValue;
+    const filter = payload ? '' : filterData.join(',');
+    const { data }: ListCharitiesResponse = yield Charity.getCharitiesList(userId, search, filter);
+    if (payload) {
+      yield put(setCheckedGetCharitiesListSuccess(data));
+    } else {
+      yield put(getCharitiesListSuccess(data));
+    }
   } catch (e) {
     yield put(processRequestError({ error: e, failAction: getCharitiesListFail }));
   }
@@ -43,14 +48,26 @@ function* getCharitiesListSaga() {
 function* getFilterCharitySaga() {
   try {
     const { data }: any = yield Charity.getFilterCharity();
-    console.log('data: ', data);
     const filterArr = Object.keys(data).reduce((res, v) => {
       return res.concat(data[v]);
     }, []);
-    console.log('arr: ', filterArr);
     yield put(getFilterCharitySuccess(filterArr));
   } catch (e) {
     yield put(processRequestError({ error: e, failAction: getFilterCharityFail }));
+  }
+}
+
+function* createUserCharitySaga() {
+  try {
+    const { userId } = yield select((state: RootState) => state.userReducer);
+    const { checkSelected } = yield select((state: RootState) => state.charityReducer);
+    const requestData = {
+      charity_ids: checkSelected.map((e: { label: number }) => e.label),
+    };
+    yield Charity.createUserCharity(userId, requestData);
+    yield put(createUserCharitySuccess());
+  } catch (e) {
+    yield put(processRequestError({ error: e, failAction: createUserCharityFail }));
   }
 }
 
@@ -95,6 +112,7 @@ export function* watchCharityPeriodically() {
 export function* watchCharity() {
   yield takeLatest(getType(getCharitiesList), getCharitiesListSaga);
   yield takeLatest(getType(getFilterCharity), getFilterCharitySaga);
+  yield takeLatest(getType(createUserCharity), createUserCharitySaga);
   yield takeLatest(getType(getUserCharity), getUserCharitySaga);
   yield takeLatest(getType(getUserFeed), getUserFeedSaga);
 }

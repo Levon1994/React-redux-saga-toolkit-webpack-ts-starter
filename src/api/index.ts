@@ -42,6 +42,10 @@ export class Api {
   static post<T = any>(url: string, data?: object, config?: AxiosRequestConfig): AxiosPromise<T> {
     return Api.getAxios().post(url, data, config);
   }
+
+  static put<T = any>(url: string, data?: object, config?: AxiosRequestConfig): AxiosPromise<T> {
+    return Api.getAxios().put(url, data, config);
+  }
 }
 
 export default Api;

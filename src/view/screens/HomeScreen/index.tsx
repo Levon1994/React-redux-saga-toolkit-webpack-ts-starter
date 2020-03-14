@@ -5,7 +5,8 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 
 import { useAction } from 'utils/hooks';
 
-import { getUser } from 'modules/user/actions';
+import * as Actions from 'modules/notifications/actions';
+import { getUser, resetUserReducer } from 'modules/user/actions';
 import { getUserCharity, getUserFeed, resetCharityReducer } from 'modules/charity/actions';
 import { RootState, Navigation } from 'types';
 
@@ -33,10 +34,13 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
     (state: RootState) => state.charityReducer,
   );
 
+  const initNotifications = useAction(Actions.initNotifications);
+  const resetNotifications = useAction(Actions.resetNotifications);
   const getUserData = useAction(getUser);
   const getUserCharityData = useAction(getUserCharity);
   const getUserFeedData = useAction(getUserFeed);
   const resetReducer = useAction(resetCharityReducer);
+  const resetUserDataReducer = useAction(resetUserReducer);
 
   useEffect(() => {
     const route = navigation.state.params && navigation.state.params.route;
@@ -44,10 +48,18 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
       getUserData();
       getUserCharityData();
     }
+    initNotifications();
     getUserData();
     getUserCharityData();
     getUserFeedData(false);
   }, [navigation]);
+
+  useEffect(() => {
+    // returned function will be called on component unmount
+    return () => {
+      resetNotifications();
+    };
+  }, []);
 
   const onRefresh = () => {
     getUserData();
@@ -76,7 +88,10 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
               resetReducer();
               navigation.navigate('SelectCharity', { route: 'edit' });
             }}
-            goToProfile={() => navigation.navigate('ProfileSettings')}
+            goToProfile={() => {
+              resetUserDataReducer();
+              navigation.navigate('ProfileSettings');
+            }}
           />
         )),
       [user, isLoadingUserData, userCharityData, isLoadingCharityData],

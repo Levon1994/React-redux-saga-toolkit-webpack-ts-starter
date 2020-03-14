@@ -1,8 +1,22 @@
 /* eslint-disable no-console */
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, select } from 'redux-saga/effects';
 import { CardIOModule } from 'react-native-awesome-card-io';
 
-import { scanCard, setScanCard } from './actions';
+import { Card, CardResponse } from 'api/Card';
+import { RootState } from 'types';
+
+import { processRequestError } from 'modules/errors/actions';
+import { setUserCreatedCard } from 'modules/user/actions';
+import {
+  scanCard,
+  setScanCard,
+  createUserCard,
+  createUserCardSuccess,
+  createUserCardFail,
+  getUserCard,
+  getUserCardSuccess,
+  getUserCardFail,
+} from './actions';
 
 function* scanCardSaga() {
   try {
@@ -20,6 +34,39 @@ function* scanCardSaga() {
   }
 }
 
+function* createUserCardSaga() {
+  try {
+    const { userId } = yield select((state: RootState) => state.userReducer);
+    const { card_number, cardHolder, expiryDate, cvcValue } = yield select(
+      (state: RootState) => state.cardReducer,
+    );
+    const requestData = {
+      card_number: card_number.replace(/\s/g, ''),
+      card_holder: cardHolder,
+      card_expiration: expiryDate,
+      card_cvc: cvcValue,
+    };
+    yield Card.createUserCard(userId, requestData);
+    yield put(setUserCreatedCard());
+    yield put(createUserCardSuccess());
+  } catch (e) {
+    console.log('e: ', e.response);
+    yield put(processRequestError({ error: e, failAction: createUserCardFail }));
+  }
+}
+
+function* getUserCardSaga() {
+  try {
+    const { userId } = yield select((state: RootState) => state.userReducer);
+    const { data }: CardResponse = yield Card.getUserCard(userId);
+    yield put(getUserCardSuccess(data));
+  } catch (e) {
+    yield put(processRequestError({ error: e, failAction: getUserCardFail }));
+  }
+}
+
 export function* watchCard() {
   yield takeLatest(scanCard, scanCardSaga);
+  yield takeLatest(createUserCard, createUserCardSaga);
+  yield takeLatest(getUserCard, getUserCardSaga);
 }

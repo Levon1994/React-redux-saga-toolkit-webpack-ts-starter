@@ -212,5 +212,7 @@ export const charityReducer = createReducer(defaultState, handle => [
     ...state,
     isCreatedUserCharity: false,
     createdUserCharityError: {},
+    searchValue: '',
+    checkFilter: [],
   })),
 ]);

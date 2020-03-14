@@ -7,8 +7,8 @@ import { AuthState } from './types';
 
 const defaultState: AuthState = {
   values: {
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
   },

@@ -21,7 +21,9 @@ function* processRequestErrorSaga({
         const { data } = error.response;
         Object.keys(data).forEach(key => {
           // eslint-disable-next-line prefer-destructuring
-          if (key === 'detail') {
+          if (key === 'card') {
+            errors[key] = data[key].join('. ');
+          } else if (key === 'detail') {
             errors[key] = data[key];
           } else {
             errors[key] = data[key][0];

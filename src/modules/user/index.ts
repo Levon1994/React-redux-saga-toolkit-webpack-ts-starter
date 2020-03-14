@@ -6,11 +6,17 @@ import { validateField } from 'utils/validation';
 import { changeValue } from 'modules/auth/actions';
 import {
   setUser,
+  setUserCharity,
+  setUserCreatedCard,
   setWeeklyAmount,
   setStatusCreatedBankAccount,
   getUser,
   getUserSuccess,
   getUserFail,
+  updateUser,
+  updateUserSuccess,
+  updateUserFail,
+  resetUserReducer,
 } from './actions';
 import { UserState } from './types';
 
@@ -28,6 +34,12 @@ const defaultState: UserState = {
   errors: {},
   userToken: null,
   createdBankAccountStatus: false,
+  has_charity: false,
+  has_bank: false,
+  has_card: false,
+  isSetWeeklyGoal: false,
+  isLoadingUpdateUserData: false,
+  isUpdateUserData: false,
 };
 
 export const userReducer = createReducer(defaultState, handle => [
@@ -37,8 +49,26 @@ export const userReducer = createReducer(defaultState, handle => [
       ...state,
       userId: payload.user_id,
       userToken: payload.access_token,
+      has_charity: payload.has_charity,
+      has_bank: payload.has_bank,
+      has_card: payload.has_card,
     }),
   ),
+  handle(setUserCharity, state => ({
+    ...state,
+    has_charity: true,
+  })),
+  handle(
+    setStatusCreatedBankAccount,
+    (state): UserState => ({
+      ...state,
+      has_bank: true,
+    }),
+  ),
+  handle(setUserCreatedCard, state => ({
+    ...state,
+    has_card: true,
+  })),
   handle(
     setWeeklyAmount,
     (state, { payload }): UserState => ({
@@ -47,13 +77,6 @@ export const userReducer = createReducer(defaultState, handle => [
         ...state.user,
         weekly_goal: payload,
       },
-    }),
-  ),
-  handle(
-    setStatusCreatedBankAccount,
-    (state): UserState => ({
-      ...state,
-      createdBankAccountStatus: true,
     }),
   ),
   handle(getUser, state => ({
@@ -99,4 +122,40 @@ export const userReducer = createReducer(defaultState, handle => [
       };
     },
   ),
+  handle(updateUser, state => ({
+    ...state,
+    isLoadingUpdateUserData: true,
+    errors: {},
+    getUserDataError: {},
+  })),
+  handle(
+    updateUserSuccess,
+    (state, { payload }): UserState => {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...payload,
+        },
+        isSetWeeklyGoal: true,
+        isUpdateUserData: true,
+        isLoadingUpdateUserData: false,
+        errors: {},
+        getUserDataError: {},
+      };
+    },
+  ),
+  handle(
+    updateUserFail,
+    (state, { payload }): UserState => ({
+      ...state,
+      isLoadingUpdateUserData: false,
+      isUpdateUserData: false,
+      errors: payload,
+    }),
+  ),
+  handle(resetUserReducer, state => ({
+    ...state,
+    isUpdateUserData: false,
+  })),
 ]);

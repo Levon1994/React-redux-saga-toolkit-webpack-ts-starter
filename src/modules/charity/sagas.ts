@@ -6,6 +6,7 @@ import { Charity, CharityResponse, FeedResponse, ListCharitiesResponse } from 'a
 import { RootState } from 'types';
 
 import { processRequestError } from 'modules/errors/actions';
+import { setUserCharity } from 'modules/user/actions';
 import {
   getCharitiesList,
   getCharitiesListSuccess,
@@ -32,8 +33,8 @@ function* getCharitiesListSaga({ payload }: ActionType<typeof getCharitiesList>)
     const { searchValue, checkFilter } = yield select((state: RootState) => state.charityReducer);
     const filterData: string[] = [];
     checkFilter.map((el: { label: string }) => filterData.push(el.label));
-    const search = payload ? '' : searchValue;
-    const filter = payload ? '' : filterData.join(',');
+    const search = payload ? null : searchValue;
+    const filter = payload ? null : filterData.join(',');
     const { data }: ListCharitiesResponse = yield Charity.getCharitiesList(userId, search, filter);
     if (payload) {
       yield put(setCheckedGetCharitiesListSuccess(data));
@@ -75,6 +76,7 @@ function* getUserCharitySaga() {
   try {
     const { userId } = yield select((state: RootState) => state.userReducer);
     const { data }: CharityResponse = yield Charity.getUserCharity(userId);
+    yield put(setUserCharity());
     yield put(getUserCharitySuccess(data));
   } catch (e) {
     yield put(processRequestError({ error: e, failAction: getUserCharityFail }));

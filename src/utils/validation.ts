@@ -2,16 +2,6 @@
 export const validateField = (name: string, value: string): string => {
   const { length } = value;
   switch (name) {
-    case 'firstName':
-      if (length > 30) return 'Maximum Name length is 30 characters';
-      if (length > 0 && !value.match(/^[A-Za-z\s]+$/))
-        return 'First Name must contain only alphabetical charachters';
-      break;
-    case 'lastName':
-      if (length > 30) return 'Maximum Name length is 30 characters';
-      if (length > 0 && !value.match(/^[A-Za-z\s]+$/))
-        return 'Last Name must contain only alphabetical charachters';
-      break;
     case 'first_name':
       if (length > 30) return 'Maximum Name length is 30 characters';
       if (length > 0 && !value.match(/^[A-Za-z\s]+$/))
@@ -28,6 +18,12 @@ export const validateField = (name: string, value: string): string => {
       break;
     case 'password':
       if (length < 7) return 'Password must be at least 7 characters';
+      break;
+    case 'card_number':
+      if (length < 19) return 'Card number length is 16 characters';
+      break;
+    case 'cvcValue':
+      if (length < 3) return 'CVC length is 3 characters';
       break;
     default:
       return '';

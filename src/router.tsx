@@ -120,7 +120,14 @@ const HeadStack = (initialRouteName: string) =>
       OnBoardingScreen,
       Auth: AuthStack,
       CharityStack,
+      CreateBankAccountStack,
       AddCardStack,
+      SelectWeeklyAmount: {
+        screen: SelectWeeklyAmountScreen,
+        navigationOptions: {
+          gesturesEnabled: false,
+        },
+      },
       Home: HomeStack,
     },
     {
@@ -131,26 +138,30 @@ const HeadStack = (initialRouteName: string) =>
 export const AppContainer = () => {
   const { isOnBoardingReviewed } = useSelector((state: RootState) => state.onboardingReducer);
   const userToken = useSelector((state: RootState) => state.userReducer.userToken);
-  const createdBankAccountStatus = useSelector(
-    (state: RootState) => state.userReducer.createdBankAccountStatus,
-  );
+  const has_bank = useSelector((state: RootState) => state.userReducer.has_bank);
+  const has_card = useSelector((state: RootState) => state.userReducer.has_card);
+  const has_charity = useSelector((state: RootState) => state.userReducer.has_charity);
+  const isSetWeeklyGoal = useSelector((state: RootState) => state.userReducer.isSetWeeklyGoal);
 
   if (userToken) {
     Api.setAuthToken(userToken);
   }
 
   let initialRouteName = 'OnBoardingScreen';
-  if (isOnBoardingReviewed) {
-    initialRouteName = isOnBoardingReviewed ? 'Auth' : 'OnBoardingScreen';
-  }
-
-  if (userToken) {
-    // initialRouteName = userToken ? 'CharityStack' : 'Auth';
-    initialRouteName = userToken ? 'Home' : 'Auth';
-  }
-
-  if (createdBankAccountStatus) {
-    initialRouteName = userToken ? 'AddCardStack' : 'Auth';
+  if (!isOnBoardingReviewed) {
+    initialRouteName = 'OnBoardingScreen';
+  } else if (!userToken) {
+    initialRouteName = 'Auth';
+  } else if (!has_charity) {
+    initialRouteName = 'CharityStack';
+  } else if (!has_bank) {
+    initialRouteName = 'CreateBankAccountStack';
+  } else if (!has_card) {
+    initialRouteName = 'AddCardStack';
+  } else if (!isSetWeeklyGoal) {
+    initialRouteName = 'SelectWeeklyAmount';
+  } else {
+    initialRouteName = 'Home';
   }
 
   const Container = createAppContainer(HeadStack(initialRouteName));

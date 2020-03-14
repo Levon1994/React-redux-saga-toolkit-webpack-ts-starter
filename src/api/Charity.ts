@@ -26,8 +26,24 @@ interface CharityCreateBody {
 }
 
 export class Charity {
-  static getCharitiesList = (userId: number, searchValue: string, filterData: string) =>
-    Api.get(`v1/customer/${userId}/charities?category=${filterData}&search=${searchValue}`);
+  static getCharitiesList = (
+    userId: number,
+    searchValue: string | null,
+    filterData: string | null,
+  ) => {
+    let filters = '';
+    if (filterData) {
+      filters = `?categories=${filterData}`;
+    }
+    let search = '';
+    if (filterData && searchValue) {
+      search = `&search=${searchValue}`;
+    }
+    if (searchValue) {
+      search = `?search=${searchValue}`;
+    }
+    return Api.get(`v1/customer/${userId}/charities${filters}${search}`);
+  };
 
   static getFilterCharity = () => Api.get(`v1/categories`);
 

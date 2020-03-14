@@ -39,7 +39,7 @@ export const SignUpScreen: React.FC<Props> = React.memo(({ navigation }) => {
   }, [userId]);
 
   const isButtonDisabled = React.useMemo(() => {
-    const required = pick(values, ['firstName', 'lastName', 'email', 'password']);
+    const required = pick(values, ['first_name', 'last_name', 'email', 'password']);
     return (
       Object.values(required).some(v => !v.trim()) ||
       (Object.keys(errors)[0] !== 'object_error' && Object.values(errors).some(v => !!v.trim()))
@@ -64,11 +64,11 @@ export const SignUpScreen: React.FC<Props> = React.memo(({ navigation }) => {
                 label="First Name"
                 placeholder="Alex"
                 maxLength={50}
-                key="firstName"
+                key="first_name"
                 textContentType="name"
-                value={values.firstName}
-                onChangeText={(value: string) => changeValue({ firstName: value })}
-                error={errors.firstName || errors.first_name}
+                value={values.first_name}
+                onChangeText={(value: string) => changeValue({ first_name: value })}
+                error={errors.first_name}
               />
             </InputWrapper>
             <InputWrapper>
@@ -76,11 +76,11 @@ export const SignUpScreen: React.FC<Props> = React.memo(({ navigation }) => {
                 label="Last Name"
                 placeholder="Doe"
                 maxLength={50}
-                key="lastName"
+                key="last_name"
                 textContentType="name"
-                value={values.lastName}
-                onChangeText={(value: string) => changeValue({ lastName: value })}
-                error={errors.lastName || errors.last_name}
+                value={values.last_name}
+                onChangeText={(value: string) => changeValue({ last_name: value })}
+                error={errors.last_name}
               />
             </InputWrapper>
             <InputWrapper>

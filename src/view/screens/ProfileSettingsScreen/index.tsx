@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAction } from 'utils/hooks';
+import { pick } from 'utils/helpers';
 
 import { Navigation, RootState } from 'types';
 
 import * as Actions from 'modules/auth/actions';
-import { setWeeklyAmount } from 'modules/user/actions';
+import { setWeeklyAmount, updateUser } from 'modules/user/actions';
 
-import { WeeklyGoal } from 'view/components';
+import { WeeklyGoal, globalErrorBlock } from 'view/components';
 import { Input } from 'view/components/uiKit/Input';
 import { Box } from 'view/components/uiKit/Box';
 
@@ -41,14 +42,31 @@ interface Props {
 }
 
 export const ProfileSettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
-  const { user, errors } = useSelector((state: RootState) => state.userReducer);
+  const { user, errors, isLoadingUpdateUserData, isUpdateUserData } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
 
   const changeWeeklyAmount = useAction(setWeeklyAmount);
   const changeValue = useAction(Actions.changeValue);
+  const updateUserData = useAction(updateUser);
+
+  useEffect(() => {
+    if (isUpdateUserData) {
+      navigation.navigate('HomeScreen');
+    }
+  }, [isUpdateUserData]);
 
   const goBack = useCallback(() => {
     navigation.navigate('HomeScreen', { route: 'notUpdate' });
   }, []);
+
+  const isButtonDisabled = React.useMemo(() => {
+    const required = pick(user, ['first_name', 'last_name', 'email']);
+    return (
+      Object.values(required).some(v => !v.trim()) ||
+      (Object.keys(errors)[0] !== 'object_error' && Object.values(errors).some(v => !!v.trim()))
+    );
+  }, [user, errors]);
 
   return (
     <Container>
@@ -62,6 +80,9 @@ export const ProfileSettingsScreen: React.FC<Props> = React.memo(({ navigation }
       {/* main block */}
       <StyledKeyboardAvoidingView>
         <MainBlock>
+          {Object.keys(errors).length === 1 &&
+            Object.keys(errors)[0] === 'object_error' &&
+            globalErrorBlock(errors)}
           <StyledScrollView>
             <Box mb={10}>
               <WeeklyGoal
@@ -79,7 +100,7 @@ export const ProfileSettingsScreen: React.FC<Props> = React.memo(({ navigation }
                   textContentType="name"
                   value={user.first_name}
                   onChangeText={(value: string) => changeValue({ first_name: value })}
-                  error={errors && errors.first_name}
+                  error={errors.first_name}
                 />
               </InputWrapper>
               <InputWrapper>
@@ -91,7 +112,7 @@ export const ProfileSettingsScreen: React.FC<Props> = React.memo(({ navigation }
                   textContentType="name"
                   value={user.last_name}
                   onChangeText={(value: string) => changeValue({ last_name: value })}
-                  error={errors && errors.last_name}
+                  error={errors.last_name}
                 />
               </InputWrapper>
               <InputWrapper>
@@ -105,7 +126,7 @@ export const ProfileSettingsScreen: React.FC<Props> = React.memo(({ navigation }
                   autoCompleteType="email"
                   value={user.email}
                   onChangeText={(value: string) => changeValue({ email: value })}
-                  error={errors && errors.email}
+                  error={errors.email}
                 />
               </InputWrapper>
             </Box>
@@ -125,7 +146,12 @@ export const ProfileSettingsScreen: React.FC<Props> = React.memo(({ navigation }
             </PaymentDetailsBlock>
           </StyledScrollView>
           <ButtonWrapper>
-            <StyledButton onPress={() => navigation.navigate('HomeScreen')} />
+            <StyledButton
+              disabled={isButtonDisabled}
+              onPress={updateUserData}
+              loading={isLoadingUpdateUserData}
+              reverseLoader
+            />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>

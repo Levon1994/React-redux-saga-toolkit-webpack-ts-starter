@@ -20,6 +20,26 @@ export interface Feed {
   };
 }
 
+export interface Charity {
+  id: number;
+  name: string;
+  logo: string;
+  is_selected: boolean;
+}
+
+export interface Filter {
+  id: number;
+  name: string;
+}
+
+export interface CheckedFilter {
+  label: string;
+}
+
+export interface CheckSelected {
+  label: number;
+}
+
 export interface CharityState {
   userCharityData: UserCharity;
   isLoadingCharityData: boolean;
@@ -28,4 +48,14 @@ export interface CharityState {
   next_page: number | null;
   page: number;
   getUserFeedError: ResponseErrors;
+  charitiesList: Charity[];
+  isLoadingCharitiesList: boolean;
+  getCharitiesListError: ResponseErrors;
+  filterList: Filter[];
+  checkFilter: CheckedFilter[];
+  searchValue: string;
+  checkSelected: CheckSelected[];
+  isCreatedUserCharity: boolean;
+  isLoadingCreatedUserCharity: boolean;
+  createdUserCharityError: ResponseErrors;
 }

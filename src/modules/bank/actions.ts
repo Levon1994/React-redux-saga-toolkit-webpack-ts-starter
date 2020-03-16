@@ -45,3 +45,5 @@ export const createBankAccountFail = createAction(
   'bank/CREATE_BANK_ACCOUNT_FAIL',
   resolve => (payload: ResponseErrors) => resolve(payload),
 );
+
+export const resetBankReducer = createAction('bank/RESET_BANK_REDUCER');

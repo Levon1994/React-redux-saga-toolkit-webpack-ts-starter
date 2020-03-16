@@ -7,7 +7,7 @@ export class Api {
 
   constructor() {
     this.axiosInstance = axios.create({
-      timeout: 5000,
+      timeout: 120000,
       baseURL: config.API_URI,
       headers: {
         Accept: 'application/json',
@@ -41,6 +41,10 @@ export class Api {
 
   static post<T = any>(url: string, data?: object, config?: AxiosRequestConfig): AxiosPromise<T> {
     return Api.getAxios().post(url, data, config);
+  }
+
+  static put<T = any>(url: string, data?: object, config?: AxiosRequestConfig): AxiosPromise<T> {
+    return Api.getAxios().put(url, data, config);
   }
 }
 

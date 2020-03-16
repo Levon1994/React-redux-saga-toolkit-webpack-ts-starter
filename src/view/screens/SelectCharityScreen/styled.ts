@@ -73,18 +73,19 @@ export const ErrorBlock = styled(Box).attrs(({ theme }) => ({
   center: true,
   align: 'center',
   p: '9px',
-  mb: 16,
+  mb: 10,
 }))``;
 
 export const ErrorTitlte = styled(Text).attrs(({ theme }) => ({
   color: theme.colors.error,
+  center: true,
 }))``;
 
-export const FlatListBlock = styled(Box).attrs({
-  mb: 70,
+export const FlatListBlock = styled(Box).attrs(({ isShowInfo }) => ({
+  mb: isShowInfo ? 100 : 70,
   center: true,
   align: 'center',
-})``;
+}))``;
 
 export const ButtonWrapper = styled(Box).attrs({
   mt: 'auto',
@@ -105,4 +106,17 @@ export const ContainerList = styled(Box).attrs(({ theme }) => ({
   p: '10px',
   m: `${moderateScale(2, 0.5)}px`,
   width: 'auto',
+}))``;
+
+export const ItemFilterWrapper = styled(Box).attrs(({ theme, isCheck }) => ({
+  width: 'auto',
+  bg: isCheck ? theme.colors.mainText : theme.colors.filterBackground,
+  br: 4,
+  mr: `${moderateScale(8, 0.2)}px`,
+}))``;
+
+export const FilterTitle = styled(Text).attrs(({ theme, isCheck }) => ({
+  size: 14,
+  m: '5px 10px',
+  color: isCheck && theme.colors.main,
 }))``;

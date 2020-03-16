@@ -1,5 +1,6 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { getType } from 'deox';
+import firebase from 'react-native-firebase';
 
 import Api from 'api';
 import { Register } from 'api/Auth';
@@ -13,12 +14,13 @@ function* registerSaga() {
   try {
     const { values } = yield select((state: RootState) => state.authReducer);
     const { fcmToken } = yield select((state: RootState) => state.notificationsReducer);
+    const firebaseToken = yield firebase.messaging().getToken();
     const requestData = {
       email: values.email.trim(),
-      first_name: values.firstName.trim(),
-      last_name: values.lastName.trim(),
+      first_name: values.first_name.trim(),
+      last_name: values.last_name.trim(),
       password: values.password,
-      device_token: fcmToken,
+      device_token: fcmToken || firebaseToken,
     };
     const { data } = yield Register.register(requestData);
     Api.setAuthToken(data.access_token);

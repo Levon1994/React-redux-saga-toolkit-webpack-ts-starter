@@ -1,10 +1,15 @@
 // /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import { Navigation } from 'types';
+import { useAction } from 'utils/hooks';
+import { Navigation, RootState } from 'types';
+
+import { setWeeklyAmount, updateUser } from 'modules/user/actions';
 
 import { WeeklyGoal } from 'view/components';
-
+import { Text } from 'view/components/uiKit/Text';
+import { Box } from 'view/components/uiKit/Box';
 import {
   Container,
   Header,
@@ -20,7 +25,22 @@ interface Props {
 }
 
 export const SelectWeeklyAmountScreen: React.FC<Props> = ({ navigation }) => {
-  const [weeklyValue, setWeeklyAmount] = useState(2);
+  const { user, isLoadingUpdateUserData, errors, isSetWeeklyGoal } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
+
+  const changeWeeklyAmount = useAction(setWeeklyAmount);
+  const updateUserWeeklyAmount = useAction(updateUser);
+
+  useEffect(() => {
+    if (isSetWeeklyGoal) {
+      navigation.navigate('Home');
+    }
+  }, [isSetWeeklyGoal]);
+
+  const showGlobalErrors =
+    Object.keys(errors).length === 1 && Object.keys(errors)[0] === 'object_error';
+
   return (
     <Container>
       {/* header */}
@@ -31,11 +51,22 @@ export const SelectWeeklyAmountScreen: React.FC<Props> = ({ navigation }) => {
       {/* main block */}
       <MainBlock>
         <WeeklyGoal
-          weeklyValue={weeklyValue}
-          onValueChange={(value: number) => setWeeklyAmount(value)}
+          weeklyValue={user.weekly_goal}
+          onValueChange={(value: number) => changeWeeklyAmount(value)}
         />
+        {showGlobalErrors && (
+          <Box align="center" center mt={20}>
+            <Text size={14} color="red" width="70%" center weight="regular">
+              {Object.values(errors)}
+            </Text>
+          </Box>
+        )}
         <ButtonWrapper>
-          <StyledButton onPress={() => navigation.navigate('Home')} />
+          <StyledButton
+            onPress={updateUserWeeklyAmount}
+            loading={isLoadingUpdateUserData}
+            reverseLoader
+          />
         </ButtonWrapper>
       </MainBlock>
     </Container>

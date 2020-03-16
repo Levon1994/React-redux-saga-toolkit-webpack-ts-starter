@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { put, takeLatest, select } from 'redux-saga/effects';
 import { getType, ActionType } from 'deox';
@@ -38,7 +39,6 @@ function* getTopBanksSaga() {
 }
 
 function* createBankAccountSaga({ payload }: ActionType<typeof createBankAccount>) {
-  console.log('payload: ', payload);
   try {
     const { values } = yield select((state: RootState) => state.bankReducer);
     const { userId } = yield select((state: RootState) => state.userReducer);

@@ -12,8 +12,7 @@ interface ContainerProps {
 export const InputContainer = styled(Box).attrs<ContainerProps>(({ error, theme }) => ({
   width: '100%',
   border: `1px solid ${error ? theme.colors.error : theme.colors.inputBorder}`,
-  p: `0px ${moderateScale(16, 0.2)}px 0px`,
-  pr: `${moderateScale(2, 0.2)}px`,
+  p: `0px 0px 0px ${moderateScale(13, 0.2)}px`,
   row: true,
   align: 'center',
   br: 4,
@@ -28,8 +27,10 @@ export const Label = styled(Text).attrs(({ theme }) => ({
 }))``;
 
 const inputCss = css`
+  width: 100%;
   height: 100%;
   padding: ${moderateScale(16, 0.2)}px;
+  padding-right: ${moderateScale(5, 0.2)}px;
   padding-left: 0;
   font-size: ${moderateScale(14, 0.2)};
   font-family: ${({ theme }) => theme.defaultFontFamily};
@@ -38,12 +39,10 @@ const inputCss = css`
 
 export const StyledInput = styled.TextInput`
   ${inputCss};
-  width: 100%;
 `;
 
 export const StyledMaskedInput = styled(TextInputMask)`
   ${inputCss};
-  width: auto;
 `;
 
 export const ErrorText = styled(Text).attrs(({ theme }) => ({

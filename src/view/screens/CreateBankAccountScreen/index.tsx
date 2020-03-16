@@ -1,5 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -12,6 +14,7 @@ import * as Actions from 'modules/bank/actions';
 
 import { Input } from 'view/components/uiKit/Input';
 import { Box } from 'view/components/uiKit/Box';
+import { CreateAccountInfo } from './components/CreateAccountInfo';
 
 import {
   Container,
@@ -35,18 +38,40 @@ interface Props {
 
 export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const route = navigation.state.params && navigation.state.params;
+
+  const [color, setColor] = useState('#858585');
+
   const { values, errors, isLoadingCreateBankAccount } = useSelector(
     (state: RootState) => state.bankReducer,
   );
-  const { createdBankAccountStatus } = useSelector((state: RootState) => state.userReducer);
+  const { has_bank } = useSelector((state: RootState) => state.userReducer);
   const changeValue = useAction(Actions.changeValue);
   const createBankAccount = useAction(Actions.createBankAccount);
+  const resetBankReducer = useAction(Actions.resetBankReducer);
 
   React.useEffect(() => {
-    if (createdBankAccountStatus) {
+    if (has_bank) {
       navigation.navigate('AddCard');
     }
-  }, [createdBankAccountStatus]);
+  }, [has_bank]);
+
+  React.useEffect(() => {
+    if (isLoadingCreateBankAccount) {
+      this.timer = setTimeout(
+        () => setColor('white'),
+        10000, // in milliseconds, 3s for fast show
+      );
+    }
+  }, [isLoadingCreateBankAccount]);
+
+  React.useEffect(() => {
+    if (!isLoadingCreateBankAccount) {
+      return () => {
+        setColor('#858585');
+        clearTimeout(this.timer);
+      };
+    }
+  }, [isLoadingCreateBankAccount]);
 
   const isButtonDisabled = React.useMemo(() => {
     const required = pick(values, ['loginId', 'password']);
@@ -56,16 +81,22 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
     <Container>
       {/* header */}
       <Header>
-        <GoBackBlock onPress={() => navigation.goBack()}>
+        <GoBackBlock
+          onPress={() => {
+            resetBankReducer();
+            navigation.goBack();
+          }}
+        >
           <GoBackIcon />
         </GoBackBlock>
         <Title>Add account</Title>
       </Header>
-      {Object.keys(errors).length === 1 && Object.keys(errors)[0] === 'object_error' && (
-        <ErrorBlock>
-          <ErrorTitlte>{Object.values(errors)}</ErrorTitlte>
-        </ErrorBlock>
-      )}
+      {Object.keys(errors).length === 1 &&
+        (Object.keys(errors)[0] === 'object_error' || Object.keys(errors)[0] === 'detail') && (
+          <ErrorBlock>
+            <ErrorTitlte>{Object.values(errors)}</ErrorTitlte>
+          </ErrorBlock>
+        )}
       {/* main block */}
       <StyledKeyboardAvoidingView>
         <MainBlock>
@@ -78,7 +109,7 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
                 resizeMode="contain"
               />
             )}
-            <Box mb={15}>
+            <Box mb={45}>
               <InputWrapper>
                 <Input
                   label="Customer Registration Number"
@@ -138,12 +169,11 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
             <StyledButton
               onPress={() => createBankAccount(route.bank_id)}
               disabled={isButtonDisabled}
-              loading={isLoadingCreateBankAccount}
-              reverseLoader
             />
           </ButtonWrapper>
         </MainBlock>
       </StyledKeyboardAvoidingView>
+      {isLoadingCreateBankAccount && <CreateAccountInfo color={color} />}
     </Container>
   );
 });

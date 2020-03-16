@@ -69,7 +69,6 @@ export const StyledScrollView = styled.ScrollView.attrs({
 
 export const InputWrapper = styled(Box).attrs({
   mb: 12,
-  row: true,
 })``;
 
 export const ButtonWrapper = styled(Box).attrs({

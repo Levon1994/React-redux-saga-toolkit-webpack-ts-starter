@@ -18,4 +18,11 @@ export interface UserState {
   errors: ResponseErrors;
   userToken: string | null;
   createdBankAccountStatus: boolean;
+  has_bank: boolean;
+  has_card: boolean;
+  has_charity: boolean;
+  isSetWeeklyGoal: boolean;
+  isLoadingUpdateUserData: boolean;
+  isUpdateUserData: boolean;
+  isCreatedUserCharity: boolean;
 }

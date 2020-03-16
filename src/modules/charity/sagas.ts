@@ -66,6 +66,7 @@ function* createUserCharitySaga() {
       charity_ids: checkSelected.map((e: { label: number }) => e.label),
     };
     yield Charity.createUserCharity(userId, requestData);
+    yield put(setUserCharity());
     yield put(createUserCharitySuccess());
   } catch (e) {
     yield put(processRequestError({ error: e, failAction: createUserCharityFail }));

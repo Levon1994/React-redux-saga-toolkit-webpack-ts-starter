@@ -61,11 +61,12 @@ export const SelectCharityScreen: React.FC<Props> = ({ navigation }) => {
     checkFilter,
     searchValue,
     checkSelected,
-    isCreatedUserCharity,
     isLoadingCreatedUserCharity,
     createdUserCharityError,
     getCharitiesListError,
   } = useSelector((state: RootState) => state.charityReducer);
+
+  const { isCreatedUserCharity } = useSelector((state: RootState) => state.userReducer);
 
   const fetchCharitiesList = useAction(getCharitiesList);
   const fetchFilterCharity = useAction(getFilterCharity);

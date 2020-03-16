@@ -44,16 +44,16 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
   const { values, errors, isLoadingCreateBankAccount } = useSelector(
     (state: RootState) => state.bankReducer,
   );
-  const { createdBankAccountStatus } = useSelector((state: RootState) => state.userReducer);
+  const { has_bank } = useSelector((state: RootState) => state.userReducer);
   const changeValue = useAction(Actions.changeValue);
   const createBankAccount = useAction(Actions.createBankAccount);
   const resetBankReducer = useAction(Actions.resetBankReducer);
 
   React.useEffect(() => {
-    if (createdBankAccountStatus) {
+    if (has_bank) {
       navigation.navigate('AddCard');
     }
-  }, [createdBankAccountStatus]);
+  }, [has_bank]);
 
   React.useEffect(() => {
     if (isLoadingCreateBankAccount) {
@@ -109,7 +109,7 @@ export const CreateBankAccountScreen: React.FC<Props> = React.memo(({ navigation
                 resizeMode="contain"
               />
             )}
-            <Box mb={15}>
+            <Box mb={45}>
               <InputWrapper>
                 <Input
                   label="Customer Registration Number"

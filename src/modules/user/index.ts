@@ -33,13 +33,13 @@ const defaultState: UserState = {
   getUserDataError: {},
   errors: {},
   userToken: null,
-  createdBankAccountStatus: false,
   has_charity: false,
   has_bank: false,
   has_card: false,
   isSetWeeklyGoal: false,
   isLoadingUpdateUserData: false,
   isUpdateUserData: false,
+  isCreatedUserCharity: false,
 };
 
 export const userReducer = createReducer(defaultState, handle => [
@@ -56,6 +56,7 @@ export const userReducer = createReducer(defaultState, handle => [
   ),
   handle(setUserCharity, state => ({
     ...state,
+    isCreatedUserCharity: true,
     has_charity: true,
   })),
   handle(
@@ -157,5 +158,6 @@ export const userReducer = createReducer(defaultState, handle => [
   handle(resetUserReducer, state => ({
     ...state,
     isUpdateUserData: false,
+    isCreatedUserCharity: false,
   })),
 ]);

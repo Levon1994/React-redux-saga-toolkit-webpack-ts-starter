@@ -44,7 +44,6 @@ const defaultState: CharityState = {
   filterList: [],
   checkFilter: [],
   checkSelected: [],
-  isCreatedUserCharity: false,
   isLoadingCreatedUserCharity: false,
   createdUserCharityError: {},
 };
@@ -196,7 +195,6 @@ export const charityReducer = createReducer(defaultState, handle => [
   })),
   handle(createUserCharitySuccess, state => ({
     ...state,
-    isCreatedUserCharity: true,
     isLoadingCreatedUserCharity: false,
     createdUserCharityError: {},
   })),
@@ -210,7 +208,6 @@ export const charityReducer = createReducer(defaultState, handle => [
   ),
   handle(resetCharityReducer, state => ({
     ...state,
-    isCreatedUserCharity: false,
     createdUserCharityError: {},
     searchValue: '',
     checkFilter: [],

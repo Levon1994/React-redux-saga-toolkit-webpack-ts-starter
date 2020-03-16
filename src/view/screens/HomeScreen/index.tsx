@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { TabView, SceneMap } from 'react-native-tab-view';
@@ -8,6 +7,7 @@ import { useAction } from 'utils/hooks';
 import * as Actions from 'modules/notifications/actions';
 import { getUser, resetUserReducer } from 'modules/user/actions';
 import { getUserCharity, getUserFeed, resetCharityReducer } from 'modules/charity/actions';
+import { resetCardReducer } from 'modules/card/actions';
 import { RootState, Navigation } from 'types';
 
 import { TabLabel, TabScene } from 'view/components';
@@ -41,6 +41,7 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const getUserFeedData = useAction(getUserFeed);
   const resetReducer = useAction(resetCharityReducer);
   const resetUserDataReducer = useAction(resetUserReducer);
+  const resetCardDataReducer = useAction(resetCardReducer);
 
   useEffect(() => {
     const route = navigation.state.params && navigation.state.params.route;
@@ -55,7 +56,6 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
   }, [navigation]);
 
   useEffect(() => {
-    // returned function will be called on component unmount
     return () => {
       resetNotifications();
     };
@@ -85,10 +85,12 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
             getUserDataError={getUserDataError}
             onRefresh={onRefresh}
             goToChooseCharity={() => {
+              resetUserDataReducer();
               resetReducer();
               navigation.navigate('SelectCharity', { route: 'edit' });
             }}
             goToProfile={() => {
+              resetCardDataReducer();
               resetUserDataReducer();
               navigation.navigate('ProfileSettings');
             }}
@@ -100,7 +102,10 @@ export const HomeScreen: React.FC<Props> = React.memo(({ navigation }) => {
       () =>
         TabScene(() => (
           <PersonalDetails
-            editCard={() => navigation.navigate('AddCard', { route: 'edit' })}
+            editCard={() => {
+              resetCardDataReducer();
+              navigation.navigate('AddCard', { route: 'edit' });
+            }}
             onRefresh={onRefresh}
           />
         )),

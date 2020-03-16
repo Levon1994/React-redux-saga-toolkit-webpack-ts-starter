@@ -3,13 +3,11 @@ import { AxiosResponse } from 'axios';
 import Api from '.';
 
 export type CardResponse = AxiosResponse<{
-  results: {
-    card_number: string;
-    card_holder: string;
-    card_expiration: string;
-    card_cvc: string;
-    id: number;
-  };
+  card_number: string;
+  card_holder: string;
+  card_expiration: string;
+  card_cvc: string;
+  id: number;
 }>;
 
 interface CreateCardBody {

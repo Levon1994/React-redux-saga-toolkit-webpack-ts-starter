@@ -13,6 +13,7 @@ import {
   getUserCard,
   getUserCardSuccess,
   getUserCardFail,
+  resetCardReducer,
 } from './actions';
 
 const defaultState: CardState = {
@@ -39,20 +40,23 @@ export const cardReducer = createReducer(defaultState, handle => [
     },
     globalErrors: {},
   })),
-  handle(setScanCard, (state, { payload }) => {
-    const expiryMonth =
-      payload.expiryMonth > 10
-        ? payload.expiryMonth.toString()
-        : `0${payload.expiryMonth.toString()}`;
-    return {
-      ...state,
-      isChange: true,
-      card_number: payload.cardNumber || '',
-      cardHolder: payload.cardholderName || '',
-      expiryDate:
-        payload.expiryYear > 0 ? `${expiryMonth} ${payload.expiryYear.toString().slice(-2)}` : '',
-    };
-  }),
+  handle(
+    setScanCard,
+    (state, { payload }): CardState => {
+      const expiryMonth =
+        payload.expiryMonth > 10
+          ? payload.expiryMonth.toString()
+          : `0${payload.expiryMonth.toString()}`;
+      return {
+        ...state,
+        isChange: true,
+        card_number: payload.cardNumber || '',
+        cardHolder: payload.cardholderName || '',
+        expiryDate:
+          payload.expiryYear > 0 ? `${expiryMonth} ${payload.expiryYear.toString().slice(-2)}` : '',
+      };
+    },
+  ),
   handle(createUserCard, state => ({
     ...state,
     isLoadingCreateUserCard: true,
@@ -107,4 +111,8 @@ export const cardReducer = createReducer(defaultState, handle => [
       globalErrors: payload,
     }),
   ),
+  handle(resetCardReducer, state => ({
+    ...state,
+    createStatus: false,
+  })),
 ]);

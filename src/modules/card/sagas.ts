@@ -50,7 +50,6 @@ function* createUserCardSaga() {
     yield put(setUserCreatedCard());
     yield put(createUserCardSuccess());
   } catch (e) {
-    console.log('e: ', e.response);
     yield put(processRequestError({ error: e, failAction: createUserCardFail }));
   }
 }

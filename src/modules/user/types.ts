@@ -24,4 +24,5 @@ export interface UserState {
   isSetWeeklyGoal: boolean;
   isLoadingUpdateUserData: boolean;
   isUpdateUserData: boolean;
+  isCreatedUserCharity: boolean;
 }

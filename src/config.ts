@@ -1,5 +1,7 @@
 export const config = {
-  API_URI: 'https://mcc-back-dev.appelloproject.xyz/api/',
+  // dev server
+  // API_URI: 'https://mcc-back-dev.appelloproject.xyz/api/',
+  API_URI: 'https://mcc-back-stage.appelloproject.xyz/api/',
 };
 
 export default config;

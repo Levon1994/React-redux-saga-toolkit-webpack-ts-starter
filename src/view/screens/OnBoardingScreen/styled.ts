@@ -9,7 +9,7 @@ import { Box } from 'view/components/uiKit/Box';
 import { Text } from 'view/components/uiKit/Text';
 import { Button } from 'view/components/uiKit/Button';
 
-const controlsHeight = 150;
+const controlsHeight = 140;
 const { height: screenHeight } = Dimensions.get('window');
 
 export const ScreenContainer = styled(Box).attrs(({ theme }) => ({
@@ -19,7 +19,7 @@ export const ScreenContainer = styled(Box).attrs(({ theme }) => ({
   align: 'center',
   bg: theme.colors.main,
   ph: 16,
-  pt: 26,
+  pt: moderateScale(24, 1),
 }))``;
 
 export const ImageContainer = styled(Box).attrs({
@@ -32,7 +32,7 @@ export const ImageContainer = styled(Box).attrs({
 
 export const ImageWrapper = styled(Box).attrs({
   width: '80%',
-  height: '80%',
+  height: '78%',
 })``;
 
 export const StyledImage = styled.Image.attrs({
@@ -43,16 +43,17 @@ export const StyledImage = styled.Image.attrs({
 `;
 
 export const Title = styled(Text).attrs({
-  size: moderateScale(25, 0.2),
+  size: moderateScale(24, 0.7),
   center: true,
 })`
-  padding-bottom: ${moderateScale(10, 0.2)};
+  padding-bottom: ${moderateScale(10, 0.7)};
 `;
 
 export const SubTitle = styled(Text).attrs(({ theme }) => ({
   size: moderateScale(11, 0.2),
   center: true,
   color: theme.colors.progressValue,
+  width: '95%',
 }))``;
 
 export const PaginationBox = styled(Box).attrs(({ theme }) => ({

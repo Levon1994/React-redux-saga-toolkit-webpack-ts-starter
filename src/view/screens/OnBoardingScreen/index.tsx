@@ -8,6 +8,7 @@ import { Navigation } from 'types';
 
 import { reviewOnBoarding } from 'modules/reviewOnboarding';
 
+import { Box } from 'view/components/uiKit/Box';
 import { SCREENS } from './screenData';
 import {
   ScreenContainer,
@@ -44,10 +45,10 @@ export const OnBoardingScreen: React.FC<Props> = ({ navigation }) => {
           <ImageWrapper>
             <StyledImage source={item.image} />
           </ImageWrapper>
-          <View>
+          <Box center align="center">
             <Title>{item.title}</Title>
             <SubTitle>{item.text}</SubTitle>
-          </View>
+          </Box>
         </ImageContainer>
       </ScreenContainer>
     );

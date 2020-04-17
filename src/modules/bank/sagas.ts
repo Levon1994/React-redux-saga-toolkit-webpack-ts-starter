@@ -45,9 +45,9 @@ function* createBankAccountSaga({ payload }: ActionType<typeof createBankAccount
     const requestData = {
       user_id: userId,
       // test mode
-      bank_id: 'AU00000',
+      // bank_id: 'AU00000',
       // real mode
-      // bank_id: payload,
+      bank_id: payload,
       loginId: values.loginId.trim(),
       password: values.password.trim(),
     };

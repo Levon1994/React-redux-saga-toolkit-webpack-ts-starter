@@ -1,57 +1,40 @@
 {
-  "name": "react-boilerplate",
-  "version": "0.0.1",
-  "description": "Boilerplate and standarts for all Appello React/RN projects",
-  "main": "index.js",
+  "name": "safeface",
+  "version": "0.1.0",
   "private": true,
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "dayjs": "^1.8.20",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-redux": "^7.1.3",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "^3.3.0",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
+  },
   "scripts": {
-    "prettier": "prettier --write src/**/*.js",
-    "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.com/appello/devops/reactjs.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "Roman Kuzkokov",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-eslint": "^8.2.3",
-    "cz-customizable": "^5.4.0",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-disable": "^1.0.4",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.9.1",
-    "husky": "^1.1.2",
-    "lint-staged": "^8.1.5",
-    "prettier": "^1.16.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint",
-      "git add"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   },
-  "dependencies": {
-    "redux": "^4.0.1",
-    "redux-actions": "^2.6.5",
-    "redux-saga": "^1.0.2",
-    "styled-components": "^4.2.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    }
+  "devDependencies": {
+    "node-sass": "^4.13.0"
   }
 }

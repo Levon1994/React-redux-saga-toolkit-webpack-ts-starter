@@ -8,15 +8,13 @@ const Icon = ({
   name,
   className,
   ...restProps
-}) => {
-  return(
-    <img
-     className={classnames('Icon',className)}
-     src={iconsList[name]}
-     {...restProps}
-    />
-  )
-};
+}) => (
+  <img
+   className={classnames('Icon',className)}
+   src={iconsList[name]}
+   {...restProps}
+  />
+);
 
 Icon.propTypes = {
   name: PropTypes.string,

@@ -66,7 +66,7 @@ const TextField = ({
         }
       {errorText && <div className="error-text">{errorText}</div>}
     </div>
-  )
+  );
 };
 
 TextField.propTypes = {

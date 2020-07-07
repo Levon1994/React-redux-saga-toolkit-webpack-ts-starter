@@ -1,0 +1,24 @@
+.Login {
+  .title {
+    margin-top: 54px;
+    margin-bottom: 60px;
+    color: var(--white);
+    font-weight: bold;
+    font-size: 52px;
+  }
+  .form-group {
+    width: 100%;
+    max-width: 568px;
+    .TextField {
+      &:first-child {
+        margin-bottom: 24px;
+      }
+      &:nth-child(2) {
+        margin-bottom: 30px;
+      }
+    }
+    .Button {
+      width: 100%;
+    }
+  }
+}

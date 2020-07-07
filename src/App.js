@@ -10,6 +10,7 @@ import {
 import {
   Main,
   Login,
+  QRCode,
 } from 'containers';
 
 import { Button, TextField, Icon } from 'components';
@@ -23,14 +24,18 @@ const App = () => {
         <NavLink to="/main" style={{ marginRight: 15 }}>
           <Button>Main</Button>
         </NavLink>
-        <NavLink to="/login">
+        <NavLink to="/login" style={{ marginRight: 15 }}>
           <Button>Login</Button>
+        </NavLink>
+        <NavLink to="/qr-code">
+          <Button>QR Code</Button>
         </NavLink>
       </div>
       <div className="flexible vertical aCenter grow jCenter">
         <Switch>
             <Route exact path="/main" component={Main} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/qr-code" component={QRCode} />
             <Redirect from="/" to="/main" />
         </Switch>
       </div>

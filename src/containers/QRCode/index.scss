@@ -1,0 +1,18 @@
+.QRCode {
+  .title {
+    font-size: 52px;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .subtitle {
+    color: var(--subtitle-color);
+    font-size: 24px;
+    max-width: 360px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: normal;
+  }
+  .qr-code-image {
+    margin: 20px;
+  }
+}

@@ -1,7 +1,9 @@
-import Main from './Main';
 import Login from './Login';
+import QRCode from './QRCode';
+import Scanner from './Scanner';
 
 export {
-  Main,
   Login,
+  QRCode,
+  Scanner,
 };

@@ -10,7 +10,7 @@ const Image = ({
   height,
   className,
   ...restProps
-}) => {
+}) => (
   <img
     src={path}
     width={width}
@@ -18,7 +18,7 @@ const Image = ({
     className={classnames('Image', className)}
     {...restProps}
   />
-};
+);
 
 Image.propTypes = {
   url: PropTypes.string,

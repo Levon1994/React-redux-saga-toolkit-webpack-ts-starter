@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+
+import { Icon } from 'components';
 
 import { noop } from 'utils';
 
 import './index.scss';
 
 const textFieldTypeEnum = {
+  textType: 'text',
   passwordType: 'password',
 };
 
 const TextField = ({
   type,
   value,
-  title,
+  label,
   required,
   onChange,
   textarea,
@@ -25,13 +28,22 @@ const TextField = ({
   withShowPassIcon,
   ...restProps
 }) => {
-  const { passwordType } = textFieldTypeEnum;
+  const { textType, passwordType } = textFieldTypeEnum;
+  const [fieldType, setFieldType] = useState(type);
+
+  const onToggleType = () => {
+    const newType = fieldType === textType ? passwordType : textType;
+    setFieldType(newType);
+  };
 
   return (
     <div className={classnames('TextField', className)}>
-      {title && <div className="title">{title}</div>}
+      {label && <div className="label">{label}</div>}
       {withShowPassIcon && type === passwordType &&
-        <div></div>
+        <Icon
+          name="showPass"
+          onClick={onToggleType}
+        />
       }
         {
           textarea
@@ -44,8 +56,10 @@ const TextField = ({
              />
            : <input
                placeholder={placeholder}
-               className="textfield-holder"
-               type={type}
+               className={classnames('textfield-holder', {
+                 'show-pass': withShowPassIcon && type === passwordType
+               })}
+               type={fieldType}
                onChange={onChange}
                {...restProps}
              />

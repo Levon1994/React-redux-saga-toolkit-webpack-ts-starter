@@ -11,6 +11,9 @@ const App = () => {
         Login
       </Button>
       <TextField
+        label="hello"
+        type="password"
+        withShowPassIcon
       />
       <Icon name="logo"/>
     </main>

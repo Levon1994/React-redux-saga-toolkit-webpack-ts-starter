@@ -50,8 +50,7 @@ const Scanner = () => {
             }}
           />
       }
-      {
-        imageUrl &&
+      {imageUrl &&
         <Image
           className={classnames('scanner-image')}
           id="main-image"

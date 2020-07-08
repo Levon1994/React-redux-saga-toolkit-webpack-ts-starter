@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { iconsList } from './IconsList';
 
 const Icon = ({
+  alt,
   name,
   className,
   ...restProps
@@ -12,11 +13,13 @@ const Icon = ({
   <img
    className={classnames('Icon',className)}
    src={iconsList[name]}
+   alt={alt || name}
    {...restProps}
   />
 );
 
 Icon.propTypes = {
+  alt: PropTypes.string,
   name: PropTypes.string,
   className: PropTypes.string,
 };

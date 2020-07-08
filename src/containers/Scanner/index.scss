@@ -22,7 +22,9 @@
       span {
         margin-right: 15px;
         &.success {
-          color: var(--success-color);
+          background: -webkit-linear-gradient(#82F310, #18C94D);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       }
     }

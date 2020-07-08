@@ -5,6 +5,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "dayjs": "^1.8.20",
+    "face-api.js": "^0.22.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-html5-camera-photo": "^1.5.4",
@@ -36,6 +37,7 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.13.0"
+    "node-sass": "^4.13.0",
+    "babel-eslint": "^10.1.0"
   }
 }

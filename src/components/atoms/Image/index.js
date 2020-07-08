@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import './index.scss';
 
 const Image = ({
+  alt,
   path,
   width,
   height,
@@ -12,6 +13,7 @@ const Image = ({
   ...restProps
 }) => (
   <img
+    alt={alt}
     src={path}
     width={width}
     height={height}
@@ -21,12 +23,14 @@ const Image = ({
 );
 
 Image.propTypes = {
+  alt: PropTypes.string,
   url: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
 };
 
 Image.defaultProps = {
+  alt: '',
   path: '',
   width: 230,
   height: 230,

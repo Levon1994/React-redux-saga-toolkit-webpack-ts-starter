@@ -9,6 +9,8 @@ import 'react-html5-camera-photo/build/css/index.css';
 import detectedContentUrl from 'assets/detected-content.png';
 import overlayUrl from 'assets/fade.png';
 
+import ScanInfo from './ScanInfo';
+
 import './index.scss';
 
 const Scanner = () => {
@@ -48,8 +50,7 @@ const Scanner = () => {
             }}
           />
       }
-      {
-        imageUrl &&
+      {imageUrl &&
         <Image
           className={classnames('scanner-image')}
           id="main-image"
@@ -58,18 +59,20 @@ const Scanner = () => {
           height={1024}
         />
       }
-      {!imageUrl
-        ? <Image
-            className={classnames('scanner-content', { 'zIndex': imageUrl })}
-            id="scanning-body"
-            path={overlayUrl}
-          />
-        :
-          <Image
-            className={classnames('scanner-content',{ 'zIndex': imageUrl })}
-            id="scanning-body"
-            path={detectedContentUrl}
-          />
+      <Image
+          className={classnames('scanner-content', { 'zIndex': imageUrl })}
+          id="scanning-body"
+          path={overlayUrl}
+        />
+      {imageUrl && !isScanned &&
+        <Image
+          className={classnames('scanner-content',{ 'zIndex': imageUrl })}
+          id="scanning-body"
+          path={detectedContentUrl}
+        />
+      }
+      {imageUrl && isScanned &&
+        <ScanInfo imageUrl={imageUrl} />
       }
     </div>
   );

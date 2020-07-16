@@ -1,4 +1,4 @@
-## SafeFace Web App Manager Project
+## Apello Boilerplate
 
 In the project directory, you can run:
 

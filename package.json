@@ -1,57 +1,29 @@
 {
-  "name": "react-boilerplate",
+  "name": "SafefaceTabletApp",
   "version": "0.0.1",
-  "description": "Boilerplate and standarts for all Appello React/RN projects",
-  "main": "index.js",
   "private": true,
   "scripts": {
-    "prettier": "prettier --write src/**/*.js",
-    "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.com/appello/devops/reactjs.git"
-  },
-  "author": "Roman Kuzkokov",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-eslint": "^8.2.3",
-    "cz-customizable": "^5.4.0",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-disable": "^1.0.4",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.9.1",
-    "husky": "^1.1.2",
-    "lint-staged": "^8.1.5",
-    "prettier": "^1.16.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ]
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "redux": "^4.0.1",
-    "redux-actions": "^2.6.5",
-    "redux-saga": "^1.0.2",
-    "styled-components": "^4.2.0"
+    "react": "16.13.1",
+    "react-native": "0.63.1"
   },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    }
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/runtime": "^7.10.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "babel-jest": "^26.1.0",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0",
+    "metro-react-native-babel-preset": "^0.60.0",
+    "react-test-renderer": "16.13.1"
+  },
+  "jest": {
+    "preset": "react-native"
   }
 }

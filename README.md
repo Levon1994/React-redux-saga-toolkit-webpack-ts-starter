@@ -1,62 +1,24 @@
-# :space_invader: React Native Template TypeScript
+## SafeFace Web App Manager Project
 
-<p>
-  <a href="https://travis-ci.org/react-native-community/react-native-template-typescript">
-    <img alt="Build Status" src="https://img.shields.io/travis/react-native-community/react-native-template-typescript.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/react-native-community/react-native-template-typescript#readme">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/react-native-community/react-native-template-typescript/graphs/commit-activity">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/react-native-community/react-native-template-typescript/blob/master/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
-  </a>
-</p>
+In the project directory, you can run:
 
-> Clean and minimalist React Native template for a quick start with TypeScript.
+### `npm start`
 
-## :star: Features
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-- Elegant usage directly within the [React Native CLI](https://github.com/react-native-community/cli)
-- Consistent with the default React Native template
-- Minimal additional dependencies
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-## :arrow_forward: Usage
+### `npm test`
 
-```sh
-npx react-native init MyApp --template react-native-template-typescript
-```
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Usage with older versions of React Native
+### `npm build`
 
-#### e.g. `react-native@0.62.x`
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```sh
-npx react-native init MyApp --template react-native-template-typescript@6.4.*
-```
-
-See the below table to find out which version of the template to use.
-
-#### React Native <=> Template Version
-
-| React Native  	| Template  	|
-|---	            |---	        |
-| 0.63  	        | 6.5.*       |
-| 0.62  	        | 6.4.*       |
-| 0.61  	        | 6.3.*       |
-| 0.60  	        | 6.2.*       |
-
-### Note on the legacy CLI
-There seems to be quite some confusion about the legacy CLI. This template only works with the new CLI. Make sure you have uninstalled the legacy `react-native-cli` first (`npm uninstall -g react-native-cli`), for the below command to work. If you wish to not use `npx`, you can also install the new CLI globally (`npm i -g @react-native-community/cli` or `yarn global add @react-native-community/cli`).
-
-Further information can be found here: https://github.com/react-native-community/cli#about
-
-## :computer: Contributing
-
-Contributions are very welcome. Please check out the [contributing document](CONTRIBUTING.md).
-
-## :bookmark: License
-
-This project is [MIT](LICENSE) licensed.
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!

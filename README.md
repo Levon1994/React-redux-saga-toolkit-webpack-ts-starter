@@ -1,2 +1,2 @@
 # ⚠️ DEPRECATED ⚠️
-## Use `appello-rn-template` instead
+**Use `appello-rn-template` instead**

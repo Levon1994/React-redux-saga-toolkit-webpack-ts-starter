@@ -1,3 +1,5 @@
+# ⚠️ DEPRECATED ⚠️
+## Use `appello-rn-template` instead
 ## Apello Boilerplate
 
 In the project directory, you can run:

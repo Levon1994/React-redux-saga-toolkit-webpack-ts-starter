@@ -1,0 +1,18 @@
+{
+    "output": "output",
+    "project_name_pretty": "Web App",
+    "project_name_pretty_platform": "{{ cookiecutter.project_name_pretty }} Web App",
+    "project_name_pretty_appello": "Appello {{ cookiecutter.project_name_pretty_platform }} Project",
+    "project_name_basic": "webapp",
+    "project_name_platform": "{{ cookiecutter.project_name_basic }}-back",
+
+    "s3_bucket_dev": "",
+    "s3_bucket_stage": "",
+    "s3_bucket_prod": "",
+
+    "cloudfront_dist_id_dev": "",
+    "cloudfront_dist_id_stage": "",
+    "cloudfront_dist_id_prod": "",
+
+    "boolean_variable_example": "false"
+}

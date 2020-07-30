@@ -1,0 +1,111 @@
+kind: pipeline
+name: {{ cookiecutter.project_name_pretty_platform }}
+
+steps:
+
+# ------------------------------------------------------------------------------
+
+- name: Build Development
+  image: kudato/baseimage:node12
+  commands:
+  - npm install --quiet
+  - npm run build
+  environment:
+    GOOGLE_MAPS_KEY: ''
+  when:
+    branch: dev
+    event:
+    - push
+    - pull_request
+
+
+- name: Deploy Development to S3 & Invalidate CloudFront Cache
+  image: samepagelabs/awscli:latest
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: aws_access_key_id
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: aws_secret_access_key
+    S3_URL: s3://{{ cookiecutter.s3_bucket_dev }}
+    CDN_DISTRIBUTION_ID: {{ cookiecutter.cloudfront_dist_id_dev }}
+  commands:
+  - aws s3 rm $S3_URL/previous --recursive
+  - aws s3 mv $S3_URL/latest $S3_URL/previous --recursive
+  - aws s3 sync ./build $S3_URL/latest
+  - aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
+  when:
+    branch: dev
+    event:
+    - push
+    # - pull_request
+
+
+# ------------------------------------------------------------------------------
+
+- name: Build Staging
+  image: kudato/baseimage:node12
+  commands:
+  - npm install --quiet
+  - npm run build
+  environment:
+    GOOGLE_MAPS_KEY: ''
+  when:
+    branch: stage
+    event:
+    - push
+    - pull_request
+
+- name: Deploy Staging to S3 & Invalidate CloudFront Cache
+  image: samepagelabs/awscli:latest
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: aws_access_key_id
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: aws_secret_access_key
+    S3_URL: s3://{{ cookiecutter.s3_bucket_stage }}
+    CDN_DISTRIBUTION_ID: {{ cookiecutter.cloudfront_dist_id_stage }}
+  commands:
+  - aws s3 rm $S3_URL/previous --recursive
+  - aws s3 mv $S3_URL/latest $S3_URL/previous --recursive
+  - aws s3 sync ./build $S3_URL/latest
+  - aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
+  when:
+    branch: stage
+    event:
+    - push
+    # - pull_request
+
+# # ------------------------------------------------------------------------------
+
+# - name: Build Production
+#   image: kudato/baseimage:node12
+#   commands:
+#   - npm install --quiet
+#   - npm run build
+#   environment:
+#     GOOGLE_MAPS_KEY: ''
+#   when:
+#     branch: master
+#     event:
+#     - push
+#     - pull_request
+
+# - name: Deploy Production to S3 & Invalidate CloudFront Cache
+#   image: samepagelabs/awscli:latest
+#   environment:
+#     AWS_ACCESS_KEY_ID:
+#       from_secret: aws_access_key_id # add respective client's AWS IAM keys
+#     AWS_SECRET_ACCESS_KEY:
+#       from_secret: aws_secret_access_key # add respective client's AWS IAM keys
+#     S3_URL: s3://{{ cookiecutter.s3_bucket_prod }}
+#     CDN_DISTRIBUTION_ID: {{ cookiecutter.cloudfront_dist_id_prod }}
+#   commands:
+#   - aws s3 rm $S3_URL/previous --recursive
+#   - aws s3 mv $S3_URL/latest $S3_URL/previous --recursive
+#   - aws s3 sync ./build $S3_URL/latest
+#   - aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
+#   when:
+#     branch: master
+#     event:
+#     - push
+#     # - pull_request

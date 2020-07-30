@@ -1,9 +1,9 @@
 {
     "output": "output",
-    "project_name_pretty": "Web App",
+    "project_name_pretty": "Boilerplate",
     "project_name_pretty_platform": "{{ cookiecutter.project_name_pretty }} Web App",
     "project_name_pretty_appello": "Appello {{ cookiecutter.project_name_pretty_platform }} Project",
-    "project_name_basic": "webapp",
+    "project_name_basic": "boilerplate",
     "project_name_platform": "{{ cookiecutter.project_name_basic }}-web",
 
     "s3_bucket_dev": "",

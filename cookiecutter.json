@@ -14,5 +14,7 @@
   "cloudfront_dist_id_stage": "",
   "cloudfront_dist_id_prod": "",
 
-  "boolean_variable_example": "false"
+  "boolean_variable_example": "false",
+
+  "_copy_without_render": ["*src"]
 }

@@ -15,6 +15,6 @@ export const Icon: React.FC<Props> = ({ name, className, width = '100%', height 
     height={height}
     className={className}
   >
-    <use xlinkHref={`spritemap.svg#sprite-${name}`} />
+    <use xlinkHref={`/spritemap.svg#sprite-${name}`} />
   </svg>
 );

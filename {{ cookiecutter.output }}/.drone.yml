@@ -7,6 +7,8 @@ steps:
 
 - name: Build Development
   image: kudato/baseimage:node12
+  username: DOCKER_USER
+  password: DOCKER_PASS
   commands:
   - npm install --quiet
   - npm run build
@@ -21,6 +23,8 @@ steps:
 
 - name: Deploy Development to S3 & Invalidate CloudFront Cache
   image: samepagelabs/awscli:latest
+  username: DOCKER_USER
+  password: DOCKER_PASS
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: aws_access_key_id
@@ -44,6 +48,8 @@ steps:
 
 - name: Build Staging
   image: kudato/baseimage:node12
+  username: DOCKER_USER
+  password: DOCKER_PASS
   commands:
   - npm install --quiet
   - npm run build
@@ -57,6 +63,8 @@ steps:
 
 - name: Deploy Staging to S3 & Invalidate CloudFront Cache
   image: samepagelabs/awscli:latest
+  username: DOCKER_USER
+  password: DOCKER_PASS
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: aws_access_key_id

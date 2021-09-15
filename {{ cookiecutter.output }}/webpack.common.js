@@ -21,6 +21,7 @@ module.exports = {
     filename: 'js/app.bundle.js',
     publicPath: '/',
     path: DIST_PATH,
+    chunkFilename: 'js/[name].[chunkhash].js',
   },
   mode: isProduction ? PRODUCTION_MODE : DEVELOPMENT_MODE,
   target: 'web',
@@ -61,13 +62,29 @@ module.exports = {
         ],
       },
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|svg|woff(2)?|eot|ttf|otf)$/i,
+        test: /\.css$/,
+        use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'images/[hash][ext][query]',
+        },
+      },
+      {
+        test: /\.(?:woff(2)?|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[hash][ext][query]',
+        },
       },
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css',
+    }),
     new CleanWebpackPlugin(),
     new SVGSpritemapPlugin('src/view/assets/icons/*.svg', {
       output: {
@@ -81,6 +98,12 @@ module.exports = {
             },
           ],
         },
+        filename: 'icons/spritemap.svg',
+      },
+    }),
+    new SVGSpritemapPlugin('src/view/assets/icons/raw/*.svg', {
+      output: {
+        filename: 'icons/raw-spritemap.svg',
       },
     }),
     new HtmlWebpackPlugin({

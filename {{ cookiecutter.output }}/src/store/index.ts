@@ -4,8 +4,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 
-import rootReducer from './rootReducer';
-import rootSaga from './rootSaga';
+import { rootReducer } from './rootReducer';
+import { rootSaga } from './rootSaga';
 import { RootState } from './types';
 
 const sagaMiddleware = createSagaMiddleware();

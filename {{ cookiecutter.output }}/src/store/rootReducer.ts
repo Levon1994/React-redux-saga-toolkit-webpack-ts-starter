@@ -1,6 +1,7 @@
 import { getType } from 'deox';
 import { Action, combineReducers } from 'redux';
-import { createTransform, persistReducer } from 'redux-persist';
+import { createMigrate, createTransform, persistReducer } from 'redux-persist';
+import { MigrationManifest } from 'redux-persist/es/types';
 import storage from 'redux-persist/lib/storage';
 
 import { resetStore } from '~/modules/app/actions';
@@ -20,22 +21,29 @@ const transforms = [
   ),
 ];
 
+const migrations: MigrationManifest = {
+  // eslint-disable-next-line no-underscore-dangle
+  0: state => (state ? { _persist: state._persist } : state),
+};
+
 const rootPersistConfig = {
   key: 'root',
   storage,
   whitelist: ['user'],
   transforms,
+  version: 0,
+  migrate: createMigrate(migrations),
 };
 
 const appReducer = combineReducers({
   user: userReducer,
 });
 
-const rootReducer = (state: RootState | undefined, action: Action): RootState => {
+const reducer = (state: RootState | undefined, action: Action): RootState => {
   if (action.type === getType(resetStore)) {
     state = undefined;
   }
   return appReducer(state, action);
 };
 
-export default persistReducer(rootPersistConfig, rootReducer);
+export const rootReducer = persistReducer(rootPersistConfig, reducer);

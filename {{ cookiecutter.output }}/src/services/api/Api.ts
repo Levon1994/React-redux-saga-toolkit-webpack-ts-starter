@@ -45,7 +45,7 @@ const setTokenInterceptors = (instance: AxiosInstance): void => {
 
       if (
         error.response.status === 401 &&
-        !originalRequest._retry &&
+        !originalRequest.retry &&
         originalRequest.url !== REFRESH_TOKEN_URL
       ) {
         if (isRefreshing) {
@@ -61,7 +61,7 @@ const setTokenInterceptors = (instance: AxiosInstance): void => {
             });
         }
 
-        originalRequest._retry = true;
+        originalRequest.retry = true;
         isRefreshing = true;
 
         return new Promise((resolve, reject) => {

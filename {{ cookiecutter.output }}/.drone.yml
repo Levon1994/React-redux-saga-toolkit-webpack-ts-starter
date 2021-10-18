@@ -6,7 +6,7 @@ steps:
 # ------------------------------------------------------------------------------
 
 - name: Build Development
-  image: kudato/baseimage:node12
+  image: node:16
   username: DOCKER_USER
   password: DOCKER_PASS
   commands:
@@ -47,7 +47,7 @@ steps:
 # ------------------------------------------------------------------------------
 
 - name: Build Staging
-  image: kudato/baseimage:node12
+  image: node:16
   username: DOCKER_USER
   password: DOCKER_PASS
   commands:
@@ -87,7 +87,7 @@ steps:
 # # ------------------------------------------------------------------------------
 
 # - name: Build Production
-#   image: kudato/baseimage:node12
+#   image: node:16
 #   commands:
 #   - npm install --quiet
 #   - npm run build

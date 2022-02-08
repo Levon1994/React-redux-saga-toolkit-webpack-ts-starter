@@ -2,22 +2,17 @@ const { merge } = require('webpack-merge');
 const path = require('path');
 const common = require('./webpack.common.js');
 
-const DIST_PATH = path.resolve(__dirname, './build');
+const DIST_PATH = path.join(__dirname, './build');
 
 module.exports = merge(common, {
   mode: 'development',
   devServer: {
-    static: {
-      directory: DIST_PATH,
-      publicPath: '/',
-    },
-    hot: 'only',
+    publicPath: '/',
+    hot: true,
+    contentBase: DIST_PATH,
     compress: false,
     historyApiFallback: true,
-    allowedHosts: 'all',
-    client: {
-      overlay: false,
-    },
+    disableHostCheck: true,
   },
   devtool: 'eval-cheap-module-source-map',
 });

@@ -30,9 +30,6 @@ const setTokenInterceptors = (instance: AxiosInstance): void => {
     (config: AxiosRequestConfig) => {
       const token = store.getState().user.auth?.access;
       if (token) {
-        if (!config.headers) {
-          config.headers = {};
-        }
         config.headers.Authorization = `Bearer ${token}`;
       }
       return config;

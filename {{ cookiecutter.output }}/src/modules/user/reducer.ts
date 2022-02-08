@@ -1,6 +1,7 @@
-import { AsyncStatus } from '@appello/common/lib/constants';
 import { createReducer } from 'deox';
 import produce from 'immer';
+
+import { AsyncStatus } from '~/types';
 
 import { setAuth, setUser } from './actions';
 import { UserState } from './types';

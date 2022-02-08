@@ -1,6 +1,5 @@
-import { AsyncStatus } from '@appello/common/lib/constants';
-
 import { UserProfileModel } from '~/models/user';
+import { AsyncStatus } from '~/types';
 
 export interface UserState {
   profileStatus: AsyncStatus;

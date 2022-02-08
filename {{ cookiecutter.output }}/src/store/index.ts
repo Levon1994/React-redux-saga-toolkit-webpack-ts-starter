@@ -1,6 +1,6 @@
-import { composeWithDevTools } from '@redux-devtools/extension';
 import { createSelectorHook } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 

@@ -6,7 +6,7 @@ steps:
 # ------------------------------------------------------------------------------
 
 - name: Build Development
-  image: node:16
+  image: kudato/baseimage:node12
   username: DOCKER_USER
   password: DOCKER_PASS
   commands:
@@ -27,9 +27,9 @@ steps:
   password: DOCKER_PASS
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: {{ cookiecutter.aws_ci_access_key_name_dev }}
+      from_secret: aws_access_key_id
     AWS_SECRET_ACCESS_KEY:
-      from_secret: {{ cookiecutter.aws_ci_secret_key_name_dev }}
+      from_secret: aws_secret_access_key
     S3_URL: s3://{{ cookiecutter.s3_bucket_dev }}
     CDN_DISTRIBUTION_ID: {{ cookiecutter.cloudfront_dist_id_dev }}
   commands:
@@ -47,7 +47,7 @@ steps:
 # ------------------------------------------------------------------------------
 
 - name: Build Staging
-  image: node:16
+  image: kudato/baseimage:node12
   username: DOCKER_USER
   password: DOCKER_PASS
   commands:
@@ -67,9 +67,9 @@ steps:
   password: DOCKER_PASS
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: {{ cookiecutter.aws_ci_access_key_name_stage }}
+      from_secret: aws_access_key_id
     AWS_SECRET_ACCESS_KEY:
-      from_secret: {{ cookiecutter.aws_ci_secret_key_name_stage }}
+      from_secret: aws_secret_access_key
     S3_URL: s3://{{ cookiecutter.s3_bucket_stage }}
     CDN_DISTRIBUTION_ID: {{ cookiecutter.cloudfront_dist_id_stage }}
   commands:
@@ -83,11 +83,10 @@ steps:
     - push
     # - pull_request
 
-# # Keep commented out before deploying on produciton:
 # # ------------------------------------------------------------------------------
 
 # - name: Build Production
-#   image: node:16
+#   image: kudato/baseimage:node12
 #   commands:
 #   - npm install --quiet
 #   - npm run build
@@ -103,9 +102,9 @@ steps:
 #   image: samepagelabs/awscli:latest
 #   environment:
 #     AWS_ACCESS_KEY_ID:
-#       from_secret: {{ cookiecutter.aws_ci_access_key_name_prod }}
+#       from_secret: aws_access_key_id # add respective client's AWS IAM keys
 #     AWS_SECRET_ACCESS_KEY:
-#       from_secret: {{ cookiecutter.aws_ci_secret_key_name_prod }}
+#       from_secret: aws_secret_access_key # add respective client's AWS IAM keys
 #     S3_URL: s3://{{ cookiecutter.s3_bucket_prod }}
 #     CDN_DISTRIBUTION_ID: {{ cookiecutter.cloudfront_dist_id_prod }}
 #   commands:

@@ -8,7 +8,7 @@ export class User {
   ): Promise<{ user: UserProfileModel; accessToken: string; refreshToken: string }> {
     const { data } = await Api.post('/sign-in/', params);
     return {
-      user: User.createFromApi(data),
+      user: User.createFromApi(data.user),
       accessToken: data.access,
       refreshToken: data.refresh,
     };

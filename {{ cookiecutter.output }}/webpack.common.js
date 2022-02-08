@@ -35,6 +35,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        include: /node_modules\/react-dom/,
+        use: ['react-hot-loader/webpack'],
+      },
+      {
         test: /\.tsx?$/,
         use: [
           !isProduction && {
@@ -107,7 +112,7 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      title: '{{ cookiecutter.project_name_pretty }}',
+      title: 'Boilerplate',
       template: `${__dirname}/template.html`,
       filename: 'index.html',
     }),

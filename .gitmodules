@@ -1,3 +1,0 @@
-[submodule "{{ cookiecutter.output }}"]
-	path = {{ cookiecutter.output }}
-	url = git@gitlab.com:appello-self/react-boilerplate.git

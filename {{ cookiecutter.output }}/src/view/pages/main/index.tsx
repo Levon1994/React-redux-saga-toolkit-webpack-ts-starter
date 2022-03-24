@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { useSelector } from '~/store';
+import { useAppSelector } from '~/store/hooks';
 import { Icon } from '~/view/components/icon';
 
-export const MainPage: React.FC = () => {
-  const userEmail = useSelector(state => state.user.profile?.email);
+export const MainPage: React.VFC = () => {
+  const userEmail = useAppSelector(state => state.user.profile?.email);
 
   return (
     <div>

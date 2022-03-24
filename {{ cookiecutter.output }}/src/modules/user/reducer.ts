@@ -1,6 +1,5 @@
 import { AsyncStatus } from '@appello/common/lib/constants';
-import { createReducer } from 'deox';
-import produce from 'immer';
+import { createReducer } from '@reduxjs/toolkit';
 
 import { setAuth, setUser } from './actions';
 import { UserState } from './types';
@@ -11,15 +10,12 @@ export const initialState: UserState = {
   auth: null,
 };
 
-export const userReducer = createReducer(initialState, handle => [
-  handle(setUser, (state, { payload }) =>
-    produce(state, draft => {
-      draft.profile = payload;
+export const userReducer = createReducer(initialState, builder =>
+  builder
+    .addCase(setUser, (state, { payload }) => {
+      state.profile = payload;
+    })
+    .addCase(setAuth, (state, { payload }) => {
+      state.auth = payload;
     }),
-  ),
-  handle(setAuth, (state, { payload }) =>
-    produce(state, draft => {
-      draft.auth = payload;
-    }),
-  ),
-]);
+);

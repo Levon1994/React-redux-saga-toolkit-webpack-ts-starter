@@ -1,5 +1,4 @@
-import { UserState } from '~/modules/user/types';
+import { store } from './index';
 
-export interface RootState {
-  user: UserState;
-}
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

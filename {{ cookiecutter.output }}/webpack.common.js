@@ -112,7 +112,7 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      title: '{{ cookiecutter.project_name_pretty }}',
+      title: 'Boilerplate',
       template: `${__dirname}/template.html`,
       filename: 'index.html',
     }),

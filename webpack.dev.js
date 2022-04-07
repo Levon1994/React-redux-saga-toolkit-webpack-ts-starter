@@ -11,7 +11,7 @@ module.exports = merge(common, {
       directory: DIST_PATH,
       publicPath: '/',
     },
-    hot: 'only',
+    hot: true,
     compress: false,
     historyApiFallback: true,
     allowedHosts: 'all',

@@ -1,5 +1,4 @@
 import React from 'react';
-import { hot } from 'react-hot-loader/root';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { MainPage } from '~/view/pages/main';
@@ -7,7 +6,7 @@ import { NotFoundPage } from '~/view/pages/not-found';
 
 import styles from './styles.scss';
 
-export const AppComponent: React.FC = () => {
+export const App: React.FC = () => {
   const location = useLocation();
 
   React.useEffect(() => {
@@ -23,5 +22,3 @@ export const AppComponent: React.FC = () => {
     </main>
   );
 };
-
-export const App = hot(() => <AppComponent />);

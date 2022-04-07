@@ -5,6 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const DEVELOPMENT_MODE = 'development';
 const PRODUCTION_MODE = 'production';
@@ -16,7 +19,7 @@ const DIST_PATH = path.join(__dirname, './build');
 
 module.exports = {
   context: SRC_PATH,
-  entry: ['react-hot-loader/patch', './index.tsx'],
+  entry: ['./index.tsx'],
   output: {
     filename: 'js/app.bundle.js',
     publicPath: '/',
@@ -35,19 +38,18 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        include: /node_modules\/react-dom/,
-        use: ['react-hot-loader/webpack'],
-      },
-      {
-        test: /\.tsx?$/,
+        test: /\.[jt]sx?$/,
         use: [
-          !isProduction && {
-            loader: 'babel-loader',
-            options: { plugins: ['react-hot-loader/babel'] },
+          {
+            loader: 'ts-loader',
+            options: {
+              getCustomTransformers: () => ({
+                before: [!isProduction && ReactRefreshTypeScript()].filter(Boolean),
+              }),
+              transpileOnly: true,
+            },
           },
-          'ts-loader',
-        ].filter(Boolean),
+        ],
       },
       {
         test: /\.scss$/,
@@ -87,6 +89,12 @@ module.exports = {
     ],
   },
   plugins: [
+    !isProduction && new ReactRefreshWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.join(__dirname, 'tsconfig.json'),
+      },
+    }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
     }),
@@ -124,5 +132,5 @@ module.exports = {
       extensions: ['.ts', '.tsx'],
       failOnError: false,
     }),
-  ],
+  ].filter(Boolean),
 };

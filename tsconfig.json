@@ -13,6 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,
+    "resolveJsonModule": true,
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "paths": {

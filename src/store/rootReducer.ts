@@ -6,6 +6,9 @@ import storage from 'redux-persist/lib/storage';
 import { resetStore } from '~/modules/app/actions';
 import { userReducer } from '~/modules/user/reducer';
 
+// eslint-disable-next-line no-restricted-imports
+import packageJson from '../../package.json';
+
 const transforms = [
   createTransform(
     state => JSON.stringify(state),
@@ -25,7 +28,7 @@ const migrations: MigrationManifest = {
 };
 
 const rootPersistConfig = {
-  key: 'root',
+  key: packageJson.name,
   storage,
   whitelist: ['user'],
   transforms,

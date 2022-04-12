@@ -6,7 +6,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 
-import { API_URL, REFRESH_TOKEN_URL } from '~/config/constants';
+import { API_URL, REFRESH_TOKEN_URL } from '~/constants/env';
 import { setAuth, signOut } from '~/modules/user/actions';
 import { store } from '~/store';
 

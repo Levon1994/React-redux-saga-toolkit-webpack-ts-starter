@@ -3,6 +3,7 @@
 
 # IDE
 .idea
+.vscode
 
 # node.js
 node_modules/

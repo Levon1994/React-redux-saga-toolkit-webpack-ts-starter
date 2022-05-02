@@ -8,6 +8,7 @@ const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const DEVELOPMENT_MODE = 'development';
 const PRODUCTION_MODE = 'production';
@@ -89,6 +90,15 @@ module.exports = {
     ],
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: '**/*',
+          context: path.join(__dirname, './public'),
+          to: DIST_PATH,
+        },
+      ],
+    }),
     !isProduction && new ReactRefreshWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
@@ -120,7 +130,7 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      title: 'Boilerplate',
+      title: 'Appello App',
       template: `${__dirname}/template.html`,
       filename: 'index.html',
     }),

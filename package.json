@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development --hot --progress --color --port 3000 --config webpack.dev.js",
-    "build": "mkdir -p build && webpack --config webpack.prod.js --mode production",
+    "build": "mkdir -p build && webpack --config webpack.prod.js --mode production --progress",
     "prettier": "prettier --write src/**/*.{ts,tsx}",
     "lint": "eslint --quiet src/**/*.{ts,tsx}",
     "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
-    "check-types": "tsc -p tsconfig.json --skipLibCheck --noEmit",
+    "check-types": "tsc -p tsconfig.json",
     "prepare": "husky install"
   },
   "author": "",

@@ -9,6 +9,8 @@
     "pretty": true,
     "removeComments": true,
     "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "noEmit": true,
     "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

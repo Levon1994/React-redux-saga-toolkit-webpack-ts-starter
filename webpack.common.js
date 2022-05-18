@@ -66,7 +66,12 @@ module.exports = {
               importLoaders: 1,
             },
           },
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: 'sass',
+            },
+          },
         ],
       },
       {

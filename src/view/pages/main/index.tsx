@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppSelector } from '~/store/hooks';
 import { Icon } from '~/view/components/icon';
 
-export const MainPage: React.VFC = () => {
+export const MainPage: React.FC = () => {
   const userEmail = useAppSelector(state => state.user.profile?.email);
 
   return (

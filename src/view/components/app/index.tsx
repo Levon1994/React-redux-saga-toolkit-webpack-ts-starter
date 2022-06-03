@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { MainPage } from '~/view/pages/main';
@@ -9,7 +9,7 @@ import styles from './styles.scss';
 export const App: React.FC = () => {
   const location = useLocation();
 
-  React.useEffect(() => {
+  useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 

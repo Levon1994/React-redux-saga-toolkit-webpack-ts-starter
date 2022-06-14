@@ -9,7 +9,10 @@ npm i
 ```bash
 cp .env.example .env
 ```
-3. Run development server and go to [http://localhost:3000/](http://localhost:3000/)
+3. Change `name` in `package.json` to actual project name in kebab-case
+
+
+4. Run development server and go to [http://localhost:3000/](http://localhost:3000/)
 ```bash
 npm start
 ```

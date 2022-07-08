@@ -7,8 +7,6 @@ steps:
 
 - name: Build Development
   image: node:16
-  username: DOCKER_USER
-  password: DOCKER_PASS
   commands:
   - npm install --quiet
   - npm run build
@@ -23,8 +21,6 @@ steps:
 
 - name: Deploy Development to S3 & Invalidate CloudFront Cache
   image: samepagelabs/awscli:latest
-  username: DOCKER_USER
-  password: DOCKER_PASS
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: {{ cookiecutter.aws_ci_access_key_name_dev }}
@@ -48,8 +44,6 @@ steps:
 
 - name: Build Staging
   image: node:16
-  username: DOCKER_USER
-  password: DOCKER_PASS
   commands:
   - npm install --quiet
   - npm run build
@@ -63,8 +57,6 @@ steps:
 
 - name: Deploy Staging to S3 & Invalidate CloudFront Cache
   image: samepagelabs/awscli:latest
-  username: DOCKER_USER
-  password: DOCKER_PASS
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: {{ cookiecutter.aws_ci_access_key_name_stage }}
@@ -118,3 +110,6 @@ steps:
 #     event:
 #     - push
 #     # - pull_request
+
+image_pull_secrets:
+- dockerconfigjson

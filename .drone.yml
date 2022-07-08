@@ -1,10 +1,27 @@
 kind: pipeline
 name: {{ cookiecutter.project_name_pretty_platform }}
 
+definitions:
+  environment: &environment
+    image: yaroappello/mobile-ci:latest
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      CHANNEL_ID: {{ cookiecutter.slack_channel }}
+      SLACK_API_TOKEN:
+        from_secret: slack_token
+  slack_commands1: &error_slack_message_commands
+    commands:
+      - /notify_slack.py $SLACK_API_TOKEN $CHANNEL_ID "❌ Web front end app build/deployment failed!\n*$DRONE_COMMIT_REF*, ${DRONE_COMMIT_SHA:0:8}\nSee more $DRONE_BUILD_LINK"
+  slack_commands2: &success_slack_message_commands
+    commands:
+      - /notify_slack.py $SLACK_API_TOKEN $CHANNEL_ID "✅ Web front end app build/deployment succeeded!\n*$DRONE_COMMIT_REF*, ${DRONE_COMMIT_SHA:0:8}\nSee more $DRONE_BUILD_LINK"
+
+
 steps:
-
-# ------------------------------------------------------------------------------
-
+# Dev
 - name: Build Development
   image: node:16
   commands:
@@ -17,7 +34,6 @@ steps:
     event:
     - push
     - pull_request
-
 
 - name: Deploy Development to S3 & Invalidate CloudFront Cache
   image: samepagelabs/awscli:latest
@@ -39,9 +55,7 @@ steps:
     - push
     # - pull_request
 
-
-# ------------------------------------------------------------------------------
-
+# Staging
 - name: Build Staging
   image: node:16
   commands:
@@ -75,9 +89,7 @@ steps:
     - push
     # - pull_request
 
-# # Keep commented out before deploying on produciton:
-# # ------------------------------------------------------------------------------
-
+# # Production (Keep commented out before deploying on produciton)
 # - name: Build Production
 #   image: node:16
 #   commands:
@@ -111,5 +123,27 @@ steps:
 #     - push
 #     # - pull_request
 
+# Slack notifications
+- name: Notify Slack about success
+    <<: [*environment, *success_slack_message_commands]
+    when:
+      branch:
+      - dev
+      - stage
+      - master
+      status:
+      - success
+
+- name: Notify Slack about failure
+    <<: [*environment, *error_slack_message_commands]
+    when:
+      branch:
+      - dev
+      - stage
+      - master
+      status:
+      - failure
+
+# Pull Docker secrets
 image_pull_secrets:
 - dockerconfigjson

@@ -135,7 +135,7 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      title: 'Appello App',
+      title: 'React redux-saga',
       template: `${__dirname}/template.html`,
       filename: 'index.html',
     }),

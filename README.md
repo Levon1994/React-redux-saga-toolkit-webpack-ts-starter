@@ -1,4 +1,4 @@
-# React boilerplate
+# React-redux-saga-toolkit-webpack-ts-starter
 
 ## Setup project
 1. Install dependencies
